@@ -34,10 +34,10 @@ const mainController = {
   getSignUp: function (req, res) {
     res.render('./signup')
   },
-  logIn: function (req, res) {
+  logIn: function (req, res, next) {
     passport.authenticate('local', {
       successRedirect: '/eventcreate',
-      failureRedirect: '/landing',
+      failureRedirect: '/',
       failureFlash: 'Invalid username and/or password',
       successFlash: 'You have logged in'
     })(req, res)

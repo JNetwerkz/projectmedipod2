@@ -6,6 +6,7 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
+// const isLoggedIn = require('./middleware/isLoggedIn')
 const path = require('path')
 const app = express()
 

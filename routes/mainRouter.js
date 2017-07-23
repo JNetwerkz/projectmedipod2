@@ -6,12 +6,22 @@ const mainController = require('../controller/mainController')
 router.route('/')
 .get(mainController.getLanding)
 
-// route when posting signup details
+// route when posting log in details
 router.route('/landing')
 .get(mainController.getLanding)
+.post(mainController.logIn)
+
+// route getting to creating event page
+router.route('/eventcreate')
+.get(mainController.createEvent)
+
+// route for sign up page
+router.route('/signup')
+.get(mainController.getSignUp)
 .post(mainController.signingup)
 
-router.route('/eventcreate')
-.get(mainController.createevent)
+// route to log out
+router.route('/logout')
+.get(mainController.logOut)
 
 module.exports = router

@@ -2,7 +2,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mainRouter = require('./routes/mainRouter')
 const ejsLayout = require('express-ejs-layouts')
-var session = require('express-session')
+const session = require('express-session')
+const passport = require('./config/passport')
+const MongoStore = require('connect-mongo')(session)
+const flash = require('connect-flash')
 const path = require('path')
 const app = express()
 
@@ -21,8 +24,22 @@ mongoose.Promise = global.Promise
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: new MongoStore({ url: dbURI })
 }))
+
+// initialize the passport configuration and session as middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+// setting up flash
+app.use(flash())
+app.use(function (req, res, next) {
+  // before every route, attach the flash messages and current user to res.locals
+  res.locals.alerts = req.flash()
+  res.locals.currentUser = req.user
+  next()
+})
 
 // setting up bodyParser to use input forms
 app.use(bodyParser.urlencoded({extended: false}))

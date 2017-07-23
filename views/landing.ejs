@@ -1,34 +1,16 @@
 <div class="signin">
-  <h1>Medipod Sign In</h1>
+  <h1>Medipod Log In</h1>
 
-  <p>Sign in portal for clinics, admin and ambassador</p>
+  <p>Log in portal for clinics, admin and ambassador</p>
 
-  <form action="/login" method="post">
+  <form action="/landing" method="post">
     <label for="email">Email
       <input type="text" name="email" placeholder="ian@medipod.com">
     </label>
     <label for="signinpassword">Password
       <input type="password" name="signinpassword">
     </label>
-    <button type="submit">Sign In</button>
+    <button type="submit">Log In</button>
   </form>
 </div>
-<div class="signup">
-  <h1>Medipod Sign Up</h1>
-  <p>Sign up for admin account or sales account</p>
-  <form action="/landing" method="post">
-    <label for="">Email
-      <input type="text" name="email" placeholder="ian@medipod.com">
-    </label>
-    <label for="signinpassword">Password
-      <input type="password" name="password">
-    </label>
-    <label for="confirmPass">Confirm Password
-      <input type="password" name="confirmPassword">
-    </label>
-    <%# <label for="typeUser">Type of User
-      <input type="text" name="typeUser">
-    </label>%>
-    <button type="submit">Sign Up</button>
-  </form>
-</div>
+<a href="/signup">Sign Up Here</a>

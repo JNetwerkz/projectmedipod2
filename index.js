@@ -1,8 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
 const mainRouter = require('./routes/mainRouter')
 const ejsLayout = require('express-ejs-layouts')
+var session = require('express-session')
 const path = require('path')
 const app = express()
 
@@ -10,11 +10,19 @@ const app = express()
 require('dotenv').config({ silent: true })
 
 // mongoose and database set up
-const dbURI = process.env.PROD_MONGODB || 'mongodb://localhost/medipod'
-mongoose.createConnection(dbURI, function () {
-  console.log('db is connected')
+const dbURI = 'mongodb://localhost/medipod'
+const mongoose = require('mongoose')
+mongoose.connect(dbURI, {
+  useMongoClient: true
 })
 mongoose.Promise = global.Promise
+
+// setting up sessions
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 
 // setting up bodyParser to use input forms
 app.use(bodyParser.urlencoded({extended: false}))

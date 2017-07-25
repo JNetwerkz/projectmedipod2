@@ -50,6 +50,11 @@ app.set('view engine', 'ejs')
 app.use(ejsLayout)
 app.use(express.static(path.join(__dirname, 'assets')))
 
+// setup for landing page for vistors and user
+app.get('/', function (req, res) {
+  res.render('landing')
+})
+
 // setting up routes after auth wall
 app.use('/', mainRouter)
 

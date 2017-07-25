@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt')
 // regex for email
 var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
 
+// User Schema which consist of clinics, admins and sales advisor
 var userSchema = new mongoose.Schema({
   email: {
     type: String,

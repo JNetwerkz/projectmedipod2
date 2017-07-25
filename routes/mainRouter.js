@@ -3,9 +3,9 @@ const router = express.Router()
 const mainController = require('../controller/mainController')
 const isLoggedIn = require('../middleware/isLoggedIn')
 
-// route when you first land on web app
-router.route('/')
-.get(mainController.getLanding)
+// // route when you first land on web app
+// router.route('/')
+// .get(mainController.getLanding)
 
 // route when posting log in details
 router.route('/landing')
@@ -19,6 +19,7 @@ router.route('/signup')
 .get(mainController.getSignUp)
 .post(mainController.signingup)
 
+// Authentication wall everything below is locked out.
 router.use(isLoggedIn)
 
 // route to log out
@@ -26,7 +27,12 @@ router.route('/logout')
 .get(mainController.logOut)
 
 // route getting to creating event page
-router.route('/eventcreate')
+router.route('/admin')
 .get(mainController.createEvent)
+
+// route for clinic to verify code
+router.route('/clinic')
+.get(mainController.clinicVerify)
+.post(mainController.verifyCode)
 
 module.exports = router

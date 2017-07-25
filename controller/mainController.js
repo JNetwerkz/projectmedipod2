@@ -64,6 +64,10 @@ const mainController = {
     // place holder till there's a customer db
     console.log('checking promo codes')
     res.send(req.body.userpromo)
+  },
+  // Attendee registeration form (road show)
+  rdShowSignUp: function (req, res) {
+    res.render('./rdshow')
   }
 }
 module.exports = mainController

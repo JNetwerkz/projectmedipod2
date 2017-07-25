@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-var companySchema = new mongoose.Schema({
+var promoSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -11,12 +11,16 @@ var companySchema = new mongoose.Schema({
     minlength: [5, 'Code has to be at least 5 characters'],
     maxlength: [99, 'Code cannot be more than 99 characters']
   },
+  event: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'event'
+  }],
   attendee: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'
   }]
 })
 // setting up models
-var Company = mongoose.model('Company', companySchema)
+var Promo = mongoose.model('Promo', promoSchema)
 
-module.exports = Company
+module.exports = Promo

@@ -8,8 +8,8 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 // .get(mainController.getLanding)
 
 // route when posting log in details
-router.route('/landing')
-.get(mainController.getLanding)
+// router.route('/landing')
+// .get(mainController.getLanding)
 
 router.route('/login')
 .post(mainController.logIn)
@@ -34,5 +34,9 @@ router.route('/admin')
 router.route('/clinic')
 .get(mainController.clinicVerify)
 .post(mainController.verifyCode)
+
+// route for road show sign up form
+router.route('/attendee')
+.get(mainController.rdShowSignUp)
 
 module.exports = router

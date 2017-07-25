@@ -2,3 +2,41 @@
 <h1>Create Event Page</h1>
 
 <p>Creat an event (either Seminar or road show)</p>
+
+<form class="/eventcreate" method="post">
+
+<label for="eventname">Event Name
+  <input type="text" name="eventname">
+</label>
+
+<label for="datefrom">Event Date From
+  <input type="date" name="datefrom">
+</label>
+
+<label for="datetill">Event Date Till
+  <input type="date" name="datetill">
+</label>
+
+<label for="location">Location
+  <input type="text" name="location">
+</label>
+
+<label for="codeprefix">Promo Code Prefix
+  <input type="text" name="codeprefix">
+</label>
+
+<label for="agencyprefix">Agency Prefix
+  <input type="text" name="agencyprefix">
+</label>
+
+<label for="validdate">Validity Period</label>
+<select name="validdate">
+  <option value="60days">60 Days</option>
+  <option value="120days">120 Days</option>
+  <option value="180days">180 Days</option>
+</select>
+
+<button type="submit">Create</button>
+<button type="button" name="clear">Clear</button>
+
+</form>

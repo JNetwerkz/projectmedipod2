@@ -29,6 +29,7 @@ router.route('/logout')
 // route getting to creating event page
 router.route('/admin')
 .get(mainController.createEvent)
+.post(mainController.createPromo)
 
 // route for clinic to verify code
 router.route('/clinic')

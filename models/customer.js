@@ -13,25 +13,25 @@ var customerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  add1: {
+  address1: {
     type: String,
     required: true
   },
-  add2: {
+  address2: {
     type: String,
     required: true
   },
   postalcode: {
     type: String,
     required: true,
-    minlength: [6, 'Postal Code is 6 characters'],
-    maxlength: [6, 'Code cannot be more than 99 characters']
+    minlength: [6, 'Postal Code Number has to be 8 digits'],
+    maxlength: [6, 'Postal Code Number has to be 8 digits']
   },
   contactno: {
     type: Number,
     required: true,
-    minlength: [8, 'Code has to be at least 5 characters'],
-    maxlength: [8, 'Code cannot be more than 99 characters']
+    minlength: [8, 'Contact Number has to be 8 digits'],
+    maxlength: [8, 'Contact Number has to be 8 digits']
   },
   email: {
     type: String,
@@ -44,8 +44,8 @@ var customerSchema = new mongoose.Schema({
   ic: {
     type: String,
     required: true,
-    minlength: [9, 'Code has to be at least 5 characters'],
-    maxlength: [9, 'Code cannot be more than 99 characters']
+    minlength: [9, 'IC Number has to be 9 characters'],
+    maxlength: [9, 'IC Number has to be 9 characters']
   },
   event: [{
     type: mongoose.Schema.ObjectId,

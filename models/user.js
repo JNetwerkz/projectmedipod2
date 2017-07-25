@@ -18,7 +18,11 @@ var userSchema = new mongoose.Schema({
     required: true,
     minlength: [3, 'password must be at minimum 3 characters'],
     maxlength: [99, 'password cannot be more than 99 characters']
-  }
+  },
+  event: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'event'
+  }]
 })
 
 // creating hashed password for users

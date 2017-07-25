@@ -1,5 +1,5 @@
 var User = require('../models/user')
-var Promo = require('../models/promo')
+var Event = require('../models/event')
 var passport = require('../config/passport')
 
 const mainController = {
@@ -35,6 +35,32 @@ const mainController = {
   // rendering create event page
   createEvent: function (req, res) {
     res.render('./eventcreate')
+  },
+  // posting create event form and creating event
+  createPromo: function (req, res) {
+    // res.send(req.body)
+    Event.create({
+      name: req.body.eventname,
+      datefrom: req.body.datefrom,
+      dateto: req.body.datetill,
+      location: req.body.location,
+      promocodeprefix: req.body.codeprefix,
+      agencyprefix: req.body.agencyprefix,
+      validity: req.body.validdate
+    }, function (err, event) {
+      if (err) {
+        req.flash('error', 'Event Not Added')
+        return res.redirect('/eventcreate')
+      }
+      User.findByIdAndUpdate(req.user._id, {$push: {event: event.id}}, function (err, updatedData) {
+        if (err) {
+          req.flash('error', 'Event Already Added')
+          return res.redirect('/eventcreate')
+        }
+        req.flash('success', 'Event Added')
+        return res.redirect('/eventcreate')
+      })
+    })
   },
   // Rendering sign up page
   getSignUp: function (req, res) {

@@ -33,10 +33,6 @@ var eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  event: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'event'
-  }],
   attendee: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'

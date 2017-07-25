@@ -50,15 +50,15 @@ const mainController = {
     }, function (err, event) {
       if (err) {
         req.flash('error', 'Event Not Added')
-        return res.redirect('/eventcreate')
+        return res.redirect('/admin')
       }
       User.findByIdAndUpdate(req.user._id, {$push: {event: event.id}}, function (err, updatedData) {
         if (err) {
           req.flash('error', 'Event Already Added')
-          return res.redirect('/eventcreate')
+          return res.redirect('/admin')
         }
         req.flash('success', 'Event Added')
-        return res.redirect('/eventcreate')
+        return res.redirect('/admin')
       })
     })
   },

@@ -38,7 +38,6 @@ const mainController = {
   },
   // posting create event form and creating event
   createPromo: function (req, res) {
-    // res.send(req.body)
     Event.create({
       name: req.body.eventname,
       datefrom: req.body.datefrom,

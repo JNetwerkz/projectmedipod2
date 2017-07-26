@@ -1,5 +1,6 @@
 var User = require('../models/user')
 var Event = require('../models/event')
+var Customer = require('../models/customer')
 var passport = require('../config/passport')
 
 const mainController = {
@@ -93,6 +94,35 @@ const mainController = {
   // Attendee registeration form (road show)
   rdShowSignUp: function (req, res) {
     res.render('./rdshow')
+  },
+  signedUpRdShow: function (req, res) {
+    // place holder to create customer (road show)
+    Customer.create({
+      title: req.body.title,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      address1: req.body.address1,
+      address2: req.body.address2,
+      postalcode: req.body.postalcode,
+      contactno: req.body.contactno,
+      email: req.body.email,
+      dob: req.body.dob,
+      ic: req.body.ic
+    }, function (err, customer) {
+      if (err) {
+        req.flash('error', 'Customer Not Added')
+        console.log(err)
+        return res.redirect('/attendee')
+      }
+      // Event.findByIdAndUpdate(req.event._id, {$push: {customer: customer.id}}, function (err, updatedData) {
+      //   if (err) {
+      //     req.flash('error', 'Customer Already Added')
+      //     return res.redirect('/attendee')
+      //   }
+        req.flash('success', 'Customer Added')
+        return res.redirect('/attendee')
+      })
+    // })
   }
 }
 module.exports = mainController

@@ -24,8 +24,8 @@ var customerSchema = new mongoose.Schema({
   postalcode: {
     type: String,
     required: true,
-    minlength: [6, 'Postal Code Number has to be 8 digits'],
-    maxlength: [6, 'Postal Code Number has to be 8 digits']
+    minlength: [6, 'Postal Code Number has to be 6 digits'],
+    maxlength: [6, 'Postal Code Number has to be 6 digits']
   },
   contactno: {
     type: Number,
@@ -37,7 +37,7 @@ var customerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  DOB: {
+  dob: {
     type: String,
     required: true
   },
@@ -46,15 +46,16 @@ var customerSchema = new mongoose.Schema({
     required: true,
     minlength: [9, 'IC Number has to be 9 characters'],
     maxlength: [9, 'IC Number has to be 9 characters']
-  },
-  event: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'event'
-  }],
-  attendee: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'customer'
-  }]
+  }
+  // ,
+  // event: [{
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: 'event'
+  // }],
+  // attendee: [{
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: 'customer'
+  // }]
 })
 // setting up models
 var Customer = mongoose.model('Customer', customerSchema)

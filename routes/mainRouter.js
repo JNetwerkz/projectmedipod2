@@ -39,5 +39,6 @@ router.route('/clinic')
 // route for road show sign up form
 router.route('/attendee')
 .get(mainController.rdShowSignUp)
+.post(mainController.signedUpRdShow)
 
 module.exports = router

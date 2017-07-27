@@ -22,7 +22,7 @@ var customerSchema = new mongoose.Schema({
     required: true
   },
   postalcode: {
-    type: String,
+    type: Number,
     required: true,
     minlength: [6, 'Postal Code Number has to be 6 digits'],
     maxlength: [6, 'Postal Code Number has to be 6 digits']
@@ -38,7 +38,7 @@ var customerSchema = new mongoose.Schema({
     required: true
   },
   dob: {
-    type: String,
+    type: Date,
     required: true
   },
   ic: {
@@ -46,6 +46,10 @@ var customerSchema = new mongoose.Schema({
     required: true,
     minlength: [9, 'IC Number has to be 9 characters'],
     maxlength: [9, 'IC Number has to be 9 characters']
+  },
+  creation_date: {
+    type: Date,
+    default: Date.now
   }
   // ,
   // event: [{

@@ -6,11 +6,11 @@ var eventSchema = new mongoose.Schema({
     required: true
   },
   datefrom: {
-    type: String,
+    type: Date,
     required: true
   },
   dateto: {
-    type: String,
+    type: Date,
     required: true
   },
   location: {

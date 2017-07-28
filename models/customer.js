@@ -50,6 +50,14 @@ var customerSchema = new mongoose.Schema({
   creation_date: {
     type: Date,
     default: Date.now
+  },
+  attended: {
+    type: Boolean,
+    default: false
+  },
+  sign_up_count: {
+    type: Number,
+    default: 0
   }
   // ,
   // event: [{

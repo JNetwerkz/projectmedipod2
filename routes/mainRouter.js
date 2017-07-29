@@ -41,4 +41,7 @@ router.route('/attendee')
 .get(mainController.rdShowSignUp)
 .post(mainController.signedUpRdShow)
 
+// route for list of events for advisor to choose from
+router.route('/eventindex')
+
 module.exports = router

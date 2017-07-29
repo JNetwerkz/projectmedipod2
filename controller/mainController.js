@@ -75,7 +75,7 @@ const mainController = {
       successFlash: 'You have logged in'
     })(req, res)
   },
-  // Logout controlls
+  // Logout controls
   logOut: function (req, res) {
     req.logout()
     req.flash('success', 'You have logged out')

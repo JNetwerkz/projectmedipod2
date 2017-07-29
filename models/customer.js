@@ -51,23 +51,14 @@ var customerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  attended: {
+  has_attended: {
     type: Boolean,
     default: false
   },
-  sign_up_count: {
-    type: Number,
-    default: 0
-  }
-  // ,
-  // event: [{
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'event'
-  // }],
-  // attendee: [{
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'customer'
-  // }]
+  event: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'event'
+  }]
 })
 // setting up models
 var Customer = mongoose.model('Customer', customerSchema)

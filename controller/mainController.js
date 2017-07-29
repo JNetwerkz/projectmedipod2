@@ -114,15 +114,9 @@ const mainController = {
         console.log(err)
         return res.redirect('/attendee')
       }
-      // Event.findByIdAndUpdate(req.event._id, {$push: {customer: customer.id}}, function (err, updatedData) {
-      //   if (err) {
-      //     req.flash('error', 'Customer Already Added')
-      //     return res.redirect('/attendee')
-      //   }
-        req.flash('success', 'Customer Added')
-        return res.redirect('/attendee')
-      })
-    // })
+      req.flash('success', 'Customer Added')
+      return res.redirect('/attendee')
+    })
   }
 }
 module.exports = mainController

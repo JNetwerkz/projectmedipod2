@@ -95,8 +95,8 @@ const mainController = {
   rdShowSignUp: function (req, res) {
     res.render('./rdshow')
   },
+  // place holder to create customer (road show)
   signedUpRdShow: function (req, res) {
-    // place holder to create customer (road show)
     Customer.create({
       title: req.body.title,
       firstname: req.body.firstname,
@@ -116,6 +116,32 @@ const mainController = {
       }
       req.flash('success', 'Customer Added')
       return res.redirect('/attendee')
+    })
+  },
+  // populating index page with attendance list and vetted attendee list
+  AttendanceList: function (req, res) {
+    User.findById(req.user._id)
+    .populate({
+      path: 'event',
+      model: 'Event'
+    })
+    .exec(function (err, events) {
+      let listevent = events.event
+      if (err) {
+        req.flash('error', 'Can\'t populate events list')
+        console.log(err)
+        return res.redirect('/')
+      }
+      console.log(listevent)
+      listevent.forEach(function (event, i) {
+        if (event.dateto > Date.now()) {
+          var nameevent = event.name
+          console.log(nameevent)
+        } else {
+          console.log('event passed')
+        }
+      })
+      res.render('eventindex', {list: listevent})
     })
   }
 }

@@ -28,6 +28,12 @@ router.route('/logout')
 
 // route getting to creating event page
 router.route('/admin')
+// .get(mainController.createEvent)
+// .post(mainController.createPromo)
+.get(mainController.AttendanceList)
+
+// route for list of events for advisor/admin to choose from
+router.route('/adminCreateEvent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)
 
@@ -40,8 +46,5 @@ router.route('/clinic')
 router.route('/attendee')
 .get(mainController.rdShowSignUp)
 .post(mainController.signedUpRdShow)
-
-// route for list of events for advisor to choose from
-router.route('/eventindex')
 
 module.exports = router

@@ -33,7 +33,7 @@ router.route('/admin')
 .get(mainController.AttendanceList)
 
 // route for list of events for advisor/admin to choose from
-router.route('/admin/createEvent')
+router.route('/admin/createevent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)
 
@@ -46,5 +46,9 @@ router.route('/clinic')
 router.route('/attendee')
 .get(mainController.rdShowSignUp)
 .post(mainController.signedUpRdShow)
+
+router.route('/admin/createclinic')
+.get(mainController.clinicCreateForm)
+.post(mainController.clinicCreate)
 
 module.exports = router

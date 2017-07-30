@@ -30,7 +30,7 @@ router.route('/logout')
 router.route('/admin')
   // .get(mainController.createEvent)
   // .post(mainController.createPromo)
-.get(mainController.AttendanceList)
+.get(mainController.attendanceList)
 
 // route for list of events for advisor/admin to choose from
 router.route('/admin/createevent')
@@ -46,13 +46,18 @@ router.route('/clinic')
 .get(mainController.clinicVerify)
 .post(mainController.verifyCode)
 
-// route for road show sign up form
+// route for advisor to see event index
 router.route('/attendee')
+.get(mainController.advisorEventIndex)
+
+// route for road show sign up form
+router.route('/attendee/:id')
 .get(mainController.rdShowSignUp)
 .post(mainController.signedUpRdShow)
 
-router.route('/admin/createclinic')
-.get(mainController.clinicCreateForm)
-.post(mainController.clinicCreate)
+// route for admin to create clinic account
+// router.route('/admin/createclinic')
+// .get(mainController.clinicCreateForm)
+// .post(mainController.clinicCreate)
 
 module.exports = router

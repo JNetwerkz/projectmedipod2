@@ -93,7 +93,7 @@ const mainController = {
   },
   // Attendee registeration form (road show)
   rdShowSignUp: function (req, res) {
-    res.render('./rdshow')
+    res.render('rdshow', {event: req.params})
   },
   // place holder to create customer (road show)
   signedUpRdShow: function (req, res) {
@@ -146,7 +146,7 @@ const mainController = {
     })
   },
   // populating index page with attendance list and vetted attendee list
-  AttendanceList: function (req, res) {
+  attendanceList: function (req, res) {
     User.findById(req.user._id)
     .populate({
       path: 'event',
@@ -176,6 +176,16 @@ const mainController = {
   chosenEvent: function (req, res) {
     console.log(req.params.id)
     res.render('./chosenevent')
+  },
+  // advisor to choose event to create a sign up form
+  advisorEventIndex: function (req, res) {
+    Event.find({}, function (err, events) {
+      if (err) {
+        req.flash('error', 'Can\'t populate events list')
+        res.redirect('/attendee')
+      }
+      res.render('advisoreventindex', {events: events})
+    })
   }
 }
 module.exports = mainController

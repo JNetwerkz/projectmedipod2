@@ -130,7 +130,7 @@ const mainController = {
       res.redirect('/admin/createclinic')
       return
     }
-    // creating users
+    // creating clinic account
     User.create({
       name: req.body.clinicname,
       email: req.body.email,
@@ -171,6 +171,11 @@ const mainController = {
       })
       res.render('eventindex', {list: nameevent, events: listevent})
     })
+  },
+  // when admin chooses a listed event and to generate promocode
+  chosenEvent: function (req, res) {
+    console.log(req.params.id)
+    res.render('./chosenevent')
   }
 }
 module.exports = mainController

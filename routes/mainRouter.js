@@ -28,14 +28,18 @@ router.route('/logout')
 
 // route getting to creating event page
 router.route('/admin')
-// .get(mainController.createEvent)
-// .post(mainController.createPromo)
+  // .get(mainController.createEvent)
+  // .post(mainController.createPromo)
 .get(mainController.AttendanceList)
 
 // route for list of events for advisor/admin to choose from
 router.route('/admin/createevent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)
+
+// route for chosen event to generate code for attendees
+router.route('/admin/:id')
+.get(mainController.chosenEvent)
 
 // route for clinic to verify code
 router.route('/clinic')

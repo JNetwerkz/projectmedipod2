@@ -1,2 +1,77 @@
-<h1>list of all customers by event</h1>
-<%list%>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <a href="/admin" class="navbar-brand navbar-left">Home</a>
+        <a href="/admin/createEvent" class="navItem">Create Event</a>
+        <a href="/logout" class="navItem navbar-right">Log Out</a>
+    </div>
+</div>
+
+<h1>list of all events</h1>
+
+<h3>Ongoing Events</h3>
+<div class="table-responsive">
+  <table class="table table-hover">
+  <% events.forEach(function(event,i){ %>
+    <% if (event.dateto > Date.now()) { %>
+      <tr>
+        <th rowspan="2">
+          <%= event.name %>
+        </th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Location</th>
+        <th rowspan="2">
+          <form action="/admin/<%= event._id %>" method="post">
+            <button type="submit">More</button>
+          </form>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <%= event.datefrom %>
+        </td>
+        <td>
+          <%= event.dateto %>
+        </td>
+        <td>
+          <%= event.location %>
+        </td>
+      </tr>
+    <% } %>
+  <% }) %>
+  </table>
+</div>
+
+<h3>Past Events</h3>
+<div class="table-responsive">
+  <table class="table table-hover">
+  <% events.forEach(function(event,i){ %>
+    <% if (event.dateto < Date.now()) { %>
+      <tr>
+        <th rowspan="2">
+          <%= event.name %>
+        </th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Location</th>
+        <th rowspan="2">
+          <form action="/admin/<%= event._id %>" method="post">
+            <button type="submit">More</button>
+          </form>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <%= event.datefrom %>
+        </td>
+        <td>
+          <%= event.dateto %>
+        </td>
+        <td>
+          <%= event.location %>
+        </td>
+      </tr>
+    <% } %>
+  <% }) %>
+  </table>
+</div>

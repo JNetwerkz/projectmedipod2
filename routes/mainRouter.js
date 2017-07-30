@@ -33,7 +33,7 @@ router.route('/admin')
 .get(mainController.AttendanceList)
 
 // route for list of events for advisor/admin to choose from
-router.route('/adminCreateEvent')
+router.route('/admin/createEvent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)
 

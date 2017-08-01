@@ -11,6 +11,11 @@ var promoSchema = new mongoose.Schema({
     minlength: [5, 'Code has to be at least 5 characters'],
     maxlength: [99, 'Code cannot be more than 99 characters']
   },
+  is_redeemed: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

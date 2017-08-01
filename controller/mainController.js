@@ -1,7 +1,10 @@
 var User = require('../models/user')
 var Event = require('../models/event')
 var Customer = require('../models/customer')
+var Promo = require('../models/promo')
 var passport = require('../config/passport')
+const voucher_codes = require('voucher-code-generator')
+// const async = require('async')
 
 const mainController = {
 
@@ -146,9 +149,37 @@ const mainController = {
     })
   },
   // when admin chooses a listed event and to generate promocode
+  // Issue of call back for repeatcustomerarray not getting sent to rendered page
   chosenEvent: function (req, res) {
-    console.log(req.params.id)
-    res.render('./chosenevent')
+    var repeatcustomerarray = []
+    Customer.aggregate([
+      {
+        '$group': {
+          '_id': { 'ic': '$ic' },
+          'uniqueIds': { '$addToSet': '$_id' },
+          'count': { '$sum': 1 }
+        }
+      },
+    { '$match': { 'count': { '$gt': 1 } } }
+    ], function (err, group) {
+      if (err) {
+        req.flash('error', 'Cannot vet through attendee list')
+        req.redirect('/attendee')
+      }
+      var vettedcustomers = group[0].uniqueIds
+      vettedcustomers.forEach(function (customer, i) {
+        Customer.findById(customer, function (err, users) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          repeatcustomerarray.push(users)
+          // console.log(repeatcustomerarray)
+        })
+      })
+      // console.log(repeatcustomerarray)
+      res.render('chosenevent', {vetted: vettedcustomers, vettedObjs: repeatcustomerarray})
+    })
   },
   // advisor to choose event to create a sign up form
   advisorEventIndex: function (req, res) {
@@ -158,6 +189,26 @@ const mainController = {
         res.redirect('/attendee')
       }
       res.render('advisoreventindex', {events: events})
+    })
+  },
+  // generate promocode for user
+  CodeGenerate: function (req, res) {
+    var code = voucher_codes.generate({
+      prefix: 'AB',
+      postfix: 'CD'
+    })
+    console.log(code)
+    Promo.create({
+      name: 'Free Checkup',
+      code: code,
+      attendee: req.params.id
+    }, function (err, code) {
+      if (err) {
+        console.log(err)
+        req.flash('error', 'Code not created')
+      }
+      req.flash('success', 'code made')
+      return res.redirect('/admin')
     })
   }
 }

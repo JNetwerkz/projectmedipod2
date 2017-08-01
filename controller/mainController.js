@@ -118,33 +118,6 @@ const mainController = {
       return res.redirect('/attendee')
     })
   },
-  // render page for clinic sign up form
-  clinicCreateForm: function (req, res) {
-    res.render('./cliniccreate')
-  },
-  // posting of clinic sign up form
-  clinicCreate: function (req, res) {
-    res.locals.userData = req.body
-    if (req.body.password !== req.body.confirmPassword) {
-      req.flash('error', 'Password does not Match')
-      res.redirect('/admin/createclinic')
-      return
-    }
-    // creating clinic account
-    User.create({
-      name: req.body.clinicname,
-      email: req.body.email,
-      password: req.body.password
-    }, function (err, createdUser) {
-      if (err) {
-        req.flash('error', 'Could not create user account')
-        res.redirect('/admin/createclinic')
-      } else {
-        req.flash('success', 'Clinic created')
-        res.redirect('/admin/createclinic')
-      }
-    })
-  },
   // populating index page with attendance list and vetted attendee list
   attendanceList: function (req, res) {
     User.findById(req.user._id)

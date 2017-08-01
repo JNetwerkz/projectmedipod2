@@ -55,9 +55,4 @@ router.route('/attendee/:id')
 .get(mainController.rdShowSignUp)
 .post(mainController.signedUpRdShow)
 
-// route for admin to create clinic account
-// router.route('/admin/createclinic')
-// .get(mainController.clinicCreateForm)
-// .post(mainController.clinicCreate)
-
 module.exports = router

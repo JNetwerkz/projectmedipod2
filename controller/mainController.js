@@ -3,7 +3,7 @@ var Event = require('../models/event')
 var Customer = require('../models/customer')
 var Promo = require('../models/promo')
 var passport = require('../config/passport')
-const voucher_codes = require('voucher-code-generator')
+const voucherCodes = require('voucher-code-generator')
 // const async = require('async')
 
 const mainController = {
@@ -98,7 +98,7 @@ const mainController = {
   rdShowSignUp: function (req, res) {
     res.render('rdshow', {event: req.params})
   },
-  // place holder to create customer (road show)
+  // function when posting sign up form for customer
   signedUpRdShow: function (req, res) {
     Customer.create({
       title: req.body.title,
@@ -117,11 +117,17 @@ const mainController = {
         console.log(err)
         return res.redirect('/attendee')
       }
-      req.flash('success', 'Customer Added')
-      return res.redirect('/attendee')
+      Event.findByIdAndUpdate(req.params.id, {$push: {attendee: customer.id}}, function (err, updatedData) {
+        if (err) {
+          req.flash('error', 'Customer already added into event')
+          return res.redirect('/attendee')
+        }
+        req.flash('success', 'Customer Added')
+        return res.redirect('/attendee')
+      })
     })
   },
-  // populating index page with attendance list and vetted attendee list
+  // populating index page of all events past and current
   attendanceList: function (req, res) {
     User.findById(req.user._id)
     .populate({
@@ -193,7 +199,7 @@ const mainController = {
   },
   // generate promocode for user
   CodeGenerate: function (req, res) {
-    var code = voucher_codes.generate({
+    var code = voucherCodes.generate({
       prefix: 'AB',
       postfix: 'CD'
     })

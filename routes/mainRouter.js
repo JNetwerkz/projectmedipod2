@@ -37,6 +37,11 @@ router.route('/admin/createevent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)
 
+// route for post to create promotion in /createevent page
+router.route('/admin/promotioncreate')
+.get(mainController.getPromotionCreate)
+.post(mainController.promotionsCreate)
+
 // route for chosen event to generate code for attendees
 router.route('/admin/:id')
 .get(mainController.chosenEvent)

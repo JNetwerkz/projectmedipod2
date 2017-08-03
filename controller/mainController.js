@@ -2,6 +2,7 @@ var User = require('../models/user')
 var Event = require('../models/event')
 var Customer = require('../models/customer')
 var Promo = require('../models/promo')
+var Code = require('../models/codes')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
 // const async = require('async')
@@ -46,10 +47,10 @@ const mainController = {
       name: req.body.eventname,
       datefrom: req.body.datefrom,
       dateto: req.body.datetill,
-      location: req.body.location,
-      promocodeprefix: req.body.codeprefix,
-      agencyprefix: req.body.agencyprefix,
-      validity: req.body.validdate
+      location: req.body.location
+      // promocodeprefix: req.body.codeprefix,
+      // agencyprefix: req.body.agencyprefix,
+      // validity: req.body.validdate
     }, function (err, event) {
       if (err) {
         req.flash('error', 'Event Not Added')
@@ -91,7 +92,7 @@ const mainController = {
   // Checking promo code
   verifyCode: function (req, res) {
     // place holder till there's a customer db
-    console.log('checking promo codes')
+    // console.log('checking promo codes')
     res.send(req.body.userpromo)
   },
   // Attendee registeration form (road show)
@@ -197,14 +198,14 @@ const mainController = {
       res.render('advisoreventindex', {events: events})
     })
   },
-  // generate promocode for user
+  // generate promocode for user (KIV changed schema)
   CodeGenerate: function (req, res) {
     var code = voucherCodes.generate({
       prefix: 'AB',
       postfix: 'CD'
     })
     console.log(code)
-    Promo.create({
+    Code.create({
       name: 'Free Checkup',
       code: code,
       attendee: req.params.id
@@ -215,6 +216,26 @@ const mainController = {
       }
       req.flash('success', 'code made')
       return res.redirect('/admin')
+    })
+  },
+  // get promotions create page
+  getPromotionCreate: function (req, res) {
+    res.render('./promotioncreate')
+  },
+  // post route to create promotions
+  promotionsCreate: function (req, res) {
+    Promo.create({
+      name: req.body.namepromo,
+      promocodeprefix: req.body.codeprefix.toUpperCase(),
+      agencyprefix: req.body.agencyprefix.toUpperCase(),
+      validity: req.body.validdate
+    }, function (err, code) {
+      if (err) {
+        req.flash('error', 'Promotion can\'t be created')
+        return res.redirect('/admin/promotioncreate')
+      }
+      req.flash('success', 'Promotion Created')
+      return res.redirect('/admin/promotioncreate')
     })
   }
 }

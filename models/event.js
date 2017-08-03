@@ -17,22 +17,22 @@ var eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  agencyprefix: {
-    type: String,
-    required: true,
-    minlength: [2, 'Agency Prefix has to be 2 characters'],
-    maxlength: [2, 'Agency Prefix has to be 2 characters']
-  },
-  promocodeprefix: {
-    type: String,
-    required: true,
-    minlength: [2, 'Promo Prefix has to be 2 characters'],
-    maxlength: [2, 'Promo Prefix has to be 2 characters']
-  },
-  validity: {
-    type: String,
-    required: true
-  },
+  // agencyprefix: {
+  //   type: String,
+  //   required: true,
+  //   minlength: [2, 'Agency Prefix has to be 2 characters'],
+  //   maxlength: [2, 'Agency Prefix has to be 2 characters']
+  // },
+  // promocodeprefix: {
+  //   type: String,
+  //   required: true,
+  //   minlength: [2, 'Promo Prefix has to be 2 characters'],
+  //   maxlength: [2, 'Promo Prefix has to be 2 characters']
+  // },
+  // validity: {
+  //   type: String,
+  //   required: true
+  // },
   attendee: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'

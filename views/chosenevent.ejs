@@ -3,28 +3,32 @@
 <p>Repeat Sign Ups will be flagged at the top of the page, while other 1st comers are noted below</p>
 <div class="table-responsive">
   <table class="table table-hover">
-  <% vetted.forEach(function(user,i){ %>
-      <tr>
-        <th rowspan="2">
-          <%= user%>
-        </th>
-        <th>Signed Up Date</th>
-        <th>Current Date</th>
-        <th rowspan="2">
-          <form action="/admin/<%= user %>" method="post">
-            <button type="submit">Generate Code</button>
-          </form>
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <%= vettedObjs.creation_date %>
-        </td>
-        <td>
-          <%= Date() %>
-        </td>
-      </tr>
-  <% }) %>
+    <form action="/allpick" method="post">
+      <button type="button" name="allpkbtn">All Pick</button>
+      <% vetted.forEach(function(user,i){ %>
+          <tr>
+            <th rowspan="2">
+              <%= user%>
+            </th>
+            <th>Signed Up Date</th>
+            <th>Current Date</th>
+            <th rowspan="2">
+              <form action="/admin/<%= user %>" method="post">
+              <button type="submit">Generate Code</button>
+              </form>
+              <input type="checkbox" value="<%= user %>" name='allpk'>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <%= vettedObjs.creation_date %>
+            </td>
+            <td>
+              <%= Date() %>
+            </td>
+          </tr>
+      <% }) %>
+    </form>
   </table>
 </div>
 <p>Please vet through the repeat sign ups</p>

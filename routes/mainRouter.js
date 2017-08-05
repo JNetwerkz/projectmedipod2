@@ -18,11 +18,11 @@ router.use(isLoggedIn)
 router.route('/logout')
 .get(mainController.logOut)
 
-// route getting to creating event page
+// route getting to creating event index page
 router.route('/admin')
 .get(mainController.attendanceList)
 
-// route for list of events for advisor/admin to choose from
+// route for creating events
 router.route('/admin/createevent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)

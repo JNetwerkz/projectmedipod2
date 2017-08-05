@@ -20,5 +20,11 @@
     <input type="text" name="location">
   </label>
 
+  <label>Promotions
+    <% promos.forEach(function(event,i){ %>
+      <label for="promocheck"><%= event.name %><input type="checkbox" name="promocheck" value="<%= event._id %>"></label>
+    <% }) %>
+  </label>
+
   <button type="submit">Create</button>
 </form>

@@ -8,12 +8,14 @@ var promoSchema = new mongoose.Schema({
   agencyprefix: {
     type: String,
     required: true,
+    toUpperCase: true,
     minlength: [2, 'Agency Prefix has to be 2 characters'],
     maxlength: [2, 'Agency Prefix has to be 2 characters']
   },
   promocodeprefix: {
     type: String,
     required: true,
+    toUpperCase: true,
     minlength: [2, 'Promo Prefix has to be 2 characters'],
     maxlength: [2, 'Promo Prefix has to be 2 characters']
   },

@@ -19,9 +19,10 @@ var userSchema = new mongoose.Schema({
     minlength: [3, 'password must be at minimum 3 characters'],
     maxlength: [99, 'password cannot be more than 99 characters']
   },
-  is_admin: {
-    type: Boolean,
-    default: false
+  has_roles: {
+    type: String,
+    enum: ['admin', 'clinic', 'advisor'],
+    default: 'advisor'
   },
   event: [{
     type: mongoose.Schema.ObjectId,

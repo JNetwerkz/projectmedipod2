@@ -39,7 +39,13 @@ const mainController = {
   },
   // rendering create event page
   createEvent: function (req, res) {
-    res.render('./eventcreate')
+    Promo.find({}, function (err, promo) {
+      if (err) {
+        req.flash('error', 'Can\'t get promotion list')
+        res.redirect('/eventindex')
+      }
+      res.render('eventcreate', {promos: promo})
+    })
   },
   // posting create event form and creating event
   createPromo: function (req, res) {
@@ -48,21 +54,26 @@ const mainController = {
       datefrom: req.body.datefrom,
       dateto: req.body.datetill,
       location: req.body.location
-      // promocodeprefix: req.body.codeprefix,
-      // agencyprefix: req.body.agencyprefix,
-      // validity: req.body.validdate
     }, function (err, event) {
       if (err) {
         req.flash('error', 'Event Not Added')
         return res.redirect('/admin')
       }
+      // inserting events to current user
       User.findByIdAndUpdate(req.user._id, {$push: {event: event.id}}, function (err, updatedData) {
         if (err) {
           req.flash('error', 'Event Already Added')
           return res.redirect('/admin')
         }
-        req.flash('success', 'Event Added')
-        return res.redirect('/admin')
+        // inserting promo to event
+        Event.findByIdAndUpdate(event.id, {$push: {promo: {$each: req.body.promocheck}}}, function (err, updatedData) {
+          if (err) {
+            req.flash('error', 'Not able to add promo')
+            return res.redirect('/admin')
+          }
+          req.flash('success', 'Event Added')
+          return res.redirect('/admin')
+        })
       })
     })
   },
@@ -143,11 +154,11 @@ const mainController = {
         console.log(err)
         return res.redirect('/')
       }
-      console.log(listevent)
+      // console.log(listevent)
       listevent.forEach(function (event, i) {
         if (event.dateto > Date.now()) {
           nameevent = event.name
-          console.log(nameevent)
+          // console.log(nameevent)
         } else {
           console.log('event passed')
         }

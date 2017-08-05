@@ -25,5 +25,8 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "voucher-code-generator": "^1.1.1"
+  },
+  "devDependencies": {
+    "locus": "^2.0.1"
   }
 }

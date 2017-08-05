@@ -55,11 +55,6 @@ var customerSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
-  // ,
-  // event: [{
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'event'
-  // }]
 })
 // setting up models
 var Customer = mongoose.model('Customer', customerSchema)

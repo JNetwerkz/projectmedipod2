@@ -3,14 +3,6 @@ const router = express.Router()
 const mainController = require('../controller/mainController')
 const isLoggedIn = require('../middleware/isLoggedIn')
 
-// // route when you first land on web app
-// router.route('/')
-// .get(mainController.getLanding)
-
-// route when posting log in details
-// router.route('/landing')
-// .get(mainController.getLanding)
-
 router.route('/login')
 .post(mainController.logIn)
 
@@ -28,8 +20,6 @@ router.route('/logout')
 
 // route getting to creating event page
 router.route('/admin')
-  // .get(mainController.createEvent)
-  // .post(mainController.createPromo)
 .get(mainController.attendanceList)
 
 // route for list of events for advisor/admin to choose from

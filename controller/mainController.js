@@ -66,14 +66,25 @@ const mainController = {
           return res.redirect('/admin')
         }
         // inserting promo to event
-        Event.findByIdAndUpdate(event.id, {$push: {promo: {$each: req.body.promocheck}}}, function (err, updatedData) {
-          if (err) {
-            req.flash('error', 'Not able to add promo')
+        if (req.body.promocheck.length === 24) {
+          Event.findByIdAndUpdate(event.id, {$push: {promo: req.body.promocheck}}, function (err, updatedData) {
+            if (err) {
+              req.flash('error', 'Not able to add promo')
+              return res.redirect('/admin')
+            }
+            req.flash('success', 'Event Added')
             return res.redirect('/admin')
-          }
-          req.flash('success', 'Event Added')
-          return res.redirect('/admin')
-        })
+          })
+        } else {
+          Event.findByIdAndUpdate(event.id, {$push: {promo: {$each: req.body.promocheck}}}, function (err, updatedData) {
+            if (err) {
+              req.flash('error', 'Not able to add promo')
+              return res.redirect('/admin')
+            }
+            req.flash('success', 'Event Added')
+            return res.redirect('/admin')
+          })
+        }
       })
     })
   },
@@ -154,13 +165,9 @@ const mainController = {
         console.log(err)
         return res.redirect('/')
       }
-      // console.log(listevent)
       listevent.forEach(function (event, i) {
         if (event.dateto > Date.now()) {
           nameevent = event.name
-          // console.log(nameevent)
-        } else {
-          console.log('event passed')
         }
       })
       res.render('eventindex', {list: nameevent, events: listevent})
@@ -195,7 +202,6 @@ const mainController = {
           // console.log(repeatcustomerarray)
         })
       })
-      // console.log(repeatcustomerarray)
       res.render('chosenevent', {vetted: vettedcustomers, vettedObjs: repeatcustomerarray})
     })
   },
@@ -211,13 +217,16 @@ const mainController = {
   },
   // generate promocode for user (KIV changed schema)
   CodeGenerate: function (req, res) {
+    console.log(req.params)
+    // Promo.findById(req.params)
     var code = voucherCodes.generate({
       prefix: 'AB',
-      postfix: 'CD'
+      postfix: 'CD',
+      length: 5,
+      charset: voucherCodes.charset('alphanumeric')
     })
     console.log(code)
     Code.create({
-      name: 'Free Checkup',
       code: code,
       attendee: req.params.id
     }, function (err, code) {

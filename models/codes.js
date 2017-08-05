@@ -4,8 +4,7 @@ var codeSchema = new mongoose.Schema({
   code: {
     type: String,
     required: true,
-    minlength: [5, 'Code has to be at least 5 characters'],
-    maxlength: [99, 'Code cannot be more than 99 characters']
+    minlength: [5, 'Code has to be at least 5 characters']
   },
   is_redeemed: {
     type: Boolean,

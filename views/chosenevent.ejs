@@ -3,6 +3,11 @@
 <p>Repeat Sign Ups will be flagged at the top of the page, while other 1st comers are noted below</p>
 <div class="table-responsive">
   <table class="table table-hover">
+    <select class="promos" name="promos">
+      <% promo.forEach(function(onpromo,i){ %>
+        <option value="<%= onpromo._id %>"><%= onpromo.name %></option>
+      <% }) %>
+    </select>
     <form action="/allpick" method="post">
       <button type="button" name="allpkbtn">All Pick</button>
     </form>
@@ -16,7 +21,7 @@
             <th>Current Date</th>
             <th rowspan="2">
               <form action="/admin/<%= user._id %>" method="post">
-              <button type="submit">Generate Code</button>
+                <button type="submit">Generate Code</button>
               </form>
               <input type="checkbox" value="<%= user._id %>" name='allpk'>
             </th>
@@ -30,7 +35,6 @@
             </td>
           </tr>
       <% }) %>
-    </form>
   </table>
 </div>
 <p>Please vet through the repeat sign ups</p>

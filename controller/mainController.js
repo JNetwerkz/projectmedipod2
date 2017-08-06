@@ -205,8 +205,13 @@ const mainController = {
         console.log(err)
         return res.redirect('/admin')
       }
-      console.log(customers.attendees)
-      res.render('chosenevent', {list: customers.attendees})
+      Promo.find({}, function (err, promo) {
+        if (err) {
+          req.flash('error', 'Can\'t get promotion list')
+          res.redirect('/eventindex')
+        }
+        res.render('chosenevent', {list: customers.attendees, promo: promo})
+      })
     })
   },
   // advisor to choose event to create a sign up form

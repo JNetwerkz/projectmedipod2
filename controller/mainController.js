@@ -5,6 +5,7 @@ var Promo = require('../models/promo')
 var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
+var eventid = ''
 
 const mainController = {
 
@@ -195,6 +196,7 @@ const mainController = {
   // when admin chooses a listed event and to generate promocode
   chosenEvent: function (req, res) {
     // find all customers
+    eventid = req.params.id
     Event.findById(req.params.id)
     .populate({
       path: 'attendees',
@@ -226,7 +228,6 @@ const mainController = {
           if (err) {
             req.flash('error', 'Unable to vet through list')
           } else {
-            console.log(duplicates)
             res.render('chosenevent', {list: customers.attendees, promo: promo, dups: duplicates})
           }
         })
@@ -245,24 +246,30 @@ const mainController = {
   },
   // generate promocode for user (KIV changed schema)
   CodeGenerate: function (req, res) {
-    console.log(req.params)
-    var code = voucherCodes.generate({
-      prefix: 'AB',
-      postfix: 'CD',
-      length: 5,
-      charset: voucherCodes.charset('alphanumeric')
-    })
-    console.log(code)
-    Code.create({
-      code: code,
-      attendee: req.params.id
-    }, function (err, code) {
+    Promo.findByIdAndUpdate(eventid, {$push: {attendees: req.params.id}}, function (err, updatedData) {
       if (err) {
-        console.log(err)
-        req.flash('error', 'Code not created')
+        req.flash('error', 'Cannot add promo to user')
+        return res.redirect('/admin')
+      } else {
+        var code = voucherCodes.generate({
+          prefix: 'AB',
+          postfix: 'CD',
+          length: 5,
+          charset: voucherCodes.charset('alphanumeric')
+        })
+        console.log(code)
+        Code.create({
+          code: code,
+          attendee: req.params.id
+        }, function (err, code) {
+          if (err) {
+            console.log(err)
+            req.flash('error', 'Code not created')
+          }
+          req.flash('success', 'code made')
+          return res.redirect('/admin')
+        })
       }
-      req.flash('success', 'code made')
-      return res.redirect('/admin')
     })
   },
   // get promotions create page

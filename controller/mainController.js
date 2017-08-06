@@ -210,7 +210,26 @@ const mainController = {
           req.flash('error', 'Can\'t get promotion list')
           res.redirect('/eventindex')
         }
-        res.render('chosenevent', {list: customers.attendees, promo: promo})
+        // checking for duplicates
+        Customer.aggregate([
+          {$group: {
+            _id: {ic: '$ic'},
+            uniqueIds: {$addToSet: '$_id'},
+            firstnames: {$addToSet: '$firstname'},
+            lastnames: {$addToSet: '$lastname'},
+            count: {$sum: 1}
+          }},
+          {$match: {
+            count: {'$gt': 1}
+          }}
+        ], function (err, duplicates) {
+          if (err) {
+            req.flash('error', 'Unable to vet through list')
+          } else {
+            console.log(duplicates)
+            res.render('chosenevent', {list: customers.attendees, promo: promo, dups: duplicates})
+          }
+        })
       })
     })
   },

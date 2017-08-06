@@ -267,7 +267,26 @@ const mainController = {
   },
   // creating clinic with post route
   creatingclinic: function (req, res) {
-    res.send(req.body)
+    if (req.body.password !== req.body.confirmPassword) {
+      req.flash('error', 'Password does not Match')
+      res.redirect('/admin/createclinic')
+      return
+    }
+    // creating clinic account
+    User.create({
+      email: req.body.email,
+      password: req.body.password,
+      has_roles: 'clinic'
+    }, function (err, createdclinic) {
+      if (err) {
+        req.flash('error', 'Unable to create clinic')
+        return res.redirect('/admin/createclinic')
+      } else {
+        console.log(createdclinic)
+        req.flash('success', 'Created Clinic account')
+        return res.redirect('/admin/createclinic')
+      }
+    })
   }
 }
 module.exports = mainController

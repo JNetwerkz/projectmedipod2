@@ -2,10 +2,9 @@ var User = require('../models/user')
 var Event = require('../models/event')
 var Customer = require('../models/customer')
 var Promo = require('../models/promo')
-var Code = require('../models/codes')
+var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
-// const async = require('async')
 
 const mainController = {
 
@@ -113,9 +112,29 @@ const mainController = {
   },
   // Checking promo code
   verifyCode: function (req, res) {
-    // place holder till there's a customer db
-    // console.log('checking promo codes')
-    res.send(req.body.userpromo)
+    Code.find({ code: req.body.userpromo },
+    function (err, check) {
+      if (err) {
+        req.flash('error', 'Not able to find code in database')
+        res.redirect('/clinic')
+      } else {
+        if (check[0].is_redeemed) {
+          req.flash('error', 'Code already redeemed')
+          res.redirect('/clinic')
+        } else {
+          Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: req.body.dateused } }, { new: true },
+            function (err, doc) {
+              if (err) {
+                req.flash('error', 'Not able to find code in database')
+                res.redirect('/clinic')
+              } else {
+                req.flash('success', 'Code successfully redeemed')
+                res.redirect('./clinic')
+              }
+            })
+        }
+      }
+    })
   },
   // Attendee registeration form (road show)
   rdShowSignUp: function (req, res) {
@@ -140,7 +159,7 @@ const mainController = {
         console.log(err)
         return res.redirect('/attendee')
       }
-      Event.findByIdAndUpdate(req.params.id, {$push: {attendee: customer.id}}, function (err, updatedData) {
+      Event.findByIdAndUpdate(req.params.id, {$push: {attendees: customer.id}}, function (err, updatedData) {
         if (err) {
           req.flash('error', 'Customer already added into event')
           return res.redirect('/attendee')
@@ -174,35 +193,20 @@ const mainController = {
     })
   },
   // when admin chooses a listed event and to generate promocode
-  // Issue of call back for repeatcustomerarray not getting sent to rendered page
   chosenEvent: function (req, res) {
-    var repeatcustomerarray = []
-    Customer.aggregate([
-      {
-        '$group': {
-          '_id': { 'ic': '$ic' },
-          'uniqueIds': { '$addToSet': '$_id' },
-          'count': { '$sum': 1 }
-        }
-      },
-    { '$match': { 'count': { '$gt': 1 } } }
-    ], function (err, group) {
+    // find all customers
+    Event.findById(req.params.id)
+    .populate({
+      path: 'attendees',
+      model: 'Customer'
+    })
+    .exec(function (err, customers) {
       if (err) {
-        req.flash('error', 'Cannot vet through attendee list')
-        req.redirect('/attendee')
+        console.log(err)
+        return res.redirect('/admin')
       }
-      var vettedcustomers = group[0].uniqueIds
-      vettedcustomers.forEach(function (customer, i) {
-        Customer.findById(customer, function (err, users) {
-          if (err) {
-            console.log(err)
-            return
-          }
-          repeatcustomerarray.push(users)
-          // console.log(repeatcustomerarray)
-        })
-      })
-      res.render('chosenevent', {vetted: vettedcustomers, vettedObjs: repeatcustomerarray})
+      console.log(customers.attendees)
+      res.render('chosenevent', {list: customers.attendees})
     })
   },
   // advisor to choose event to create a sign up form
@@ -218,7 +222,6 @@ const mainController = {
   // generate promocode for user (KIV changed schema)
   CodeGenerate: function (req, res) {
     console.log(req.params)
-    // Promo.findById(req.params)
     var code = voucherCodes.generate({
       prefix: 'AB',
       postfix: 'CD',
@@ -257,6 +260,14 @@ const mainController = {
       req.flash('success', 'Promotion Created')
       return res.redirect('/admin/promotioncreate')
     })
+  },
+  // rendering create clinic form page
+  createclinic: function (req, res) {
+    res.render('./createclinic')
+  },
+  // creating clinic with post route
+  creatingclinic: function (req, res) {
+    res.send(req.body)
   }
 }
 module.exports = mainController

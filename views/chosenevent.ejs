@@ -6,23 +6,24 @@
     <form action="/allpick" method="post">
       <button type="button" name="allpkbtn">All Pick</button>
     </form>
-      <% vetted.forEach(function(user,i){ %>
+      <% list.forEach(function(user,i){ %>
           <tr>
             <th rowspan="2">
-              <%= user%>
+              <%= user.firstname%>
+              <%= user.lastname %>
             </th>
             <th>Signed Up Date</th>
             <th>Current Date</th>
             <th rowspan="2">
-              <form action="/admin/<%= user %>" method="post">
+              <form action="/admin/<%= user._id %>" method="post">
               <button type="submit">Generate Code</button>
               </form>
-              <input type="checkbox" value="<%= user %>" name='allpk'>
+              <input type="checkbox" value="<%= user._id %>" name='allpk'>
             </th>
           </tr>
           <tr>
             <td>
-              <%= vettedObjs.creation_date %>
+              <%= user.creation_date %>
             </td>
             <td>
               <%= Date() %>

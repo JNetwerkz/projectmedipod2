@@ -11,6 +11,13 @@ var codeSchema = new mongoose.Schema({
     required: true,
     default: false
   },
+  datecreated: {
+    type: Date,
+    default: Date.now()
+  },
+  dateredeemed: {
+    type: Date
+  },
   attendee: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'

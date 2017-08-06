@@ -32,6 +32,11 @@ router.route('/admin/promotioncreate')
 .get(mainController.getPromotionCreate)
 .post(mainController.promotionsCreate)
 
+// route to check for promo
+router.route('/admin/createclinic')
+.get(mainController.createclinic)
+.post(mainController.creatingclinic)
+
 // route for chosen event to generate code for attendees
 router.route('/admin/:id')
 .get(mainController.chosenEvent)

@@ -56,4 +56,8 @@ router.route('/attendee/:id')
 .get(mainController.rdShowSignUp)
 .post(mainController.signedUpRdShow)
 
+// route for all pick on attendees
+router.route('/allpick')
+.post(mainController.allPick)
+
 module.exports = router

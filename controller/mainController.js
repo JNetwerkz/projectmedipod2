@@ -5,7 +5,7 @@ var Promo = require('../models/promo')
 var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
-var eventid = ''
+var promoid = ''
 
 const mainController = {
 
@@ -196,7 +196,6 @@ const mainController = {
   // when admin chooses a listed event and to generate promocode
   chosenEvent: function (req, res) {
     // find all customers
-    eventid = req.params.id
     Event.findById(req.params.id)
     .populate({
       path: 'attendees',
@@ -246,7 +245,7 @@ const mainController = {
   },
   // generate promocode for user (KIV changed schema)
   CodeGenerate: function (req, res) {
-    Promo.findByIdAndUpdate(eventid, {$push: {attendees: req.params.id}}, function (err, updatedData) {
+    Promo.findByIdAndUpdate(promoid, {$push: {attendees: req.params.id}}, function (err, updatedData) {
       if (err) {
         req.flash('error', 'Cannot add promo to user')
         return res.redirect('/admin')
@@ -318,6 +317,64 @@ const mainController = {
         return res.redirect('/admin/createclinic')
       }
     })
+  },
+  allPick: function (req, res) {
+    console.log(req.body)
+    var alllist = req.body.allpk
+    console.log(req.body.allpk.length)
+    if (alllist.length !== 24) {
+      alllist.forEach(function (ea, i) {
+        Promo.findByIdAndUpdate(req.body.promos, {$push: {attendees: ea}}, function (err, updatedData) {
+          if (err) {
+            req.flash('error', 'Not able to find Promo')
+            return res.redirect('/admin')
+          } else {
+            var code = voucherCodes.generate({
+              prefix: updatedData.promocodeprefix,
+              postfix: updatedData.agencyprefix,
+              length: 5,
+              charset: voucherCodes.charset('alphanumeric')
+            })
+            console.log(code)
+            Code.create({
+              code: code,
+              attendee: alllist[i]
+            }, function (err, code) {
+              if (err) {
+                console.log(err)
+              }
+            })
+          }
+        })
+      })
+      req.flash('success', 'Code Created')
+      return res.redirect('/admin')
+    } else {
+      Promo.findByIdAndUpdate(req.body.promos, {$push: {attendees: req.body.allpk}}, function (err, updatedData) {
+        if (err) {
+          req.flash('error', 'Not able to find Promo')
+          return res.redirect('/admin')
+        } else {
+          var code = voucherCodes.generate({
+            prefix: updatedData.promocodeprefix,
+            postfix: updatedData.agencyprefix,
+            length: 5,
+            charset: voucherCodes.charset('alphanumeric')
+          })
+          console.log(code)
+          Code.create({
+            code: code,
+            attendee: req.body.allpk
+          }, function (err, code) {
+            if (err) {
+              console.log(err)
+            }
+          })
+        }
+      })
+      req.flash('success', 'Code Created')
+      return res.redirect('/admin')
+    }
   }
 }
 module.exports = mainController

@@ -335,10 +335,12 @@ const mainController = {
               length: 5,
               charset: voucherCodes.charset('alphanumeric')
             })
-            console.log(code)
+            var expires = new Date()
+            expires = expires.setDate(expires.getDate() + updatedData.validity)
             Code.create({
               code: code,
-              attendee: alllist[i]
+              attendee: alllist[i],
+              dateexpires: expires
             }, function (err, code) {
               if (err) {
                 console.log(err)
@@ -361,10 +363,12 @@ const mainController = {
             length: 5,
             charset: voucherCodes.charset('alphanumeric')
           })
-          console.log(code)
+          var expires = new Date()
+          expires = expires.setDate(expires.getDate() + updatedData.validity)
           Code.create({
             code: code,
-            attendee: req.body.allpk
+            attendee: req.body.allpk,
+            dateexpires: expires
           }, function (err, code) {
             if (err) {
               console.log(err)

@@ -18,6 +18,9 @@ var codeSchema = new mongoose.Schema({
   dateredeemed: {
     type: Date
   },
+  dateexpires: {
+    type: Date
+  },
   attendee: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'

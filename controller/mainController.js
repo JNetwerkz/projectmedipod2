@@ -243,34 +243,6 @@ const mainController = {
       res.render('advisoreventindex', {events: events})
     })
   },
-  // generate promocode for user (KIV changed schema)
-  CodeGenerate: function (req, res) {
-    Promo.findByIdAndUpdate(promoid, {$push: {attendees: req.params.id}}, function (err, updatedData) {
-      if (err) {
-        req.flash('error', 'Cannot add promo to user')
-        return res.redirect('/admin')
-      } else {
-        var code = voucherCodes.generate({
-          prefix: 'AB',
-          postfix: 'CD',
-          length: 5,
-          charset: voucherCodes.charset('alphanumeric')
-        })
-        console.log(code)
-        Code.create({
-          code: code,
-          attendee: req.params.id
-        }, function (err, code) {
-          if (err) {
-            console.log(err)
-            req.flash('error', 'Code not created')
-          }
-          req.flash('success', 'code made')
-          return res.redirect('/admin')
-        })
-      }
-    })
-  },
   // get promotions create page
   getPromotionCreate: function (req, res) {
     res.render('./promotioncreate')

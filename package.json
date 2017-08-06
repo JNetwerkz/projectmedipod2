@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.5.0",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
@@ -26,7 +25,5 @@
     "passport-local": "^1.0.0",
     "voucher-code-generator": "^1.1.1"
   },
-  "devDependencies": {
-    "locus": "^2.0.1"
-  }
+  "devDependencies": {}
 }

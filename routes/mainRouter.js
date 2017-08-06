@@ -40,7 +40,6 @@ router.route('/admin/createclinic')
 // route for chosen event to generate code for attendees
 router.route('/admin/:id')
 .get(mainController.chosenEvent)
-// .post(mainController.CodeGenerate)
 
 // route for clinic to verify code
 router.route('/clinic')

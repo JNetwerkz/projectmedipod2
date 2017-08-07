@@ -12,17 +12,17 @@ router.route('/signup')
 .get(mainController.getSignUp)
 .post(mainController.signingup)
 
+// route for road show sign up form (if doesnt work out shift below router.route('/attendee'))
+router.route('/attendee/:id')
+.get(mainController.rdShowSignUp)
+.post(mainController.signedUpRdShow)
+
 // Authentication wall everything below is locked out.
 router.use(isLoggedIn)
 
 // route for advisor to see event index
 router.route('/attendee')
 .get(mainController.advisorEventIndex)
-
-// route for road show sign up form
-router.route('/attendee/:id')
-.get(mainController.rdShowSignUp)
-.post(mainController.signedUpRdShow)
 
 // route for clinic to verify code
 router.route('/clinic')

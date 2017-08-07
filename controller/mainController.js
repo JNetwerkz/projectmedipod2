@@ -5,7 +5,6 @@ var Promo = require('../models/promo')
 var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
-var promoid = ''
 
 const mainController = {
 

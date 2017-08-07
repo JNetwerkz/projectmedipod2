@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mainController = require('../controller/mainController')
 const isLoggedIn = require('../middleware/isLoggedIn')
+const rolecheck = require('../middleware/rolecheck')
 
 router.route('/login')
 .post(mainController.logIn)
@@ -14,9 +15,26 @@ router.route('/signup')
 // Authentication wall everything below is locked out.
 router.use(isLoggedIn)
 
+// route for advisor to see event index
+router.route('/attendee')
+.get(mainController.advisorEventIndex)
+
+// route for road show sign up form
+router.route('/attendee/:id')
+.get(mainController.rdShowSignUp)
+.post(mainController.signedUpRdShow)
+
+// route for clinic to verify code
+router.route('/clinic')
+.get(mainController.clinicVerify)
+.post(mainController.verifyCode)
+
 // route to log out
 router.route('/logout')
 .get(mainController.logOut)
+
+// Checking of roles (Only admins able to access pages below)
+router.use(rolecheck)
 
 // route getting to creating event index page
 router.route('/admin')
@@ -40,20 +58,6 @@ router.route('/admin/createclinic')
 // route for chosen event to generate code for attendees
 router.route('/admin/:id')
 .get(mainController.chosenEvent)
-
-// route for clinic to verify code
-router.route('/clinic')
-.get(mainController.clinicVerify)
-.post(mainController.verifyCode)
-
-// route for advisor to see event index
-router.route('/attendee')
-.get(mainController.advisorEventIndex)
-
-// route for road show sign up form
-router.route('/attendee/:id')
-.get(mainController.rdShowSignUp)
-.post(mainController.signedUpRdShow)
 
 // route for all pick on attendees
 router.route('/allpick')

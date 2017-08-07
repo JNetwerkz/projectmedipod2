@@ -9,7 +9,11 @@
   <body>
     <% if (currentUser && currentUser.has_roles==='admin') { %>
       <% include partials/adminnav %>
-    <% } %>
+    <% } else if (currentUser && currentUser.has_roles==='advisor') { %>
+      <% include partials/advisornav %>
+    <%} else if (currentUser && currentUser.has_roles==='clinic') { %>
+      <% include partials/clinicnav %>
+    <%}%>
     <% include partials/alerts %>
     <%- body %>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

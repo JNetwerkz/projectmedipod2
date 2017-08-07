@@ -13,7 +13,16 @@
   <button type="submit">All Pick</button>
   <h2>Duplicate IC Numbers Found</h2>
   <% dups.forEach(function(dup,i){ %>
-    <h4>Duplicate IC numbers found <%= dup._id.ic %> for a <%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
+    <h4>Duplicate IC numbers found <%= dup._id.ic %></h4>
+    <br />
+    <% if (dup.count > 1) { %>
+      <% for (var i=0; i<dup.count;i++){%>
+        <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
+      <% } %>
+    <% } else { %>
+      <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
+    <% }%>
+    <br />
     <% }) %>
       <div class="table-responsive">
         <table class="table table-bordered">

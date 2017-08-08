@@ -4,6 +4,7 @@ const mainController = require('../controller/mainController')
 const isLoggedIn = require('../middleware/isLoggedIn')
 const rolecheck = require('../middleware/rolecheck')
 
+// Route for login
 router.route('/login')
 .post(mainController.logIn)
 

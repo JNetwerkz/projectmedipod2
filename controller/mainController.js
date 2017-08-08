@@ -5,6 +5,7 @@ var Promo = require('../models/promo')
 var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
+const nodemailer = require('nodemailer')
 
 const mainController = {
 
@@ -294,6 +295,7 @@ const mainController = {
     console.log(req.body)
     var alllist = req.body.allpk
     console.log(req.body.allpk.length)
+    // creating code when multiple attendees are chosen
     if (alllist.length !== 24) {
       alllist.forEach(function (ea, i) {
         Promo.findByIdAndUpdate(req.body.promos, {$push: {attendees: ea}}, function (err, updatedData) {
@@ -318,12 +320,15 @@ const mainController = {
                 console.log(err)
               }
             })
+            // add mailer here
+            mailer()
           }
         })
       })
       req.flash('success', 'Code Created')
       return res.redirect('/admin')
     } else {
+      // creating code for single chosen attendees only
       Promo.findByIdAndUpdate(req.body.promos, {$push: {attendees: req.body.allpk}}, function (err, updatedData) {
         if (err) {
           req.flash('error', 'Not able to find Promo')
@@ -346,6 +351,8 @@ const mainController = {
               console.log(err)
             }
           })
+          // add mailer here
+          mailer()
         }
       })
       req.flash('success', 'Code Created')
@@ -354,3 +361,33 @@ const mainController = {
   }
 }
 module.exports = mainController
+
+// Nodemailer script
+function mailer () {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    port: 25,
+    auth: {
+      user: 'iantest91@gmail.com',
+      pass: process.env.PASS
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  })
+
+  const HelperOptions = {
+    from: '"Ian Chong" <iantest91@gmail.com',
+    to: 'iantest91@gmail.com',
+    subject: 'Testerino',
+    text: 'Waddup my man'
+  }
+
+  transporter.sendMail(HelperOptions, (err, info) => {
+    if (err) {
+      return console.log(err)
+    }
+    console.log(info)
+    console.log('Message sent')
+  })
+}

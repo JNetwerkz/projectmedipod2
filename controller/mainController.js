@@ -152,7 +152,8 @@ const mainController = {
       contactno: req.body.contactno,
       email: req.body.email,
       dob: req.body.dob,
-      ic: req.body.ic
+      ic: req.body.ic,
+      event: req.params.id
     }, function (err, customer) {
       if (err) {
         req.flash('error', 'Customer Not Added')

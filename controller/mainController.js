@@ -137,7 +137,7 @@ const mainController = {
       }
     })
   },
-  // Attendee registeration form (road show)
+  // Attendee registeration form (road show) with redirect to expired link page with log out function
   rdShowSignUp: function (req, res) {
     Event.findById(req.params.id, function (err, event) {
       if (err) {
@@ -145,13 +145,13 @@ const mainController = {
         return res.redirect('/')
       } else {
         if (Date.now() <= event.dateto) {
+          req.logout()
           res.render('rdshow', {event: req.params})
         } else {
           res.render('./linkexpired')
         }
       }
     })
-    // res.render('rdshow', {event: req.params})
   },
   // function when posting sign up form for customer
   signedUpRdShow: function (req, res) {
@@ -179,7 +179,7 @@ const mainController = {
           return res.redirect('/attendee')
         }
         req.flash('success', 'Customer Added')
-        return res.redirect('/attendee')
+        return res.redirect('back')
       })
     })
   },

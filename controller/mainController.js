@@ -148,8 +148,26 @@ const mainController = {
         return res.redirect('/')
       } else {
         if (Date.now() <= event.dateto) {
-          req.logout()
+          // // if you log out user, advisor wont be able to render road show form (have to move these outside auth wall but beats the point of keeping it private)
+          // req.logout()
           res.render('rdshow', {event: req.params})
+        } else {
+          res.render('./linkexpired')
+        }
+      }
+    })
+  },
+  // Attendee registeration form (seminar) with redirect to expired link page with log out function
+  seminarSignUp: function (req, res) {
+    Event.findById(req.params.id, function (err, event) {
+      if (err) {
+        req.flash('error', 'Not able to find event')
+        return res.redirect('/')
+      } else {
+        if (Date.now() <= event.dateto) {
+          // // log out not needed here i think since if you are sending this as a link they wont be able to access routes after auth
+          // req.logout()
+          res.render('seminar', {event: req.params})
         } else {
           res.render('./linkexpired')
         }
@@ -169,17 +187,48 @@ const mainController = {
       email: req.body.email,
       dob: req.body.dob,
       ic: req.body.ic,
+      event: req.params.id,
+      has_attended: true
+    }, function (err, customer) {
+      if (err) {
+        req.flash('error', 'Customer Not Added')
+        console.log(err)
+        return res.redirect('back')
+      }
+      Event.findByIdAndUpdate(req.params.id, {$push: {attendees: customer.id}}, function (err, updatedData) {
+        if (err) {
+          req.flash('error', 'Customer already added into event')
+          return res.redirect('back')
+        }
+        req.flash('success', 'Customer Added')
+        return res.redirect('back')
+      })
+    })
+  },
+  // function when posting sign up form for customer
+  signedUpSeminar: function (req, res) {
+    Customer.create({
+      title: req.body.title,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      address1: req.body.address1,
+      address2: req.body.address2,
+      postalcode: req.body.postalcode,
+      contactno: req.body.contactno,
+      email: req.body.email,
+      dob: req.body.dob,
+      ic: req.body.ic,
       event: req.params.id
     }, function (err, customer) {
       if (err) {
         req.flash('error', 'Customer Not Added')
         console.log(err)
-        return res.redirect('/attendee')
+        return res.redirect('back')
       }
       Event.findByIdAndUpdate(req.params.id, {$push: {attendees: customer.id}}, function (err, updatedData) {
         if (err) {
           req.flash('error', 'Customer already added into event')
-          return res.redirect('/attendee')
+          return res.redirect('back')
         }
         req.flash('success', 'Customer Added')
         return res.redirect('back')

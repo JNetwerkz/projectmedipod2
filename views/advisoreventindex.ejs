@@ -13,8 +13,11 @@
         <th>End Date</th>
         <th>Location</th>
         <th rowspan="2">
-          <form action="/attendee/<%= event._id %>" method="get">
-            <button type="submit">Sign Up</button>
+          <form action="/attendee/roadshow/<%= event._id %>" method="get">
+            <button type="submit">Road Show</br>(Sign Up)</button>
+          </form>
+          <form action="/attendee/seminar/<%= event._id %>" method="get">
+            <button type="submit">Seminar</br>(Sign Up)</button>
           </form>
         </th>
       </tr>

@@ -5,22 +5,25 @@ var promoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  code: {
+  agencyprefix: {
     type: String,
     required: true,
-    minlength: [5, 'Code has to be at least 5 characters'],
-    maxlength: [99, 'Code cannot be more than 99 characters']
+    toUpperCase: true,
+    minlength: [2, 'Agency Prefix has to be 2 characters'],
+    maxlength: [2, 'Agency Prefix has to be 2 characters']
   },
-  is_redeemed: {
-    type: Boolean,
+  promocodeprefix: {
+    type: String,
     required: true,
-    default: false
+    toUpperCase: true,
+    minlength: [2, 'Promo Prefix has to be 2 characters'],
+    maxlength: [2, 'Promo Prefix has to be 2 characters']
   },
-  event: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'event'
-  }],
-  attendee: [{
+  validity: {
+    type: Number,
+    required: true
+  },
+  attendees: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'
   }]

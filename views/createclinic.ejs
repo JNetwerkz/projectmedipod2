@@ -1,11 +1,12 @@
-<h1>Sign Up Account</h1>
+<h1>Create Clinics</h1>
 
-<p>Sign Up portal advisors</p>
+<p>Sign Up portal for clinics</p>
 
 <div class="signup">
-  <h1>Medipod Sign Up</h1>
-  <p>Sign up for admin account or sales account</p>
-  <form action="/signup" method="post">
+  <form action="/admin/createclinic" method="post">
+    <label for="">Clinic name
+      <input type="text" name="clinicname" placeholder="Silver Cross">
+    </label>
     <label for="">Email
       <input type="text" name="email" placeholder="ian@medipod.com">
     </label>
@@ -18,4 +19,3 @@
     <button type="submit">Sign Up</button>
   </form>
 </div>
-<a href="/">Log In Here</a>

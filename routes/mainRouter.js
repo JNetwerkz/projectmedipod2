@@ -3,6 +3,8 @@ const router = express.Router()
 const mainController = require('../controller/mainController')
 const isLoggedIn = require('../middleware/isLoggedIn')
 const rolecheck = require('../middleware/rolecheck')
+const isClinic = require('../middleware/isClinic')
+const isAdvisor = require('../middleware/isAdvisor')
 
 // Route for login
 router.route('/login')
@@ -23,12 +25,12 @@ router.use(isLoggedIn)
 
 // route for advisor to see event index
 router.route('/attendee')
-.get(mainController.advisorEventIndex)
+.get(isAdvisor, mainController.advisorEventIndex)
 
 // route for clinic to verify code
 router.route('/clinic')
-.get(mainController.clinicVerify)
-.post(mainController.verifyCode)
+.get(isClinic, mainController.clinicVerify)
+.post(isClinic, mainController.verifyCode)
 
 // route to log out
 router.route('/logout')

@@ -1,0 +1,51 @@
+<h1>Seminar Registration Form</h1>
+
+<form class="/attendees/<%= event._id %>" method="post">
+  <label for="title">Title
+  <select name="title">
+    <option value="Mr">Mr</option>
+    <option value="Miss">Ms</option>
+    <option value="Mrs">Mrs</option>
+    <option value="Mdm">Mdm</option>
+  </select>
+  </label>
+
+  <label for="firstname">First Name
+    <input type="text" name="firstname">
+  </label>
+
+  <label for="lastname">Last Name
+    <input type="text" name="lastname">
+  </label>
+
+  <label for="address1">Address 1
+    <input type="text" name="address1">
+  </label>
+
+  <label for="address2">Address 2
+    <input type="text" name="address2">
+  </label>
+
+  <label for="postalcode">Postal Code
+    <input type="Number" name="postalcode">
+  </label>
+
+  <label for="contactno">Contact Number
+    <input type="tel" name="contactno">
+  </label>
+
+  <label for="email">Email
+    <input type="text" name="email">
+  </label>
+
+  <label for="dob">Date of Birth
+    <input type="date" name="dob">
+  </label>
+
+  <label for="ic">IC Number
+    <input type="text" name="ic">
+  </label>
+
+  <button type="submit">Register</button>
+  <button type="button">Cancel</button>
+</form>

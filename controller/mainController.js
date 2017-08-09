@@ -319,7 +319,15 @@ const mainController = {
                 console.log(err)
               }
             })
-            mailer(code)
+            Customer.findById(ea, function (err, customer) {
+              if (err) {
+                console.log('Customer not found')
+                return
+              } else {
+                console.log(customer)
+                mailer(customer, code)
+              }
+            })
           }
         })
       })
@@ -349,7 +357,15 @@ const mainController = {
               console.log(err)
             }
           })
-          mailer(code)
+          Customer.findById(alllist, function (err, customer) {
+            if (err) {
+              console.log('Customer not found')
+              return
+            } else {
+              console.log(customer)
+              mailer(customer, code)
+            }
+          })
         }
       })
       req.flash('success', 'Code Created')
@@ -360,7 +376,7 @@ const mainController = {
 module.exports = mainController
 
 // Nodemailer script
-function mailer (code) {
+function mailer (customer, code) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     port: 25,
@@ -376,8 +392,8 @@ function mailer (code) {
   const HelperOptions = {
     from: '"Ian Chong" <iantest91@gmail.com',
     to: 'iantest91@gmail.com',
-    subject: 'Testerino',
-    text: 'Thanks for registering for our Event, your code is ' + code
+    subject: 'Promotion Code for Event',
+    text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code
   }
 
   transporter.sendMail(HelperOptions, (err, info) => {

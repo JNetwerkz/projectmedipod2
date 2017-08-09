@@ -109,7 +109,8 @@ const mainController = {
   },
   // Rendering clinic verify promo page
   clinicVerify: function (req, res) {
-    res.render('./clinic')
+    console.log(req.user)
+    res.render('./clinic', {clinic: req.user})
   },
   // Checking promo code
   verifyCode: function (req, res) {
@@ -344,7 +345,8 @@ const mainController = {
     User.create({
       email: req.body.email,
       password: req.body.password,
-      has_roles: 'clinic'
+      has_roles: 'clinic',
+      name: req.body.clinicname
     }, function (err, createdclinic) {
       if (err) {
         req.flash('error', 'Unable to create clinic')

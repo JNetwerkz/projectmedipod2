@@ -24,6 +24,9 @@ var userSchema = new mongoose.Schema({
     enum: ['admin', 'clinic', 'advisor'],
     default: 'advisor'
   },
+  name: {
+    type: String
+  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

@@ -36,28 +36,28 @@
               <th>Signed Up Date</th>
               <th> NIRC Number</th>
               <th> Received Code</th>
-              <th> Attended</th>
+              <th> Attended Yet?</th>
               <th rowspan="2">
                 <p>Create Code</p>
                 <input type="checkbox" value="<%= user._id %>" name='allpk'>
               </th>
-</form>
-  </tr>
-  <tr>
-    <td>
-      <%= user.creation_date %>
-    </td>
-    <td>
-      <%= user.ic %>
-    </td>
-    <td>
-      <%= user.has_code %>
-    </td>
-    <td>
-      <%= user.has_attended %>
-    </td>
-  </tr>
-  <% }) %>
-    </table>
-    </div>
-    <p>Please vet through the repeat sign ups</p>
+  </form>
+    </tr>
+    <tr>
+      <td>
+        <%= user.creation_date %>
+      </td>
+      <td>
+        <%= user.ic %>
+      </td>
+      <td>
+        <%= user.has_code %>
+      </td>
+      <td>
+        <%= user.has_attended %>
+      </td>
+    </tr>
+    <% }) %>
+      </table>
+      </div>
+      <p>Please vet through the repeat sign ups</p>

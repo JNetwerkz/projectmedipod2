@@ -294,7 +294,6 @@ const mainController = {
   allPick: function (req, res) {
     console.log(req.body)
     var alllist = req.body.allpk
-    console.log(req.body.allpk.length)
     // creating code when multiple attendees are chosen
     if (alllist.length !== 24) {
       alllist.forEach(function (ea, i) {
@@ -320,8 +319,7 @@ const mainController = {
                 console.log(err)
               }
             })
-            // add mailer here
-            mailer()
+            mailer(code)
           }
         })
       })
@@ -351,8 +349,7 @@ const mainController = {
               console.log(err)
             }
           })
-          // add mailer here
-          mailer()
+          mailer(code)
         }
       })
       req.flash('success', 'Code Created')
@@ -363,7 +360,7 @@ const mainController = {
 module.exports = mainController
 
 // Nodemailer script
-function mailer () {
+function mailer (code) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     port: 25,
@@ -380,7 +377,7 @@ function mailer () {
     from: '"Ian Chong" <iantest91@gmail.com',
     to: 'iantest91@gmail.com',
     subject: 'Testerino',
-    text: 'Waddup my man'
+    text: 'Thanks for registering for our Event, your code is ' + code
   }
 
   transporter.sendMail(HelperOptions, (err, info) => {

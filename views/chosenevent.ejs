@@ -34,26 +34,30 @@
                   <%= user.lastname %>
               </th>
               <th>Signed Up Date</th>
-              <th>Current Date</th>
               <th> IC Number</th>
+              <th> Received Code</th>
+              <th> Attended</th>
               <th rowspan="2">
-                <p>Generate Code</p>
+                <p>Check for Code</p>
                 <input type="checkbox" value="<%= user._id %>" name='allpk'>
               </th>
 </form>
-</tr>
-<tr>
-  <td>
-    <%= user.creation_date %>
-  </td>
-  <td>
-    <%= Date() %>
-  </td>
-  <td>
-    <%= user.ic %>
-  </td>
-</tr>
-<% }) %>
-  </table>
-  </div>
-  <p>Please vet through the repeat sign ups</p>
+  </tr>
+  <tr>
+    <td>
+      <%= user.creation_date %>
+    </td>
+    <td>
+      <%= user.ic %>
+    </td>
+    <td>
+      <%= user.ic %>
+    </td>
+    <td>
+      <%= user.has_attended %>
+    </td>
+  </tr>
+  <% }) %>
+    </table>
+    </div>
+    <p>Please vet through the repeat sign ups</p>

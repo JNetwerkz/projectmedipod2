@@ -240,6 +240,7 @@ const mainController = {
           if (err) {
             req.flash('error', 'Unable to vet through list')
           } else {
+            console.log(customers)
             res.render('chosenevent', {list: customers.attendees, promo: promo, dups: duplicates})
           }
         })

@@ -1,69 +1,69 @@
-<h1>list of all events</h1>
-
-<h3>Ongoing Events</h3>
-<div class="table-responsive">
-  <table class="table table-hover">
-  <% events.forEach(function(event,i){ %>
-    <% if (event.dateto > Date.now()) { %>
-      <tr>
-        <th rowspan="2">
-          <%= event.name %>
-        </th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Location</th>
-        <th rowspan="2">
-          <form action="/admin/<%= event._id %>" method="get">
-            <button type="submit">More</button>
-          </form>
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <%= event.datefrom %>
-        </td>
-        <td>
-          <%= event.dateto %>
-        </td>
-        <td>
-          <%= event.location %>
-        </td>
-      </tr>
-    <% } %>
-  <% }) %>
-  </table>
-</div>
-
-<h3>Past Events</h3>
-<div class="table-responsive">
-  <table class="table table-hover">
-  <% events.forEach(function(event,i){ %>
-    <% if (event.dateto < Date.now()) { %>
-      <tr>
-        <th rowspan="2">
-          <%= event.name %>
-        </th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Location</th>
-        <th rowspan="2">
-          <form action="/admin/<%= event._id %>" method="get">
-            <button type="submit">More</button>
-          </form>
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <%= event.datefrom %>
-        </td>
-        <td>
-          <%= event.dateto %>
-        </td>
-        <td>
-          <%= event.location %>
-        </td>
-      </tr>
-    <% } %>
-  <% }) %>
-  </table>
+<div class="container-fluid">
+  <h1>Lists of All Events</h1>
+  <h3>Ongoing Events</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <% events.forEach(function(event,i){ %>
+        <% if (event.dateto > Date.now()) { %>
+          <tr>
+            <th rowspan="2">
+              <%= event.name %>
+            </th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Location</th>
+            <th rowspan="2">
+              <form action="/admin/<%= event._id %>" method="get">
+                <button type="submit" class='btn btn-primary'>More</button>
+              </form>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <%= event.datefrom %>
+            </td>
+            <td>
+              <%= event.dateto %>
+            </td>
+            <td>
+              <%= event.location %>
+            </td>
+          </tr>
+          <% } %>
+            <% }) %>
+    </table>
+  </div>
+  <h3>Past Events</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <% events.forEach(function(event,i){ %>
+        <% if (event.dateto < Date.now()) { %>
+          <tr>
+            <th rowspan="2">
+              <%= event.name %>
+            </th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Location</th>
+            <th rowspan="2">
+              <form action="/admin/<%= event._id %>" method="get">
+                <button type="submit" class='btn btn-primary'>More</button>
+              </form>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <%= event.datefrom %>
+            </td>
+            <td>
+              <%= event.dateto %>
+            </td>
+            <td>
+              <%= event.location %>
+            </td>
+          </tr>
+          <% } %>
+            <% }) %>
+    </table>
+  </div>
 </div>

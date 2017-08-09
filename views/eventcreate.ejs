@@ -1,30 +1,38 @@
-<h1>Create Event Page</h1>
-
-<p>Creat an event (either Seminar or road show)</p>
-
-<form class="/eventcreate" method="post">
-
-  <label for="eventname">Event Name
-    <input type="text" name="eventname">
-  </label>
-
-  <label for="datefrom">Event Date From
-    <input type="date" name="datefrom">
-  </label>
-
-  <label for="datetill">Event Date Till
-    <input type="date" name="datetill">
-  </label>
-
-  <label for="location">Location
-    <input type="text" name="location">
-  </label>
-
-  <label>Promotions
-    <% promos.forEach(function(event,i){ %>
-      <label for="promocheck"><%= event.name %><input type="checkbox" name="promocheck" value="<%= event._id %>"></label>
-    <% }) %>
-  </label>
-
-  <button type="submit">Create</button>
-</form>
+<div class="container-fluid">
+  <h1>Create Event Page</h1>
+  <h4>Instructions for create event form</h4>
+  <p>1) Fill in the details of your event (Road Show or Seminar)</p>
+  <p>2) Choose which promotions that would be included in this event.</p>
+  <form class="/eventcreate" method="post">
+    <div class="form-group">
+      <label for="eventname">Event Name
+        <input type="text" name="eventname" class='form-control'>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="datefrom">Event Start Date
+        <input type="date" name="datefrom" class="form-control">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="datetill">Event End Date
+        <input type="date" name="datetill" class="form-control">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="location">Location of Event
+        <input type="text" name="location" class="form-control">
+      </label>
+    </div>
+    <div class="form-group">
+      <label>Promotions
+        <% promos.forEach(function(event,i){ %>
+          <label for="promocheck"><%= event.name %>
+            <input type="checkbox" name="promocheck" value="<%= event._id %>">
+          </label>
+        <% }) %>
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>

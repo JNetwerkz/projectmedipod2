@@ -1,63 +1,63 @@
-<h1>Attendance List</h1>
-
-<p>Repeat Sign Ups will be flagged at the top of the page, while other 1st comers are noted below</p>
-<form action="/allpick" method="post">
-  <select class="promos" name="promos">
-  <% promo.forEach(function(onpromo,i){ %>
-    <option value="<%= onpromo._id %>"><%= onpromo.name %></option>
-  <% }) %>
-</select>
-  <label for="">Select All Attendees
-    <input type="checkbox" onclick="toggle(this)">
-  </label>
-  <button type="submit">Generate Code</button>
-  <h2>Duplicate IC Numbers Found</h2>
-  <% dups.forEach(function(dup,i){ %>
-    <h4>Duplicate IC numbers found <%= dup._id.ic %></h4>
-    <br />
-    <% if (dup.count > 1) { %>
-      <% for (var i=0; i<dup.count;i++){%>
-        <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
-      <% } %>
-    <% } else { %>
-      <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
-    <% }%>
-    <br />
+<div class="container-fluid">
+  <h1>Attendance List</h1>
+  <p>Repeat Sign Ups will be flagged at the top of the page</p>
+  <p>Please vet through the repeat sign ups with columns coloured red</p>
+  <form action="/allpick" method="post">
+    <select class="promos" name="promos">
+    <% promo.forEach(function(onpromo,i){ %>
+      <option value="<%= onpromo._id %>"><%= onpromo.name %></option>
     <% }) %>
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <h2>All Attendees</h2>
-          <% list.forEach(function(user,i){ %>
-            <tr>
-              <th rowspan="2">
-                <%= user.firstname%>
-                  <%= user.lastname %>
-              </th>
-              <th>Signed Up Date</th>
-              <th> NIRC Number</th>
-              <th> Received Code</th>
-              <th> Attended Yet?</th>
-              <th rowspan="2">
-                <p>Create Code</p>
-                <input type="checkbox" value="<%= user._id %>" name='allpk'>
-              </th>
+  </select>
+    <label for="">Select All Attendees
+      <input type="checkbox" onclick="toggle(this)">
+    </label>
+    <button type="submit" class="btn btn-primary">Generate Code</button>
+    <h2>Duplicate NIRC Number</h2>
+    <% dups.forEach(function(dup,i){ %>
+      <h3>Customers With NIRC number <%= dup._id.ic %></h3>
+      <% if (dup.count > 1) { %>
+        <% for (var i=0; i<dup.count;i++){%>
+          <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
+          <% } %>
+            <% } else { %>
+              <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
+              <% }%>
+                <br />
+                <% }) %>
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <h2>All Attendees</h2>
+                      <% list.forEach(function(user,i){ %>
+                        <tr>
+                          <th rowspan="2">
+                            <%= user.firstname%>
+                              <%= user.lastname %>
+                          </th>
+                          <th>Signed Up Date</th>
+                          <th> NIRC Number</th>
+                          <th> Received Code</th>
+                          <th> Attended Yet?</th>
+                          <th rowspan="2">
+                            <p>Create Code</p>
+                            <input type="checkbox" value="<%= user._id %>" name='allpk'>
+                          </th>
   </form>
-    </tr>
-    <tr>
-      <td>
-        <%= user.creation_date %>
-      </td>
-      <td>
-        <%= user.ic %>
-      </td>
-      <td>
-        <%= user.has_code %>
-      </td>
-      <td>
-        <%= user.has_attended %>
-      </td>
-    </tr>
-    <% }) %>
-      </table>
-      </div>
-      <p>Please vet through the repeat sign ups</p>
+  </tr>
+  <tr>
+    <td>
+      <%= user.creation_date %>
+    </td>
+    <td>
+      <%= user.ic %>
+    </td>
+    <td>
+      <%= user.has_code %>
+    </td>
+    <td>
+      <%= user.has_attended %>
+    </td>
+  </tr>
+  <% }) %>
+    </table>
+    </div>
+</div>

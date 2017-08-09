@@ -1,0 +1,12 @@
+*{
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, th{
+  font-family: 'Roboto Slab', serif;
+}
+
+th{
+  font-weight: bolder;
+  font-size: 1.3em;
+}

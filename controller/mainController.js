@@ -130,7 +130,7 @@ const mainController = {
                 res.redirect('/clinic')
               } else {
                 req.flash('success', 'Code successfully redeemed')
-                res.redirect('./clinic')
+                res.redirect('/clinic')
               }
             })
         }
@@ -139,7 +139,19 @@ const mainController = {
   },
   // Attendee registeration form (road show)
   rdShowSignUp: function (req, res) {
-    res.render('rdshow', {event: req.params})
+    Event.findById(req.params.id, function (err, event) {
+      if (err) {
+        req.flash('error', 'Not able to find event')
+        return res.redirect('/')
+      } else {
+        if (Date.now() <= event.dateto) {
+          res.render('rdshow', {event: req.params})
+        } else {
+          res.render('./linkexpired')
+        }
+      }
+    })
+    // res.render('rdshow', {event: req.params})
   },
   // function when posting sign up form for customer
   signedUpRdShow: function (req, res) {

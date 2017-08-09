@@ -34,11 +34,11 @@
                   <%= user.lastname %>
               </th>
               <th>Signed Up Date</th>
-              <th> IC Number</th>
+              <th> NIRC Number</th>
               <th> Received Code</th>
               <th> Attended</th>
               <th rowspan="2">
-                <p>Check for Code</p>
+                <p>Create Code</p>
                 <input type="checkbox" value="<%= user._id %>" name='allpk'>
               </th>
 </form>
@@ -51,7 +51,7 @@
       <%= user.ic %>
     </td>
     <td>
-      <%= user.ic %>
+      <%= user.has_code %>
     </td>
     <td>
       <%= user.has_attended %>

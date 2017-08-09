@@ -121,7 +121,10 @@ const mainController = {
       } else {
         if (check[0].is_redeemed) {
           req.flash('error', 'Code already redeemed')
-          res.redirect('/clinic')
+          return res.redirect('/clinic')
+        } else if (Date.now() > check[0].dateexpires) {
+          req.flash('error', 'Code has expired')
+          return res.redirect('/clinic')
         } else {
           Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: req.body.dateused } }, { new: true },
             function (err, doc) {
@@ -304,10 +307,11 @@ const mainController = {
       }
     })
   },
+  // Generating code for customer
   allPick: function (req, res) {
     console.log(req.body)
     var alllist = req.body.allpk
-    // creating code when multiple attendees are chosen
+    // Creating code when multiple attendees are chosen
     if (alllist.length !== 24) {
       alllist.forEach(function (ea, i) {
         Promo.findByIdAndUpdate(req.body.promos, {$push: {attendees: ea}}, function (err, updatedData) {
@@ -338,6 +342,7 @@ const mainController = {
                 return
               } else {
                 console.log(customer)
+                toggle(customer)
                 mailer(customer, code)
               }
             })
@@ -376,6 +381,7 @@ const mainController = {
               return
             } else {
               console.log(customer)
+              toggle(customer)
               mailer(customer, code)
             }
           })
@@ -415,5 +421,14 @@ function mailer (customer, code) {
     }
     console.log(info)
     console.log('Message sent')
+  })
+}
+
+// Toggling has_attended on customer schema to true after creating code
+function toggle (attendee) {
+  Customer.findByIdAndUpdate(attendee._id, {$set: {has_code: true}}, function (err, updateData) {
+    if (err) {
+      console.log(err)
+    }
   })
 }

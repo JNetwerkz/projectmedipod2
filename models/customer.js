@@ -55,6 +55,10 @@ var customerSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  has_code: {
+    type: Boolean,
+    default: false
+  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

@@ -13,7 +13,7 @@ const app = express()
 require('dotenv').config({ silent: true })
 
 // mongoose and database set up
-const dbURI = 'mongodb://localhost/medipod'
+const dbURI = process.env.PROD_MONGODB || 'mongodb://localhost/medipod'
 const mongoose = require('mongoose')
 mongoose.connect(dbURI, {
   useMongoClient: true

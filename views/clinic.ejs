@@ -1,12 +1,14 @@
-<h1>Verify Code Page for <%= clinic.name %></h1>
-
-<form class="/clinic" method="post">
-
-  <label for="dateused">Date of Use</label>
-  <input type="date" name="dateused">
-
-  <label for="userpromo">Promo Code</label>
-  <input type="string" name="userpromo">
-
-  <button type="submit">Verify</button>
-</form>
+<div class="container-fluid">
+  <h1>Verify Code Page for <%= clinic.name %></h1>
+  <form class="/clinic" method="post">
+    <div class="form-group">
+      <label for="dateused">Date of Use</label>
+      <input type="date" name="dateused" id="dateused">
+    </div>
+    <div class="form-group">
+      <label for="userpromo">Promo Code</label>
+      <input type="string" name="userpromo" id="userpromo">
+    </div>
+    <button type="submit" class="btn btn-primary">Verify</button>
+  </form>
+</div>

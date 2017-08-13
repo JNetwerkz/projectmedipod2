@@ -1,51 +1,67 @@
-<h1>Seminar Registration Form</h1>
-
-<form class="/attendees/<%= event._id %>" method="post">
-  <label for="title">Title
-  <select name="title">
-    <option value="Mr">Mr</option>
-    <option value="Miss">Ms</option>
-    <option value="Mrs">Mrs</option>
-    <option value="Mdm">Mdm</option>
-  </select>
-  </label>
-
-  <label for="firstname">First Name
-    <input type="text" name="firstname">
-  </label>
-
-  <label for="lastname">Last Name
-    <input type="text" name="lastname">
-  </label>
-
-  <label for="address1">Address 1
-    <input type="text" name="address1">
-  </label>
-
-  <label for="address2">Address 2
-    <input type="text" name="address2">
-  </label>
-
-  <label for="postalcode">Postal Code
-    <input type="Number" name="postalcode">
-  </label>
-
-  <label for="contactno">Contact Number
-    <input type="tel" name="contactno">
-  </label>
-
-  <label for="email">Email
-    <input type="text" name="email">
-  </label>
-
-  <label for="dob">Date of Birth
-    <input type="date" name="dob">
-  </label>
-
-  <label for="ic">NIRC Number
-    <input type="text" name="ic">
-  </label>
-
-  <button type="submit">Register</button>
-  <button type="button">Cancel</button>
-</form>
+<div class="container-fluid">
+  <h1>Seminar Registration Form</h1>
+  <form class="/attendees/<%= event._id %>" method="post" class="form-inline">
+    <div class="row">
+      <div class="form-group">
+        <label for="title">Title
+          <select name="title">
+            <option value="Mr">Mr</option>
+            <option value="Miss">Ms</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Mdm">Mdm</option>
+          </select>
+        </label>
+    </div>
+    <div class="form-group">
+      <label for="firstnamesem">First Name
+        <input type="text" name="firstname" class="form-control" id="firstnamesem" placeholder="John">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="lastnamesem">Last Name
+        <input type="text" name="lastname" class="form-control" id="lastnamesem" placeholder="Doe">
+      </label>
+    </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="address1sem">Address 1
+          <input type="text" name="address1" class="form-control" id="address1sem" placeholder="i.e. 8 Scotts Road">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="address2sem">Address 2
+          <input type="text" name="address2" class="form-control" id="address2sem" placeholder="i.e. #05-05">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="postalcodesem">Postal Code
+          <input type="Number" name="postalcode" class="form-control" id="postalcodesem" placeholder="i.e. 123456">
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="contactnosem">Contact Number
+          <input type="tel" name="contactno" class="form-control" id="contactnosem">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="emailsem">Email
+          <input type="text" name="email" class="form-control" id="emailsem">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="dobsem">Date of Birth
+          <input type="date" name="dob" class="form-control" id="dobsem">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="icsem">NIRC Number
+          <input type="text" name="ic" class="form-control" id="icsem">
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>

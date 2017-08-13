@@ -23,3 +23,8 @@ th{
   margin-bottom: 1vh;
   width: 7em !important;
 }
+
+.row{
+  margin-bottom: 1em;
+  margin-right: 2vw;
+}

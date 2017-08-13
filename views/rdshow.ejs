@@ -1,51 +1,68 @@
-<h1>Road Show Registration Form</h1>
-
-<form class="/attendees/<%= event._id %>" method="post">
-  <label for="title">Title
-  <select name="title">
-    <option value="Mr">Mr</option>
-    <option value="Miss">Ms</option>
-    <option value="Mrs">Mrs</option>
-    <option value="Mdm">Mdm</option>
-  </select>
-  </label>
-
-  <label for="firstname">First Name
-    <input type="text" name="firstname">
-  </label>
-
-  <label for="lastname">Last Name
-    <input type="text" name="lastname">
-  </label>
-
-  <label for="address1">Address 1
-    <input type="text" name="address1">
-  </label>
-
-  <label for="address2">Address 2
-    <input type="text" name="address2">
-  </label>
-
-  <label for="postalcode">Postal Code
-    <input type="Number" name="postalcode">
-  </label>
-
-  <label for="contactno">Contact Number
-    <input type="tel" name="contactno">
-  </label>
-
-  <label for="email">Email
-    <input type="text" name="email">
-  </label>
-
-  <label for="dob">Date of Birth
-    <input type="date" name="dob">
-  </label>
-
-  <label for="ic">NIRC Number
-    <input type="text" name="ic">
-  </label>
-
-  <button type="submit">Register</button>
-  <button type="button">Cancel</button>
-</form>
+<div class="container-fluid">
+  <h1>Road Show Registration Form</h1>
+  <p>Thank you for taking your time to fill in this form</p>
+  <form class="/attendees/<%= event._id %>" method="post" class="form-inline">
+    <div class="row">
+      <div class="form-group">
+        <label for="title">Title
+          <select name="title">
+            <option value="Mr">Mr</option>
+            <option value="Miss">Ms</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Mdm">Mdm</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="firstnamecustomer">First Name:
+          <input type="text" name="firstname" class="form-control" id="firstnamecustomer" placeholder="John">
+        </label>
+      </div>
+      <div class="form-group">
+      <label for="lastnamecustomer">Last Name:
+        <input type="text" name="lastname" class="form-control" id="lastnamecustomer" placeholder="Doe">
+      </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+      <label for="address1">Address 1:
+        <input type="text" name="address1" class="form-control" id="address1" placeholder="i.e. 8 Scotts Road">
+      </label>
+      </div>
+      <div class="form-group">
+      <label for="address2">Address 2:
+        <input type="text" name="address2" class="form-control" id="address2" placeholder="i.e. #05-05">
+      </label>
+      </div>
+      <div class="form-group">
+      <label for="postalcode">Postal Code:
+        <input type="Number" name="postalcode" class="form-control" id="postalcode" placeholder="i.e. 123456">
+      </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="contactno">Contact Number:
+          <input type="tel" name="contactno" class="form-control" id="contactno">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="emailcustomer">Email:
+          <input type="text" name="email" class="form-control" id="emailcustomer">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth:
+          <input type="date" name="dob" class="form-control" id="dob">
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="ic">NIRC Number:
+          <input type="text" name="ic" class="form-control" id="ic">
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>

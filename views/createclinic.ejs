@@ -1,21 +1,27 @@
-<h1>Create Clinics</h1>
-
-<p>Sign Up portal for clinics</p>
-
-<div class="signup">
+<div class="container-fluid">
+  <h1>Create Clinics</h1>
+  <p>Set Up clinic accounts here</p>
   <form action="/admin/createclinic" method="post">
-    <label for="">Clinic name
-      <input type="text" name="clinicname" placeholder="Silver Cross">
-    </label>
-    <label for="">Email
-      <input type="text" name="email" placeholder="ian@medipod.com">
-    </label>
-    <label for="signinpassword">Password
-      <input type="password" name="password">
-    </label>
-    <label for="confirmPass">Confirm Password
-      <input type="password" name="confirmPassword">
-    </label>
-    <button type="submit">Sign Up</button>
+    <div class="form-group">
+      <label for="clinicname">Clinic name
+        <input type="text" name="clinicname" placeholder="Silver Cross" class="form-control" id="clinicname">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="clinicemail">Email
+        <input type="text" name="email" placeholder="abc@slivercross.com" class="form-control" id="clinicemail">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="clinicpass">Password
+        <input type="password" name="password" id="clinicpass" class="form-control">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassclinic">Confirm Password
+        <input type="password" name="confirmPassword" id="confirmPassclinic" class="form-control">
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
   </form>
 </div>

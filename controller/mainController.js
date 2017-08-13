@@ -109,11 +109,12 @@ const mainController = {
   },
   // Rendering clinic verify promo page
   clinicVerify: function (req, res) {
-    console.log(req.user)
+    // console.log(req.user)
     res.render('./clinic', {clinic: req.user})
   },
   // Checking promo code
   verifyCode: function (req, res) {
+    console.log(req.user)
     Code.find({ code: req.body.userpromo },
     function (err, check) {
       if (err) {
@@ -127,7 +128,7 @@ const mainController = {
           req.flash('error', 'Code has expired')
           return res.redirect('/clinic')
         } else {
-          Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: req.body.dateused } }, { new: true },
+          Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: req.body.dateused, redeemed_by: req.user._id } }, { new: true },
             function (err, doc) {
               if (err) {
                 req.flash('error', 'Not able to find code in database')
@@ -310,6 +311,10 @@ const mainController = {
       res.render('advisoreventindex', {events: events})
     })
   },
+  // advisor to mark who attended the seminar after signing up online
+  eventAttendance: function (req, res) {
+    res.render('./eventattendance')
+  },
   // get promotions create page
   getPromotionCreate: function (req, res) {
     res.render('./promotioncreate')
@@ -382,7 +387,7 @@ const mainController = {
               code: code,
               attendee: alllist[i],
               dateexpires: expires
-            }, function (err, code) {
+            }, function (err, codeUpdate) {
               if (err) {
                 console.log(err)
               }
@@ -421,7 +426,7 @@ const mainController = {
             code: code,
             attendee: req.body.allpk,
             dateexpires: expires
-          }, function (err, code) {
+          }, function (err, codeUpdate) {
             if (err) {
               console.log(err)
             }
@@ -441,6 +446,38 @@ const mainController = {
       req.flash('success', 'Code Created')
       return res.redirect('/admin')
     }
+  },
+  // admin checking which clinic has redeemed what codes
+  clinicRedeem: function (req, res) {
+    User.find({has_roles: 'clinic'}, function (err, clinics) {
+      if (err) {
+        req.flash('error', 'Cannot populate clincs')
+        return res.redirect('/attendee')
+      } else {
+        Code.aggregate([
+          {$group: {
+            _id: {redeemed_by: '$redeemed_by'},
+            attendee: {$addToSet: '$attendee'},
+            code: {$addToSet: '$code'},
+            count: {$sum: 1}
+          }},
+          {$match: {
+            count: {'$gt': 1}
+          }},
+          {$sort: {
+            _id: 1
+          }}
+        ], function (err, clinicgrp) {
+          if (err) {
+            req.flash('error', 'Unable to vet through list')
+          } else {
+            console.log(clinicgrp)
+            console.log(clinics)
+            res.render('clinicredeem', {clinics: clinics, clinicgrp: clinicgrp})
+          }
+        })
+      }
+    })
   }
 }
 module.exports = mainController

@@ -1,21 +1,23 @@
-<h1>Sign Up Account</h1>
-
-<p>Sign Up portal advisors</p>
-
-<div class="signup">
+<div class="container-fluid">
   <h1>Medipod Sign Up</h1>
-  <p>Sign up for admin account or sales account</p>
+  <p>Sign Up page for advisors only</p>
   <form action="/signup" method="post">
-    <label for="">Email
-      <input type="text" name="email" placeholder="ian@medipod.com">
-    </label>
-    <label for="signinpassword">Password
-      <input type="password" name="password">
-    </label>
-    <label for="confirmPass">Confirm Password
-      <input type="password" name="confirmPassword">
-    </label>
-    <button type="submit">Sign Up</button>
+    <div class="form-group">
+      <label for="signupemail">Email:
+        <input type="text" name="email" placeholder="abc@medipod.com" class="form-control" id="signupemail">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="signinpassword">Password:
+        <input type="password" name="password" class="form-control" id="signinpassword">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="confirmPass">Confirm Password:
+        <input type="password" name="confirmPassword" id="confirmPass" class="form-control">
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
   </form>
+  <a href="/">Log In Here</a>
 </div>
-<a href="/">Log In Here</a>

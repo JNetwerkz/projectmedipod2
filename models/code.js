@@ -24,6 +24,10 @@ var codeSchema = new mongoose.Schema({
   attendee: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'
+  }],
+  redeemed_by: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'user'
   }]
 })
 // setting up models

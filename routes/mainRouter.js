@@ -15,10 +15,15 @@ router.route('/signup')
 .get(mainController.getSignUp)
 .post(mainController.signingup)
 
-// route for seminar sign up form
+// route for seminar sign up form (should we add in the log out function)
 router.route('/attendee/seminar/:id')
 .get(mainController.seminarSignUp)
 .post(mainController.signedUpSeminar)
+
+// route for road show sign up form (should we add in the log out function)
+router.route('/attendee/roadshow/:id')
+.get(mainController.rdShowSignUp)
+.post(mainController.signedUpRdShow)
 
 // Authentication wall everything below is locked out.
 router.use(isLoggedIn)
@@ -27,10 +32,9 @@ router.use(isLoggedIn)
 router.route('/attendee')
 .get(isAdvisor, mainController.advisorEventIndex)
 
-// route for road show sign up form
-router.route('/attendee/roadshow/:id')
-.get(mainController.rdShowSignUp)
-.post(mainController.signedUpRdShow)
+// route for advisor to see seminar event attendance list
+router.route('/attendee/seminar/:id/attendance')
+.get(isAdvisor, mainController.eventAttendance)
 
 // route for clinic to verify code
 router.route('/clinic')
@@ -62,6 +66,10 @@ router.route('/admin/promotioncreate')
 router.route('/admin/createclinic')
 .get(mainController.createclinic)
 .post(mainController.creatingclinic)
+
+// route for admin to check which clinic has redeemed which codes
+router.route('/admin/clinicredeem')
+.get(mainController.clinicRedeem)
 
 // route for chosen event to generate code for attendees
 router.route('/admin/:id')

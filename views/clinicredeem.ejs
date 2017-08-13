@@ -1,0 +1,16 @@
+<h1>Clinic Redemption</h1>
+
+<% clinicgrp.forEach(function(redeem,index) { %>
+  <h3><%= redeem._id.redeemed_by %></h3>
+  <% if (redeem._id.redeemed_by=='') { %>
+    <h3>Not Redeemed Yet</h3>
+  <% } %>
+  <% if (redeem.count > 1) { %>
+    <% for (var i=0; i<redeem.count;i++){%>
+      <h4><%= redeem.code[i] %></h4>
+    <% } %>
+  <% } else { %>
+    <h4><%= redeem.code[i] %></h4>
+  <% }%>
+  <br />
+<% }) %>

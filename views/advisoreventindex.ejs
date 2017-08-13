@@ -1,38 +1,44 @@
-<h1>Ongoing Events</h1>
-<p>Advisors, please choose current event that you are advising for currently </p>
-
-<div class="table-responsive">
-  <table class="table table-hover">
-  <% events.forEach(function(event,i){ %>
-    <% if (event.dateto > Date.now()) { %>
-      <tr>
-        <th rowspan="2">
+<div class="container-fluid">
+  <h1>Ongoing Events</h1>
+  <h4>Advisors, Please choose the correct sign up form for seminars or road shows and link the chosen URL</h4>
+  <h4>If marking attendance of registered customers choose seminar attendance button</h4>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <% events.forEach(function(event,i){ %>
+        <% if (event.dateto > Date.now()) { %>
+          <tr>
+          <th rowspan="2">
           <%= event.name %>
-        </th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Location</th>
-        <th rowspan="2">
-          <form action="/attendee/roadshow/<%= event._id %>" method="get">
-            <button type="submit">Road Show</br>(Sign Up)</button>
-          </form>
-          <form action="/attendee/seminar/<%= event._id %>" method="get">
-            <button type="submit">Seminar</br>(Sign Up)</button>
-          </form>
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <%= event.datefrom %>
-        </td>
-        <td>
-          <%= event.dateto %>
-        </td>
-        <td>
-          <%= event.location %>
-        </td>
-      </tr>
-    <% } %>
-  <% }) %>
-  </table>
+          </th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Location</th>
+          <th rowspan="2">
+            <form action="/attendee/roadshow/<%= event._id %>" method="get">
+            <button type="submit" class="btn btn-warning btn-advisor">Road Show</br>(Sign Up)</button>
+            </form>
+            <form action="/attendee/seminar/<%= event._id %>" method="get">
+            <button type="submit" class="btn btn-secondary btn-advisor">Seminar</br>(Sign Up)</button>
+            </form>
+            <form action="/attendee/seminar/<%= event._id %>/attendance" method="get">
+            <button type="submit" class="btn btn-primary btn-advisor">Seminar</br>Attendance</button>
+            </form>
+          </th>
+          </tr>
+          <tr>
+          <td>
+            <%= event.datefrom %>
+          </td>
+          <td>
+            <%= event.dateto %>
+          </td>
+          <td>
+            <%= event.location %>
+          </td>
+          </tr>
+        <% } %>
+      <% }) %>
+    </table>
+  </div>
 </div>

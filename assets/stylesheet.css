@@ -10,3 +10,16 @@ th{
   font-weight: bolder;
   font-size: 1.3em;
 }
+
+.container-fluid{
+  text-align: center;
+}
+
+.checkboxes{
+  margin-right: 10px;
+}
+
+.btn-advisor{
+  margin-bottom: 1vh;
+  width: 7em !important;
+}

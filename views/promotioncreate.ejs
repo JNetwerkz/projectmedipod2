@@ -1,24 +1,29 @@
-<h1>Create Promotion</h1>
-
-<p>Create a promotion that will generate code for attendees (i.e Free Full Body Checkup)</p>
-
-<form class="/eventcreatecode" method="post">
-
-  <label for="namepromo">Name of Promotion
-    <input type="text" name="namepromo">
-  </label>
-
-  <label for="codeprefix">Promo Code Prefix
-    <input type="text" name="codeprefix">
-  </label>
-
-  <label for="agencyprefix">Agency Postfix
-    <input type="text" name="agencyprefix">
-  </label>
-
-  <label for="validdate">Validity Period
-    <input type="number" name="validdate" placeholder="Number of days">
-  </label>
-
-  <button type="submit">Create</button>
-</form>
+<div class="container-fluid">
+  <h1>Create Promotion</h1>
+  <h4>Instructions for promotion create form</h4>
+  <p>1) Fill in name of promotion (i.e. Free Eye Check Up), both pre and post fixes</p>
+  <p>2) Key in the validity period (Days Only) of generated code for this promotion </p>
+  <form class="/eventcreatecode" method="post">
+    <div class="form-group">
+      <label for="namepromo">Name of Promotion
+        <input type="text" name="namepromo" class="form-control" id="namepromo" placeholder="Free Eye Check Up">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="codeprefix">Promo Code Prefix
+        <input type="text" name="codeprefix"  class="form-control" id="codeprefix" placeholder="2 Characters Only">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="agencyprefix">Agency Postfix
+        <input type="text" name="agencyprefix"  class="form-control" id="agencyprefix" placeholder="2 Characters Only">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="validdate">Validity Period
+        <input type="number" name="validdate" placeholder="Number of days" class="form-control" id="validdate">
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>

@@ -26,6 +26,10 @@ var promoSchema = new mongoose.Schema({
   attendees: [{
     type: mongoose.Schema.ObjectId,
     ref: 'customer'
+  }],
+  clinics: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'user'
   }]
 })
 // setting up models

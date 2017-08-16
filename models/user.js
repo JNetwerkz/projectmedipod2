@@ -36,12 +36,6 @@ var userSchema = new mongoose.Schema({
   address2: {
     type: String
   },
-  opening: {
-    type: String
-  },
-  closing: {
-    type: String
-  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

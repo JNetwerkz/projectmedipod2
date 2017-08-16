@@ -356,9 +356,7 @@ const mainController = {
       name: req.body.clinicname,
       contact_number: req.body.number,
       address1: req.body.clinicadd1,
-      address2: req.body.clinicadd2,
-      opening: req.body.clinicopen,
-      closing: req.body.clinicclose
+      address2: req.body.clinicadd2
     }, function (err, createdclinic) {
       if (err) {
         req.flash('error', 'Unable to create clinic')

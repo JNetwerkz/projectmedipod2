@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<div class="container-fluid form">
   <h1>Seminar Registration Form</h1>
-  <form class="/attendees/<%= event._id %>" method="post">
+  <form class="/attendees/<%= event._id %> form-inline" method="post">
     <div class="row">
       <div class="form-group">
         <label for="title">Title
@@ -13,52 +13,60 @@
         </label>
     </div>
     <div class="form-group">
-      <label for="firstnamesem">First Name
-        <input type="text" name="firstname" class="form-control" id="firstnamesem" placeholder="John">
+      <label for="firstnamesem">First Name<span class="mandatory">*</span>:
+        <input type="text" name="firstname" class="form-control" id="firstnamesem" placeholder="John" required>
       </label>
     </div>
     <div class="form-group">
-      <label for="lastnamesem">Last Name
-        <input type="text" name="lastname" class="form-control" id="lastnamesem" placeholder="Doe">
+      <label for="lastnamesem">Last Name<span class="mandatory">*</span>:
+        <input type="text" name="lastname" class="form-control" id="lastnamesem" placeholder="Doe" required>
       </label>
     </div>
     </div>
     <div class="row">
       <div class="form-group">
-        <label for="address1sem">Address 1
+        <label for="address1sem">Address 1:
           <input type="text" name="address1" class="form-control" id="address1sem" placeholder="i.e. 8 Scotts Road">
         </label>
       </div>
       <div class="form-group">
-        <label for="address2sem">Address 2
+        <label for="address2sem">Address 2:
           <input type="text" name="address2" class="form-control" id="address2sem" placeholder="i.e. #05-05">
         </label>
       </div>
       <div class="form-group">
-        <label for="postalcodesem">Postal Code
+        <label for="postalcodesem">Postal Code:
           <input type="Number" name="postalcode" class="form-control" id="postalcodesem" placeholder="i.e. 123456">
         </label>
       </div>
     </div>
     <div class="row">
       <div class="form-group">
-        <label for="contactnosem">Contact Number
-          <input type="tel" name="contactno" class="form-control" id="contactnosem">
+        <label for="contactnosem">Contact Number<span class="mandatory">*</span>:
+          <input type="tel" name="contactno" class="form-control" id="contactnosem" required>
         </label>
       </div>
       <div class="form-group">
-        <label for="emailsem">Email
-          <input type="text" name="email" class="form-control" id="emailsem">
+        <label for="emailsem">Email<span class="mandatory">*</span>:
+          <input type="text" name="email" class="form-control" id="emailsem" required>
         </label>
       </div>
       <div class="form-group">
-        <label for="dobsem">Date of Birth
-          <input type="date" name="dob" class="form-control" id="dobsem">
+        <label for="dobsem">Date of Birth<span class="mandatory">*</span>:
+          <input type="date" name="dob" class="form-control" id="dobsem" required>
         </label>
       </div>
       <div class="form-group">
-        <label for="icsem">NIRC Number
-          <input type="text" name="ic" class="form-control" id="icsem">
+        <label for="icsem">NIRC Number<span class="mandatory">*</span>:
+          <input type="text" name="ic" class="form-control" id="icsem" required>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="pdpa" class="form-control" value= true checked>
+          By submitting this registration form, you agree that we may collect, use and disclose your personal data, as provided in this entry form, for the following purposes in accordance with the Personal Data Protection Act 2012: (a)	to administer this registration, including to contact you for the administration of services in relation to this event or future marketing references.Please visit our website at for further details on our data protection policy, including how you may access and correct your personal data or withdraw consent to the collection, use or disclosure of your personal data.
         </label>
       </div>
     </div>

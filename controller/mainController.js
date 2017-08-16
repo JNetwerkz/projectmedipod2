@@ -51,6 +51,7 @@ const mainController = {
   createPromo: function (req, res) {
     Event.create({
       name: req.body.eventname,
+      subname: req.body.subeventname,
       datefrom: req.body.datefrom,
       dateto: req.body.datetill,
       location: req.body.location
@@ -109,7 +110,6 @@ const mainController = {
   },
   // Rendering clinic verify promo page
   clinicVerify: function (req, res) {
-    // console.log(req.user)
     res.render('./clinic', {clinic: req.user})
   },
   // Checking promo code
@@ -128,7 +128,7 @@ const mainController = {
           req.flash('error', 'Code has expired')
           return res.redirect('/clinic')
         } else {
-          Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: req.body.dateused, redeemed_by: req.user._id } }, { new: true },
+          Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: Date.now(), redeemed_by: req.user._id } }, { new: true },
             function (err, doc) {
               if (err) {
                 req.flash('error', 'Not able to find code in database')
@@ -190,6 +190,7 @@ const mainController = {
       dob: req.body.dob,
       ic: req.body.ic,
       event: req.params.id,
+      pdpa_consent: req.body.pdpa,
       has_attended: true
     }, function (err, customer) {
       if (err) {
@@ -220,7 +221,8 @@ const mainController = {
       email: req.body.email,
       dob: req.body.dob,
       ic: req.body.ic,
-      event: req.params.id
+      event: req.params.id,
+      pdpa_consent: req.body.pdpa
     }, function (err, customer) {
       if (err) {
         req.flash('error', 'Customer Not Added')
@@ -351,7 +353,12 @@ const mainController = {
       email: req.body.email,
       password: req.body.password,
       has_roles: 'clinic',
-      name: req.body.clinicname
+      name: req.body.clinicname,
+      contact_number: req.body.number,
+      address1: req.body.clinicadd1,
+      address2: req.body.clinicadd2,
+      opening: req.body.clinicopen,
+      closing: req.body.clinicclose
     }, function (err, createdclinic) {
       if (err) {
         req.flash('error', 'Unable to create clinic')
@@ -397,7 +404,7 @@ const mainController = {
                 console.log('Customer not found')
                 return
               } else {
-                console.log(customer)
+                // console.log(customer)
                 toggle(customer)
                 mailer(customer, code)
               }
@@ -436,7 +443,7 @@ const mainController = {
               console.log('Customer not found')
               return
             } else {
-              console.log(customer)
+              // console.log(customer)
               toggle(customer)
               mailer(customer, code)
             }

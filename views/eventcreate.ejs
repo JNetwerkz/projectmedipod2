@@ -4,6 +4,14 @@
   <p>1) Fill in the details of your event (Road Show or Seminar)</p>
   <p>2) Choose which promotions that would be included in this event</p>
   <form class="/eventcreate" method="post">
+    <h4>Promotions</h4>
+    <div class="form-group">
+      <select name="promocheck">
+        <% promos.forEach(function(event,i){ %>
+          <option value="<%= event._id %>"><%= event.name %></option>
+          <% }) %>
+        </select>
+    </div>
     <div class="form-group">
       <label for="eventname">Event Name
         <input type="text" name="eventname" class='form-control' id="eventname">
@@ -28,14 +36,6 @@
       <label for="location">Location of Event
         <input type="text" name="location" class="form-control" id="location" placeholder="Orchard">
       </label>
-    </div>
-    <h4>Promotions</h4>
-    <div class="form-group">
-      <% promos.forEach(function(event,i){ %>
-        <label for=<%= event.name %> class='checkboxes'><%= event.name%>
-          <input type="checkbox" name="promocheck" value="<%= event._id %>" id=<%= event.name %>>
-        </label>
-      <% }) %>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
   </form>

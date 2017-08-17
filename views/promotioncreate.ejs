@@ -4,12 +4,14 @@
   <p>1) Fill in name of promotion (i.e. Free Eye Check Up), both pre and post fixes</p>
   <p>2) Key in the validity period (Days Only) of generated code for this promotion </p>
   <form class="/eventcreatecode" method="post">
-    <label for="clinicchoice">Choose Clinic</label>
-    <select name="clinic" id="clinicchoice">
-      <% clinics.forEach(function(clinic,i){ %>
-        <option value="<%= clinic._id %>"><%= clinic.name %></option>
-      <% }) %>
-    </select>
+    <div class="form-group">
+      <label for="clinicchoice">Choose Clinic</label>
+      <select name="clinic" id="clinicchoice">
+        <% clinics.forEach(function(clinic,i){ %>
+          <option value="<%= clinic._id %>"><%= clinic.name %></option>
+          <% }) %>
+        </select>
+    </div>
     <div class="form-group">
       <label for="namepromo">Name of Promotion
         <input type="text" name="namepromo" class="form-control" id="namepromo" placeholder="Free Eye Check Up">

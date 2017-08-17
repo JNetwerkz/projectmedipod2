@@ -492,10 +492,10 @@ function mailer (customer, code) {
   const transporter = nodemailer.createTransport({
     pool: true,
     secure: true,
-    service: 'gmail',
-    port: 25,
+    // service: 'gmail',
+    port: 465,
     auth: {
-      user: 'iantest91@gmail.com',
+      user: 'admin@medipod.sg',
       pass: process.env.PASS
     },
     tls: {
@@ -504,8 +504,8 @@ function mailer (customer, code) {
   })
 
   const HelperOptions = {
-    from: '"Ian Chong" <iantest91@gmail.com',
-    to: 'iantest91@gmail.com',
+    from: '"Admin" <admin@medipod.sg',
+    to: customer.email,
     subject: 'Promotion Code for Event',
     text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code
   }

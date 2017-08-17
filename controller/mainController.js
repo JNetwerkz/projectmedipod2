@@ -471,16 +471,23 @@ const mainController = {
             if (err) {
               console.log(err)
             } else {
+              const options = [
+                {
+                  path: 'attendee', model: 'Customer'
+                },
+                {
+                  path: 'clinic'
+                },
+                {
+                  path: 'event'
+                }
+              ]
 
-            }
-          })
-          Customer.findById(alllist, function (err, customer) {
-            if (err) {
-              console.log('Customer not found')
-              return
-            } else {
-              toggle(customer)
-              mailer(customer, code)
+              Code.populate(codeUpdate, options, (err, foundCode) => {
+                if (err) console.error('error', err)
+                console.log('populated Code', foundCode)
+                mailer(code, updatedData, foundCode)
+              })
             }
           })
         }

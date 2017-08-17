@@ -6,6 +6,7 @@ var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
 const nodemailer = require('nodemailer')
+const xoauth2 = require('xoauth2')
 
 const mainController = {
 
@@ -178,6 +179,7 @@ const mainController = {
   },
   // function when posting sign up form for customer
   signedUpRdShow: function (req, res) {
+    console.log('signedUpRdShow', req)
     Customer.create({
       title: req.body.title,
       firstname: req.body.firstname,
@@ -489,32 +491,31 @@ module.exports = mainController
 
 // Nodemailer script
 function mailer (customer, code) {
+  console.log('creating transport')
   const transporter = nodemailer.createTransport({
-    pool: true,
-    secure: true,
-    // service: 'gmail',
-    port: 465,
+    service: 'Gmail',
     auth: {
-      user: 'admin@medipod.sg',
-      pass: process.env.PASS
-    },
-    tls: {
-      rejectUnauthorized: false
+        type: 'OAuth2',
+        user: process.env.CLIENT_EMAIL,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN
     }
   })
 
   const HelperOptions = {
-    from: '"Admin" <admin@medipod.sg',
+    from: 'medipod.master@gmail.com',
     to: customer.email,
     subject: 'Promotion Code for Event',
-    text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code
+    // text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code
+    html: `<img src="https://s-media-cache-ak0.pinimg.com/736x/ec/01/73/ec017382cad37ebe022c5c20ad3a8e25.jpg"/><p>Dear ${customer.firstname}, you suck so much.<br /><br />Your promo code is ${code}</p>`
   }
-
+  console.log('sending mail')
   transporter.sendMail(HelperOptions, (err, info) => {
     if (err) {
-      return console.log(err)
+      return console.log('sendmail error', err)
     }
-    console.log(info)
+    console.log('sendmail info', info)
     console.log('Message sent')
   })
 }

@@ -265,7 +265,8 @@ const mainController = {
   // when admin chooses a listed event and to generate promocode
   chosenEvent: function (req, res) {
     // find all customers
-    Event.findById(req.params.id)
+    var eventId = req.params.id
+    Event.findById(eventId)
     .populate({
       path: 'attendees',
       model: 'Customer'
@@ -297,7 +298,7 @@ const mainController = {
             req.flash('error', 'Unable to vet through list')
           } else {
             console.log(customers)
-            res.render('chosenevent', {list: customers.attendees, promo: promo, dups: duplicates})
+            res.render('chosenevent', {list: customers.attendees, promo: promo, dups: duplicates, eventId: eventId})
           }
         })
       })
@@ -319,7 +320,13 @@ const mainController = {
   },
   // get promotions create page
   getPromotionCreate: function (req, res) {
-    res.render('./promotioncreate')
+    User.find({has_roles: 'clinic'}, function (err, clinic) {
+      if (err) {
+        req.flash('error', 'Not able to to populate clinics')
+        res.redirect('/attendee')
+      }
+      res.render('promotioncreate', {clinics: clinic})
+    })
   },
   // post route to create promotions
   promotionsCreate: function (req, res) {
@@ -327,7 +334,8 @@ const mainController = {
       name: req.body.namepromo,
       promocodeprefix: req.body.codeprefix.toUpperCase(),
       agencyprefix: req.body.agencyprefix.toUpperCase(),
-      validity: req.body.validdate
+      validity: req.body.validdate,
+      clinic: req.body.clinic
     }, function (err, code) {
       if (err) {
         req.flash('error', 'Promotion can\'t be created')
@@ -370,7 +378,6 @@ const mainController = {
   },
   // Generating code for customer
   allPick: function (req, res) {
-    console.log(req.body)
     var alllist = req.body.allpk
     // Creating code when multiple attendees are chosen
     if (alllist.length !== 24) {
@@ -380,6 +387,7 @@ const mainController = {
             req.flash('error', 'Not able to find Promo')
             return res.redirect('/admin')
           } else {
+            console.log(updatedData)
             var code = voucherCodes.generate({
               prefix: updatedData.promocodeprefix,
               postfix: updatedData.agencyprefix,
@@ -391,7 +399,9 @@ const mainController = {
             Code.create({
               code: code,
               attendee: alllist[i],
-              dateexpires: expires
+              dateexpires: expires,
+              clinic: updatedData.clinic[0],
+              event: req.params.id
             }, function (err, codeUpdate) {
               if (err) {
                 console.log(err)
@@ -402,7 +412,6 @@ const mainController = {
                 console.log('Customer not found')
                 return
               } else {
-                // console.log(customer)
                 toggle(customer)
                 mailer(customer, code)
               }
@@ -430,7 +439,9 @@ const mainController = {
           Code.create({
             code: code,
             attendee: req.body.allpk,
-            dateexpires: expires
+            dateexpires: expires,
+            clinic: updatedData.clinic[0],
+            event: req.params.id
           }, function (err, codeUpdate) {
             if (err) {
               console.log(err)
@@ -441,7 +452,6 @@ const mainController = {
               console.log('Customer not found')
               return
             } else {
-              // console.log(customer)
               toggle(customer)
               mailer(customer, code)
             }
@@ -492,10 +502,10 @@ function mailer (customer, code) {
   const transporter = nodemailer.createTransport({
     pool: true,
     secure: true,
-    // service: 'gmail',
-    port: 465,
+    service: 'gmail',
+    port: 25,
     auth: {
-      user: 'admin@medipod.sg',
+      user: 'iantest91@gmail.com',
       pass: process.env.PASS
     },
     tls: {
@@ -504,7 +514,7 @@ function mailer (customer, code) {
   })
 
   const HelperOptions = {
-    from: '"Admin" <admin@medipod.sg',
+    from: '"Admin" <iantest91@gmail.com',
     to: customer.email,
     subject: 'Promotion Code for Event',
     text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code

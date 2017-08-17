@@ -76,7 +76,7 @@ router.route('/admin/:id')
 .get(mainController.chosenEvent)
 
 // route for all pick on attendees
-router.route('/allpick')
+router.route('/allpick/:id')
 .post(mainController.allPick)
 
 module.exports = router

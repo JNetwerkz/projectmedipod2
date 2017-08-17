@@ -27,7 +27,7 @@ var promoSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'customer'
   }],
-  clinics: [{
+  clinic: [{
     type: mongoose.Schema.ObjectId,
     ref: 'user'
   }]

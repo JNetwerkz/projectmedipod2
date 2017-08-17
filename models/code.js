@@ -28,6 +28,14 @@ var codeSchema = new mongoose.Schema({
   redeemed_by: [{
     type: mongoose.Schema.ObjectId,
     ref: 'user'
+  }],
+  clinic: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'user'
+  }],
+  event: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'event'
   }]
 })
 // setting up models

@@ -2,12 +2,12 @@
   <h1>Attendance List</h1>
   <p>Repeat Sign Ups will be flagged at the top of the page</p>
   <p>Please vet through the repeat sign ups with columns coloured red</p>
-  <form action="/allpick" method="post">
+  <form action="/allpick/<%= eventId %>" method="post">
     <select class="promos" name="promos">
-    <% promo.forEach(function(onpromo,i){ %>
-      <option value="<%= onpromo._id %>"><%= onpromo.name %></option>
-    <% }) %>
-  </select>
+      <% promo.forEach(function(onpromo,i){ %>
+        <option value="<%= onpromo._id %>"><%= onpromo.name %></option>
+      <% }) %>
+    </select>
     <label for="">Select All Attendees
       <input type="checkbox" onclick="toggle(this)">
     </label>

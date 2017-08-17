@@ -490,6 +490,8 @@ module.exports = mainController
 // Nodemailer script
 function mailer (customer, code) {
   const transporter = nodemailer.createTransport({
+    pool: true,
+    secure: true,
     service: 'gmail',
     port: 25,
     auth: {

@@ -6,7 +6,6 @@ var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
 const nodemailer = require('nodemailer')
-const xoauth2 = require('xoauth2')
 
 const mainController = {
 
@@ -68,6 +67,7 @@ const mainController = {
           return res.redirect('/admin')
         }
         // inserting promo to event
+        console.log(req.body.promocheck)
         if (req.body.promocheck.length === 24) {
           Event.findByIdAndUpdate(event.id, {$push: {promo: req.body.promocheck}}, function (err, updatedData) {
             if (err) {
@@ -505,11 +505,11 @@ function mailer (customer, code) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        type: 'OAuth2',
-        user: process.env.CLIENT_EMAIL,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: process.env.REFRESH_TOKEN
+      type: 'OAuth2',
+      user: process.env.CLIENT_EMAIL,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: process.env.REFRESH_TOKEN
     }
   })
 

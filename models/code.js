@@ -31,11 +31,11 @@ var codeSchema = new mongoose.Schema({
   }],
   clinic: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'user'
+    ref: 'User'
   }],
   event: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'event'
+    ref: 'Event'
   }]
 })
 // setting up models

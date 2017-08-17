@@ -54,7 +54,8 @@ const mainController = {
       subname: req.body.subeventname,
       datefrom: req.body.datefrom,
       dateto: req.body.datetill,
-      location: req.body.location
+      location: req.body.location,
+      promo: req.body.promocheck
     }, function (err, event) {
       if (err) {
         req.flash('error', 'Event Not Added')
@@ -66,27 +67,8 @@ const mainController = {
           req.flash('error', 'Event Already Added')
           return res.redirect('/admin')
         }
-        // inserting promo to event
-        console.log(req.body.promocheck)
-        if (req.body.promocheck.length === 24) {
-          Event.findByIdAndUpdate(event.id, {$push: {promo: req.body.promocheck}}, function (err, updatedData) {
-            if (err) {
-              req.flash('error', 'Not able to add promo')
-              return res.redirect('/admin')
-            }
-            req.flash('success', 'Event Added')
-            return res.redirect('/admin')
-          })
-        } else {
-          Event.findByIdAndUpdate(event.id, {$push: {promo: {$each: req.body.promocheck}}}, function (err, updatedData) {
-            if (err) {
-              req.flash('error', 'Not able to add promo')
-              return res.redirect('/admin')
-            }
-            req.flash('success', 'Event Added')
-            return res.redirect('/admin')
-          })
-        }
+        req.flash('success', 'Event Added')
+        return res.redirect('/admin')
       })
     })
   },
@@ -438,7 +420,7 @@ const mainController = {
           })
           var expires = new Date()
           expires = expires.setDate(expires.getDate() + updatedData.validity)
-          Code.create({
+          var codeDetails = Code.create({
             code: code,
             attendee: req.body.allpk,
             dateexpires: expires,
@@ -447,21 +429,36 @@ const mainController = {
           }, function (err, codeUpdate) {
             if (err) {
               console.log(err)
-            }
-          })
-          Customer.findById(alllist, function (err, customer) {
-            if (err) {
-              console.log('Customer not found')
-              return
             } else {
-              toggle(customer)
-              mailer(customer, code)
+              Customer.findById(alllist, function (err, customer) {
+                if (err) {
+                  console.log('Customer not found')
+                  return
+                } else {
+                  Code.findById(codeDetails._id)
+                  .populate({
+                    path: 'event',
+                    model: 'Event'
+                  })
+                  .exec(function (err, event) {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      console.log(codeDetails)
+                      console.log(event)
+                      console.log('here')
+                      toggle(customer)
+                      mailer(customer, code)
+                    }
+                  })
+                }
+              })
             }
           })
+          req.flash('success', 'Code Created')
+          return res.redirect('/admin')
         }
       })
-      req.flash('success', 'Code Created')
-      return res.redirect('/admin')
     }
   },
   // admin checking which clinic has redeemed what codes
@@ -517,7 +514,6 @@ function mailer (customer, code) {
     from: 'medipod.master@gmail.com',
     to: customer.email,
     subject: 'Promotion Code for Event',
-    // text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code
     html: `<img src="https://s-media-cache-ak0.pinimg.com/736x/ec/01/73/ec017382cad37ebe022c5c20ad3a8e25.jpg"/><p>Dear ${customer.firstname}, you suck so much.<br /><br />Your promo code is ${code}</p>`
   }
   console.log('sending mail')

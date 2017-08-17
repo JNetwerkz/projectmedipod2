@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 
+// regex for nirc
+// const nircRegex = /^[STFG]\d{7}[A-Z]$/
+
 var customerSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -14,16 +17,13 @@ var customerSchema = new mongoose.Schema({
     required: true
   },
   address1: {
-    type: String,
-    required: true
+    type: String
   },
   address2: {
-    type: String,
-    required: true
+    type: String
   },
   postalcode: {
     type: Number,
-    required: true,
     minlength: [6, 'Postal Code Number has to be 6 digits'],
     maxlength: [6, 'Postal Code Number has to be 6 digits']
   },
@@ -45,7 +45,8 @@ var customerSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: [9, 'IC Number has to be 9 characters'],
-    maxlength: [9, 'IC Number has to be 9 characters']
+    maxlength: [9, 'IC Number has to be 9 characters'],
+    // match: nircRegex
   },
   creation_date: {
     type: Date,
@@ -58,6 +59,9 @@ var customerSchema = new mongoose.Schema({
   has_code: {
     type: Boolean,
     default: false
+  },
+  pdpa_consent: {
+    type: Boolean
   },
   event: [{
     type: mongoose.Schema.ObjectId,

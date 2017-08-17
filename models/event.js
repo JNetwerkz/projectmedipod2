@@ -5,6 +5,10 @@ var eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  subname: {
+    type: String,
+    required: true
+  },
   datefrom: {
     type: Date,
     required: true

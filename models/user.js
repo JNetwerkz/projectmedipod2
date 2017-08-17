@@ -27,6 +27,15 @@ var userSchema = new mongoose.Schema({
   name: {
     type: String
   },
+  contact_number: {
+    type: Number
+  },
+  address1: {
+    type: String
+  },
+  address2: {
+    type: String
+  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

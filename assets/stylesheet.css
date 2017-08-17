@@ -11,7 +11,7 @@ th{
   font-size: 1.3em;
 }
 
-.container-fluid{
+.form{
   text-align: center;
 }
 
@@ -27,4 +27,8 @@ th{
 .row{
   margin-bottom: 1em;
   margin-right: 2vw;
+}
+
+.mandatory{
+  color: red;
 }

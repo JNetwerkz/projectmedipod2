@@ -6,6 +6,7 @@ var Code = require('../models/code')
 var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
 const nodemailer = require('nodemailer')
+const moment = require('moment')
 
 const mainController = {
 
@@ -390,16 +391,38 @@ const mainController = {
               if (err) {
                 console.log(err)
               }
+              console.log('codeUpdate', codeUpdate)
+              const options = [
+                {
+                  path: 'attendee', model: 'Customer'
+                },
+                {
+                  path: 'clinic'
+                },
+                {
+                  path: 'event'
+                }
+              ]
+
+              Code.populate(codeUpdate, options, (err, foundCode) => {
+                if (err) console.error('error', err)
+                console.log('populated Code', foundCode)
+                mailer(code, updatedData, foundCode)
+              })
+              // Code.populate(codeUpdate, options)
+              // .then((foundCode) => {
+              //   console.log('populated Code', foundCode)
+              // })
             })
-            Customer.findById(ea, function (err, customer) {
-              if (err) {
-                console.log('Customer not found')
-                return
-              } else {
-                toggle(customer)
-                mailer(customer, code)
-              }
-            })
+            // Customer.findById(ea, function (err, customer) {
+            //   if (err) {
+            //     console.log('Customer not found')
+            //     return
+            //   } else {
+            //     toggle(customer)
+            //     mailer(customer, code)
+            //   }
+            // })
           }
         })
       })
@@ -430,28 +453,22 @@ const mainController = {
             if (err) {
               console.log(err)
             } else {
-              Customer.findById(alllist, function (err, customer) {
-                if (err) {
-                  console.log('Customer not found')
-                  return
-                } else {
-                  Code.findById(codeDetails._id)
-                  .populate({
-                    path: 'event',
-                    model: 'Event'
-                  })
-                  .exec(function (err, event) {
-                    if (err) {
-                      console.log(err)
-                    } else {
-                      console.log(codeDetails)
-                      console.log(event)
-                      console.log('here')
-                      toggle(customer)
-                      mailer(customer, code)
-                    }
-                  })
+              const options = [
+                {
+                  path: 'attendee', model: 'Customer'
+                },
+                {
+                  path: 'clinic'
+                },
+                {
+                  path: 'event'
                 }
+              ]
+
+              Code.populate(codeUpdate, options, (err, foundCode) => {
+                if (err) console.error('error', err)
+                console.log('populated Code', foundCode)
+                mailer(code, updatedData, foundCode)
               })
             }
           })
@@ -497,7 +514,40 @@ const mainController = {
 module.exports = mainController
 
 // Nodemailer script
-function mailer (customer, code) {
+function mailer (code, promoData, codeData) {
+  const {
+    name: promoName
+  } = promoData
+
+  const {
+    attendee,
+    event,
+    clinic,
+    dateexpires
+  } = codeData
+
+  const momentDateExpires = moment(dateexpires).format('DD MMM YYYY')
+
+  const {
+    firstname,
+    lastname,
+    title,
+    email
+  } = attendee[0]
+
+  const {
+    name: eventName,
+    subname: eventSubName
+  } = event[0]
+
+  const {
+    name: clinicName,
+    address1: clinicAddress1,
+    address2: clinicAddress2,
+    contact_number: clinicContactNumber
+  } = clinic[0]
+
+
   console.log('creating transport')
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -511,10 +561,26 @@ function mailer (customer, code) {
   })
 
   const HelperOptions = {
-    from: 'medipod.master@gmail.com',
-    to: customer.email,
-    subject: 'Promotion Code for Event',
-    html: `<img src="https://s-media-cache-ak0.pinimg.com/736x/ec/01/73/ec017382cad37ebe022c5c20ad3a8e25.jpg"/><p>Dear ${customer.firstname}, you suck so much.<br /><br />Your promo code is ${code}</p>`
+    from: 'Medipod <medipod.master@gmail.com>',
+    to: email,
+    subject: `Promo Code for ${promoName} Event`,
+    // text: 'Dear ' + customer.firstname + ' ' + customer.lastname + ',' + ' thank you for registering for our event. Your Promo code is ' + code
+    html: ` <p>Dear ${title}. ${firstname} ${lastname},</p>
+            <br />
+            <p>Thank you for registering for our ${eventName} event.</p>
+            <p>You are entitled to a ${promoName}, valid till ${momentDateExpires}</p>
+            <br />
+            <p>Kindly contact the clinic to fix an appointment.</p>
+            <p><strong>${clinicName}</strong></p>
+            <p>${clinicAddress1}</p>
+            <p>${clinicAddress2}</p>
+            <p>${clinicContactNumber}</p>
+            <br />
+            <p>Your Promo Code is <span style="font-size: 1.5em; font-weight: bold">${code}</span></p>
+            <br />
+            <p><i>Sincerely,</i></p>
+            <p>Medipod</p>
+          `
   }
   console.log('sending mail')
   transporter.sendMail(HelperOptions, (err, info) => {
@@ -523,6 +589,7 @@ function mailer (customer, code) {
     }
     console.log('sendmail info', info)
     console.log('Message sent')
+    toggle(attendee)
   })
 }
 

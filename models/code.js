@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+// const autopopulate = require('mongoose-autopopulate')
 
 var codeSchema = new mongoose.Schema({
   code: {
@@ -23,22 +24,26 @@ var codeSchema = new mongoose.Schema({
   },
   attendee: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'customer'
+    ref: 'Customer'
   }],
   redeemed_by: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'user'
+    ref: 'User'
   }],
   clinic: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'user'
+    ref: 'User'
   }],
   event: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'event'
+    ref: 'Event'
   }]
 })
+
+// codeSchema.plugin(autopopulate)
+
 // setting up models
+
 var Code = mongoose.model('Code', codeSchema)
 
 module.exports = Code

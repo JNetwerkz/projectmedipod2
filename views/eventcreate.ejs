@@ -6,7 +6,7 @@
   <form class="/eventcreate" method="post">
     <div class="form-group">
       <label for="eventname">Event Name
-        <input type="text" name="eventname" class='form-control' id="eventname">
+        <input required type="text" name="eventname" class='form-control' id="eventname">
       </label>
     </div>
     <div class="form-group">
@@ -33,7 +33,7 @@
     <div class="form-group">
       <% promos.forEach(function(event,i){ %>
         <label for=<%= event.name %> class='checkboxes'><%= event.name%>
-          <input type="checkbox" name="promocheck" value="<%= event._id %>" id=<%= event.name %>>
+          <input required type="checkbox" name="promocheck" value="<%= event._id %>" id=<%= event.name %>>
         </label>
       <% }) %>
     </div>

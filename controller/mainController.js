@@ -365,7 +365,6 @@ const mainController = {
     var alllist = req.body.allpk
     // Creating code when multiple attendees are chosen
     if (Array.isArray(alllist)) {
-    // if (alllist.length !== 24) {
       alllist.forEach(function (ea, i) {
         Promo.findByIdAndUpdate(req.body.promos, {$push: {attendees: ea}}, function (err, updatedData) {
           if (err) {

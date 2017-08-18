@@ -1,79 +1,113 @@
 <div class="container-fluid form">
   <h1>Road Show Registration Form</h1>
   <p>Thank you for taking your time to fill in this form</p>
-  <form class="/attendees/<%= event._id %> form-inline" method="post">
-    <div class="row">
-      <div class="form-group">
-        <label for="title">Title
-          <select name="title">
+  <div class="container">
+    <form method="post">
+    <!-- <form class="/attendees/<%= event._id %>" method="post"> -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="title">Title</label>
+        <div class="col-sm-9">
+          <select class="form-control" name="title">
             <option value="Mr">Mr</option>
             <option value="Miss">Ms</option>
             <option value="Mrs">Mrs</option>
             <option value="Mdm">Mdm</option>
           </select>
-        </label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="firstnamecustomer">First Names<span class="mandatory">*</span>:
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="firstnamecustomer">
+          First Name
+          <span class="mandatory">*</span>
+        </label>
+        <div class="col-sm-9">
           <input type="text" name="firstname" class="form-control" id="firstnamecustomer" placeholder="John" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="lastnamecustomer">Last Name
+          <span class="mandatory">*</span>
         </label>
+        <div class="col-sm-9">
+          <input type="text" name="lastname" class="form-control" id="lastnamecustomer" placeholder="Doe" required>
+        </div>
       </div>
-      <div class="form-group">
-      <label for="lastnamecustomer">Last Name<span class="mandatory">*</span>:
-        <input type="text" name="lastname" class="form-control" id="lastnamecustomer" placeholder="Doe" required>
-      </label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group">
-      <label for="address1">Address 1:
-        <input type="text" name="address1" class="form-control" id="address1" placeholder="i.e. 8 Scotts Road">
-      </label>
-      </div>
-      <div class="form-group">
-      <label for="address2">Address 2:
-        <input type="text" name="address2" class="form-control" id="address2" placeholder="i.e. #05-05">
-      </label>
-      </div>
-      <div class="form-group">
-      <label for="postalcode">Postal Code:
-        <input type="Number" name="postalcode" class="form-control" id="postalcode" placeholder="i.e. 123456">
-      </label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <label for="contactno">Contact Number<span class="mandatory">*</span>:
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="contactno">Contact Number
+          <span class="mandatory">*</span>
+        </label>
+        <div class="col-sm-9">
           <input type="tel" name="contactno" class="form-control" id="contactno" required>
-        </label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="emailcustomer">Email<span class="mandatory">*</span>:
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="emailcustomer">Email
+          <span class="mandatory">*</span>
+        </label>
+        <div class="col-sm-9">
           <input type="text" name="email" class="form-control" id="emailcustomer" required>
-        </label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="dob">Date of Birth<span class="mandatory">*</span>:
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="dob">Date of Birth
+          <span class="mandatory">*</span>
+        </label>
+        <div class="col-sm-9">
           <input type="date" name="dob" class="form-control" id="dob" required>
-        </label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="ic">NIRC Number<span class="mandatory">*</span>:
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="ic">NIRC Number
+          <span class="mandatory">*</span>
+        </label>
+        <div class="col-sm-9">
           <input type="text" name="ic" class="form-control" id="ic" required>
-        </label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <label>
-          <input type="checkbox" name="pdpa" class="form-control" value= true checked>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="address1">Address 1 </label>
+        <div class="col-sm-9">
+          <input type="text" name="address1" class="form-control" id="address1" placeholder="i.e. 8 Scotts Road">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="address2">Address 2 </label>
+        <div class="col-sm-9">
+          <input type="text" name="address2" class="form-control" id="address2" placeholder="i.e. #05-05">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right" for="postalcode">Postal Code </label>
+        <div class="col-sm-9">
+          <input type="Number" name="postalcode" class="form-control" id="postalcode" placeholder="i.e. 123456">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-1">
+          <input type="checkbox" name="pdpa" value= true checked>
+        </div>
+        <div class="col-sm-11">
           By submitting this registration form, you agree that we may collect, use and disclose your personal data, as provided in this entry form, for the following purposes in accordance with the Personal Data Protection Act 2012: (a)	to administer this registration, including to contact you for the administration of services in relation to this event or future marketing references.
-        </label>
+        </div>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
+      <div class="form-group row">
+          <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </form>
+  </div>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
 </div>
+
 <div class="navbar navbar-default navbar-fixed-bottom">
   <div class="container">
     <p class="navbar-text pull-right">This form is powered by <a href="https://www.jnetwerkzsolution.sg" target="_blank"><b>J-Netwerkz Solution</b></a></p>

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 // regex for nirc
-// const nircRegex = /^[STFG]\d{7}[A-Z]$/
+const nircRegex = /^[STFG]\d{7}[A-Z]$/
 
 var customerSchema = new mongoose.Schema({
   title: {
@@ -46,7 +46,7 @@ var customerSchema = new mongoose.Schema({
     required: true,
     minlength: [9, 'IC Number has to be 9 characters'],
     maxlength: [9, 'IC Number has to be 9 characters'],
-    // match: nircRegex
+    match: nircRegex
   },
   creation_date: {
     type: Date,

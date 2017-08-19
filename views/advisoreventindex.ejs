@@ -8,12 +8,8 @@
       <% events.forEach(function(event,i){ %>
         <% if (event.dateto > Date.now()) { %>
           <tr>
-          <th rowspan="2">
-          <%= event.name %>
-          </th>
-          <th rowspan="2">
-            <%= event.subname %>
-          </th>
+          <th>Event Name</th>
+          <th>Topic of Talk</th>
           <th>Start Date</th>
           <th>End Date</th>
           <th>Location</th>
@@ -31,10 +27,16 @@
           </tr>
           <tr>
           <td>
-            <%= event.datefrom %>
+            <%= event.name %>
           </td>
           <td>
-            <%= event.dateto %>
+            <%= event.subname %>
+          </td>
+          <td>
+            <%= moment(event.datefrom).format('DD MMM YYYY') %>
+          </td>
+          <td>
+            <%= moment(event.dateto).format('DD MMM YYYY') %>
           </td>
           <td>
             <%= event.location %>

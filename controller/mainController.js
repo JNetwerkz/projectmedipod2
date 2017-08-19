@@ -244,7 +244,7 @@ const mainController = {
           nameevent = event.name
         }
       })
-      res.render('eventindex', {list: nameevent, events: listevent})
+      res.render('eventindex', {list: nameevent, events: listevent, moment: moment})
     })
   },
   // when admin chooses a listed event and to generate promocode
@@ -296,7 +296,7 @@ const mainController = {
         req.flash('error', 'Can\'t populate events list')
         res.redirect('/attendee')
       }
-      res.render('advisoreventindex', {events: events})
+      res.render('advisoreventindex', {events: events, moment: moment})
     })
   },
   // advisor to mark who attended the seminar after signing up online
@@ -409,20 +409,7 @@ const mainController = {
                 console.log('populated Code', foundCode)
                 mailer(code, updatedData, foundCode)
               })
-              // Code.populate(codeUpdate, options)
-              // .then((foundCode) => {
-              //   console.log('populated Code', foundCode)
-              // })
             })
-            // Customer.findById(ea, function (err, customer) {
-            //   if (err) {
-            //     console.log('Customer not found')
-            //     return
-            //   } else {
-            //     toggle(customer)
-            //     mailer(customer, code)
-            //   }
-            // })
           }
         })
       })
@@ -443,7 +430,7 @@ const mainController = {
           })
           var expires = new Date()
           expires = expires.setDate(expires.getDate() + updatedData.validity)
-          var codeDetails = Code.create({
+          Code.create({
             code: code,
             attendee: req.body.allpk,
             dateexpires: expires,
@@ -546,7 +533,6 @@ function mailer (code, promoData, codeData) {
     address2: clinicAddress2,
     contact_number: clinicContactNumber
   } = clinic[0]
-
 
   console.log('creating transport')
   const transporter = nodemailer.createTransport({

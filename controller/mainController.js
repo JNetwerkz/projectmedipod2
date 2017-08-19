@@ -349,7 +349,8 @@ const mainController = {
       name: req.body.clinicname,
       contact_number: req.body.number,
       address1: req.body.clinicadd1,
-      address2: req.body.clinicadd2
+      address2: req.body.clinicadd2,
+      postalcode: req.body.postalcode
     }, function (err, createdclinic) {
       if (err) {
         req.flash('error', 'Unable to create clinic')
@@ -531,6 +532,7 @@ function mailer (code, promoData, codeData) {
     name: clinicName,
     address1: clinicAddress1,
     address2: clinicAddress2,
+    postalcode: clinicPostal,
     contact_number: clinicContactNumber
   } = clinic[0]
 
@@ -560,6 +562,7 @@ function mailer (code, promoData, codeData) {
             <p><strong>${clinicName}</strong></p>
             <p>${clinicAddress1}</p>
             <p>${clinicAddress2}</p>
+            <p>${clinicPostal}</p>
             <p>${clinicContactNumber}</p>
             <br />
             <p>Your Promo Code is <span style="font-size: 1.5em; font-weight: bold">${code}</span></p>

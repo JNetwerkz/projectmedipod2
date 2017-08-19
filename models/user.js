@@ -36,6 +36,9 @@ var userSchema = new mongoose.Schema({
   address2: {
     type: String
   },
+  postalcode: {
+    type: Number
+  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

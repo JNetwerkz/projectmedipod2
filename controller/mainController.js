@@ -524,8 +524,7 @@ function mailer (code, promoData, codeData) {
   } = attendee[0]
 
   const {
-    name: eventName,
-    subname: eventSubName
+    name: eventName
   } = event[0]
 
   const {

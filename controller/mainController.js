@@ -108,7 +108,7 @@ const mainController = {
         if (check[0].is_redeemed) {
           req.flash('error', 'Code already redeemed')
           return res.redirect('/clinic')
-        } else if (Date.now() > check[0].dateexpires) {
+        } else if (moment().format('DD MMM YYYY') > moment(check[0].dateexpires).format('DD MMM YYYY')) {
           req.flash('error', 'Code has expired')
           return res.redirect('/clinic')
         } else {
@@ -133,7 +133,7 @@ const mainController = {
         req.flash('error', 'Not able to find event')
         return res.redirect('/')
       } else {
-        if (Date.now() <= event.dateto) {
+        if (moment().format('DD MMM YYYY') <= moment(event.dateto).format('DD MMM YYYY')) {
           // // if you log out user, advisor wont be able to render road show form (have to move these outside auth wall but beats the point of keeping it private)
           // req.logout()
           res.render('rdshow', {event: req.params})
@@ -150,7 +150,7 @@ const mainController = {
         req.flash('error', 'Not able to find event')
         return res.redirect('/')
       } else {
-        if (Date.now() <= event.dateto) {
+        if (moment().format('DD MMM YYYY') <= moment(event.dateto).format('DD MMM YYYY')) {
           // // log out not needed here i think since if you are sending this as a link they wont be able to access routes after auth
           // req.logout()
           res.render('seminar', {event: req.params})
@@ -240,7 +240,7 @@ const mainController = {
         return res.redirect('/')
       }
       listevent.forEach(function (event, i) {
-        if (event.dateto > Date.now()) {
+        if (moment(event.dateto).format('DD MMM YYYY') >= moment().format('DD MMM YYYY')) {
           nameevent = event.name
         }
       })

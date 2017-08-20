@@ -4,7 +4,7 @@
   <div class="table-responsive">
     <table class="table table-bordered">
       <% events.forEach(function(event,i){ %>
-        <% if (event.dateto > Date.now()) { %>
+        <% if (moment(event.dateto).format('DD MMM YYYY') >= moment().format('DD MMM YYYY')) { %>
           <tr>
             <th>Event Name</th>
             <th>Topic of Talk</th>
@@ -42,7 +42,7 @@
   <div class="table-responsive">
     <table class="table table-bordered">
       <% events.forEach(function(event,i){ %>
-        <% if (event.dateto < Date.now()) { %>
+        <% if (moment(event.dateto).format('DD MMM YYYY') < moment().format('DD MMM YYYY')) { %>
           <tr>
             <th>Event Name</th>
             <th>Topic of Talk</th>

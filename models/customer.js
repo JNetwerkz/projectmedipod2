@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 // regex for nirc
-const nircRegex = /^[STFG]\d{7}[A-Z]$/
+const nircRegex = /^[STFGstfg]\d{7}[A-Za-z]$/
 
 var customerSchema = new mongoose.Schema({
   title: {

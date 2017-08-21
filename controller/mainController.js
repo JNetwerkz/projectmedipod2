@@ -162,7 +162,8 @@ const mainController = {
   },
   // function when posting sign up form for customer
   signedUpRdShow: function (req, res) {
-    console.log('signedUpRdShow', req)
+    var icString = req.body.ic.toUpperCase()
+    console.log(icString)
     Customer.create({
       title: req.body.title,
       firstname: req.body.firstname,
@@ -173,7 +174,7 @@ const mainController = {
       contactno: req.body.contactno,
       email: req.body.email,
       dob: req.body.dob,
-      ic: req.body.ic,
+      ic: icString,
       event: req.params.id,
       pdpa_consent: req.body.pdpa,
       has_attended: true

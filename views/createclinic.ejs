@@ -2,7 +2,7 @@
   <h1>Create Clinics</h1>
   <p>Set Up clinic accounts here</p>
   <div class="container">
-  <form action="/admin/createclinic" method="post">
+  <form action="/admin/createclinic" method="post" data-parsley-validate="">
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicname">Clinic name <span class="mandatory">*</span> :
       </label>
@@ -14,14 +14,14 @@
       <label class="col-sm-3 col-form-label text-right" for="clinicemail">Email <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="email" placeholder="abc@clinic.com" class="form-control" id="clinicemail" required>
+        <input type="text" name="email" placeholder="abc@clinic.com" class="form-control" id="clinicemail" required data-parsley-type="email">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicnum">Clinic Phone Number <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="number" class="form-control" id="clinicnum" required>
+        <input type="text" name="number" class="form-control" id="clinicnum" required data-parsley-length="[8,8]">
       </div>
     </div>
     <div class="form-group row">
@@ -42,7 +42,7 @@
       <label class="col-sm-3 col-form-label text-right" for="clinicpostal">Postal Code <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="number" name="postalcode" placeholder="123456" class="form-control" id="clinicpostal" required>
+        <input type="number" name="postalcode" placeholder="123456" class="form-control" id="clinicpostal" required data-parsley-length="[6,6]">
       </div>
     </div>
     <div class="form-group row">
@@ -56,7 +56,7 @@
       <label class="col-sm-3 col-form-label text-right" for="confirmPassclinic">Confirm Password <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="password" name="confirmPassword" id="confirmPassclinic" class="form-control" required>
+        <input type="password" name="confirmPassword" id="confirmPassclinic" class="form-control" required data-parsley-equalto="#clinicpass">
       </div>
     </div>
     <div class="row">

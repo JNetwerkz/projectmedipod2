@@ -21,7 +21,7 @@
           <span class="mandatory">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" name="firstname" class="form-control" id="firstnamecustomer" placeholder="John" data-parsley-required="true">
+          <input type="text" name="firstname" class="form-control" id="firstnamecustomer" placeholder="John" data-parsley-required="true" data-parsley-error-message="First Name is required">
         </div>
       </div>
       <div class="form-group row">
@@ -29,7 +29,8 @@
           <span class="mandatory">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" name="lastname" class="form-control" id="lastnamecustomer" placeholder="Doe" data-parsley-required="true">
+          <input type="text" name="lastname" class="form-control" id="lastnamecustomer" placeholder="Doe" data-parsley-required="true"
+          data-parsley-error-message="Last Name is required">
         </div>
       </div>
 
@@ -38,7 +39,7 @@
           <span class="mandatory">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="tel" name="contactno" class="form-control" id="contactno" data-parsley-required="true" data-parsley-type="number" data-parsley-length="[8,8]">
+          <input type="tel" name="contactno" class="form-control" id="contactno" data-parsley-required="true" data-parsley-type="number" data-parsley-length="[8,8]" data-parsley-error-message="Please enter contact number (8 Digits)">
         </div>
       </div>
 
@@ -47,7 +48,7 @@
           <span class="mandatory">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" name="email" class="form-control" id="emailcustomer" data-parsley-required="true" data-parsley-type="email">
+          <input type="text" name="email" class="form-control" id="emailcustomer" data-parsley-required="true" data-parsley-type="email" data-parsley-error-message="Email address required">
         </div>
       </div>
 
@@ -56,7 +57,7 @@
           <span class="mandatory">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="date" name="dob" class="form-control" id="dob" data-parsley-required="true">
+          <input type="date" name="dob" class="form-control" id="dob" data-parsley-required="true" data-parsley-error-message="Date of Birth required">
         </div>
       </div>
 
@@ -65,7 +66,8 @@
           <span class="mandatory">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" name="ic" class="form-control" id="ic" data-parsley-required="true" data-parsley-pattern="/^[STFGstfg]\d{7}[A-Za-z]$/">
+          <input type="text" name="ic" class="form-control" id="ic" data-parsley-required="true" data-parsley-pattern="/^[STFGstfg]\d{7}[A-Za-z]$/"
+          data-parsley-error-message="Please enter valid NIRC/ID number">
         </div>
       </div>
 

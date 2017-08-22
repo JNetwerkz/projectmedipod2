@@ -7,42 +7,42 @@
       <label class="col-sm-3 col-form-label text-right" for="clinicname">Clinic name <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="clinicname" placeholder="ABC Clinic" class="form-control" id="clinicname" required>
+        <input type="text" name="clinicname" placeholder="ABC Clinic" class="form-control" id="clinicname" required data-parsley-error-message="Name of Clinic required">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicemail">Email <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="email" placeholder="abc@clinic.com" class="form-control" id="clinicemail" required data-parsley-type="email">
+        <input type="text" name="email" placeholder="abc@clinic.com" class="form-control" id="clinicemail" required data-parsley-type="email" data-parsley-error-message="Email of clinic is required">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicnum">Clinic Phone Number <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="number" class="form-control" id="clinicnum" required data-parsley-length="[8,8]">
+        <input type="text" name="number" class="form-control" id="clinicnum" required data-parsley-length="[8,8]" data-parsley-error-message=" Please enter clinic contact number (8 Digits)">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicadd1">Address 1 <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="clinicadd1" placeholder="7 Claymore Hill" class="form-control" id="clinicadd1" required>
+        <input type="text" name="clinicadd1" placeholder="7 Claymore Hill" class="form-control" id="clinicadd1" required data-parsley-error-message="Address of clinic required">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicadd2">Address 2 <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="text" name="clinicadd2" placeholder="#01-10" class="form-control" id="clinicadd2" required>
+        <input type="text" name="clinicadd2" placeholder="#01-10" class="form-control" id="clinicadd2" required data-parsley-error-message="Address of clinic required">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label text-right" for="clinicpostal">Postal Code <span class="mandatory">*</span> :
       </label>
         <div class="col-sm-9">
-        <input type="number" name="postalcode" placeholder="123456" class="form-control" id="clinicpostal" required data-parsley-length="[6,6]">
+        <input type="number" name="postalcode" placeholder="123456" class="form-control" id="clinicpostal" required data-parsley-length="[6,6]" data-parsley-error-message="Please enter valid postal code (6 Digits)">
       </div>
     </div>
     <div class="form-group row">

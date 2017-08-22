@@ -3,10 +3,11 @@
   <h4>Instructions for promotion create form</h4>
   <p>1) Fill in name of promotion (i.e. Free Eye Check Up), both pre and post fixes</p>
   <p>2) Key in the validity period (Days Only) of generated code for this promotion </p>
-  <form class="/eventcreatecode" method="post">
+  <%# <form action="/eventcreatecode" method="post" data-parsley-validate="">%>
+  <form method="post" data-parsley-validate="">
     <div class="form-group">
       <label for="clinicchoice">Choose Clinic</label>
-      <select name="clinic" id="clinicchoice">
+      <select name="clinic" id="clinicchoice" required=''>
         <% clinics.forEach(function(clinic,i){ %>
           <option value="<%= clinic._id %>"><%= clinic.name %></option>
           <% }) %>
@@ -19,12 +20,12 @@
     </div>
     <div class="form-group">
       <label for="codeprefix">Promo Code Prefix <span class="mandatory">*</span> :
-        <input type="text" name="codeprefix"  class="form-control" id="codeprefix" placeholder="5 Characters Max" required>
+        <input type="text" name="codeprefix"  class="form-control" id="codeprefix" placeholder="5 Characters Max" required maxlength="5">
       </label>
     </div>
     <div class="form-group">
       <label for="agencyprefix">Agency Postfix <span class="mandatory">*</span> :
-        <input type="text" name="agencyprefix"  class="form-control" id="agencyprefix" placeholder="5 Characters Max" required>
+        <input type="text" name="agencyprefix"  class="form-control" id="agencyprefix" placeholder="5 Characters Max" required maxlength="5">
       </label>
     </div>
     <div class="form-group">

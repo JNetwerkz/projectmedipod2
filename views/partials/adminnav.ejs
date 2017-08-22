@@ -2,16 +2,21 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a href="/admin" class="navbar-brand">Medipod</a>
+      <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#admindropdown">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
-    <div>
+    <div class="collapse navbar-collapse" id="admindropdown">
       <ul class="nav navbar-nav">
         <li><a href="/admin/createclinic" class="navItem">Create Clinic</a></li>
         <li><a href="/admin/promotioncreate" class="navItem">Create Promotion</a></li>
         <li><a href="/admin/createevent"class="navItem">Create Event</a></li>
-        <%# <li><a href="/admin/clinicredeem" class="navItem">Clinic Redemption</a></li>%>
+        <li><a href="/admin/clinicredeem" class="navItem">Clinic Redemption</a></li>
         <li><a href="/attendee" class="navItem">Advisor Portal</a></li>
-        <li><a href="/logout" class="navItem navbar-right">Log Out</a></li>
       </ul>
+      <a href="/logout"><button class="btn btn-danger navbar-btn navbar-right" style="margin-right:1px;">Log Out</button></a>
     </div>
   </div>
 </nav>

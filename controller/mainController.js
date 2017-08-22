@@ -98,24 +98,27 @@ const mainController = {
   },
   // Checking promo code
   verifyCode: function (req, res) {
-    console.log(req.user)
     Code.find({ code: req.body.userpromo },
     function (err, check) {
       if (err) {
         req.flash('error', 'Not able to find code in database')
         res.redirect('/clinic')
       } else {
-        if (check[0].is_redeemed) {
-          req.flash('error', 'Code already redeemed')
+        if (check[0] === undefined) {
+          req.flash('error', 'Not able to find code')
           return res.redirect('/clinic')
         } else if (moment().format('DD MMM YYYY') > moment(check[0].dateexpires).format('DD MMM YYYY')) {
           req.flash('error', 'Code has expired')
+          return res.redirect('/clinic')
+        } else if (check[0].is_redeemed) {
+          console.log(check[0])
+          req.flash('error', 'Code already redeemed')
           return res.redirect('/clinic')
         } else {
           Code.findOneAndUpdate({ code: req.body.userpromo }, { $set: { is_redeemed: true, dateredeemed: Date.now(), redeemed_by: req.user._id } }, { new: true },
             function (err, doc) {
               if (err) {
-                req.flash('error', 'Not able to find code in database')
+                req.flash('error', 'Not able to find code')
                 res.redirect('/clinic')
               } else {
                 req.flash('success', 'Code successfully redeemed')

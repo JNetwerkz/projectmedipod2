@@ -1,9 +1,10 @@
 <div class="container-fluid">
   <h1>Verify Code Page for <%= clinic.name %></h1>
-  <form class="/clinic" method="post">
+  <%# <form class="/clinic" method="post">%>
+  <form method="post" data-parsley-validate="">
     <div class="form-group">
       <label for="userpromo">Promo Code</label>
-      <input type="string" name="userpromo" id="userpromo">
+      <input type="string" name="userpromo" id="userpromo" required="">
     </div>
     <button type="submit" class="btn btn-primary">Verify</button>
   </form>

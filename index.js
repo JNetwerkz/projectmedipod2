@@ -4,6 +4,7 @@ const mainRouter = require('./routes/mainRouter')
 const ejsLayout = require('express-ejs-layouts')
 const session = require('express-session')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
 const path = require('path')
@@ -13,8 +14,8 @@ const app = express()
 require('dotenv').config({ silent: true })
 
 // mongoose and database set up
-const dbURI = process.env.PROD_MONGODB || 'mongodb://localhost/medipod'
-// const dbURI = 'mongodb://localhost/medipod'
+// const dbURI = process.env.PROD_MONGODB || 'mongodb://localhost/medipod'
+const dbURI = 'mongodb://localhost/medipod'
 const mongoose = require('mongoose')
 mongoose.connect(dbURI, {
   useMongoClient: true
@@ -49,6 +50,9 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.set('view engine', 'ejs')
 app.use(ejsLayout)
 app.use(express.static(path.join(__dirname, 'assets')))
+
+// set up method override
+app.use(methodOverride('_method'))
 
 // setup for landing page for vistors and user
 app.get('/', function (req, res) {

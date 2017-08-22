@@ -74,6 +74,12 @@ router.route('/admin/clinicredeem')
 // route for chosen event to generate code for attendees
 router.route('/admin/:id')
 .get(mainController.chosenEvent)
+.delete(mainController.rmvEvent)
+
+// Route for updating event
+router.route('/admin/eventedit/:id')
+.get(mainController.editEventForm)
+.put(mainController.editingEvent)
 
 // route for all pick on attendees
 router.route('/allpick/:id')

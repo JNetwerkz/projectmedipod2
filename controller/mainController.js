@@ -357,7 +357,7 @@ const mainController = {
       postalcode: req.body.postalcode
     }, function (err, createdclinic) {
       if (err) {
-        req.flash('error', 'Unable to create clinic')
+        req.flash('error', 'Duplicate clinic found')
         return res.redirect('/admin/createclinic')
       } else {
         console.log(createdclinic)
@@ -501,6 +501,59 @@ const mainController = {
         })
       }
     })
+  },
+  // Admin delete event feature
+  rmvEvent: function (req, res, next) {
+    Event.findByIdAndRemove(req.params.id, function (err, remove) {
+      if (err) {
+        req.flash('error', 'Unable to delete event')
+        res.redirect('/admin')
+      }
+      req.flash('success', 'Deleted event')
+      res.redirect('/admin')
+    })
+  },
+  // Admin edit event form (render)
+  editEventForm: function (req, res) {
+    Promo.find({}, function (err, promo) {
+      if (err) {
+        req.flash('error', 'Can\'t get promotion list')
+        res.redirect('/eventindex')
+      }
+      res.render('editevent', {eventId: req.params.id, promos: promo})
+    })
+  },
+  // Admin editting event (put route)
+  editingEvent: function (req, res, next) {
+    // only updating 3 fields
+    if (req.body.eventname) {
+      Event.findByIdAndUpdate(req.params.id, {$set: {name: req.body.eventname}}, function (err, updated) {
+        if (err) next()
+      })
+      if (req.body.subeventname) {
+        Event.findByIdAndUpdate(req.params.id, {$set: {subname: req.body.subeventname}}, function (err, updated) {
+          if (err) next()
+        })
+        if (req.body.datefrom) {
+          Event.findByIdAndUpdate(req.params.id, {$set: {datefrom: req.body.datefrom}}, function (err, updated) {
+            if (err) next()
+          })
+          if (req.body.dateetill) {
+            Event.findByIdAndUpdate(req.params.id, {$set: {dateto: req.body.dateetill}}, function (err, updated) {
+              if (err) next()
+            })
+            if (req.body.location) {
+              Event.findByIdAndUpdate(req.params.id, {$set: {location: req.body.location}}, function (err, updated) {
+                if (err) next()
+              })
+              req.flash('success', 'Event Updated')
+              res.redirect('/admin')
+            }
+          }
+        }
+      }
+    }
+    res.redirect('/admin')
   }
 }
 module.exports = mainController

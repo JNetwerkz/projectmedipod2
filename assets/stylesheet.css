@@ -32,3 +32,12 @@ th{
 .mandatory{
   color: red;
 }
+
+.linkexpired{
+  margin-top: 40vh;
+  text-align: center;
+}
+
+.adminbtn{
+  margin-bottom: 15px;
+}

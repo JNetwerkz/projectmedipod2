@@ -85,4 +85,8 @@ router.route('/admin/eventedit/:id')
 router.route('/allpick/:id')
 .post(mainController.allPick)
 
+// Route to catch all 404s
+router.route('*')
+.get(mainController.errorPage)
+
 module.exports = router

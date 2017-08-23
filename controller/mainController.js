@@ -135,6 +135,8 @@ const mainController = {
       if (err) {
         req.flash('error', 'Not able to find event')
         return res.redirect('/')
+      } else if (event === null) {
+        res.render('./errorpage')
       } else {
         if (moment().format('DD MMM YYYY') <= moment(event.dateto).format('DD MMM YYYY')) {
           // // if you log out user, advisor wont be able to render road show form (have to move these outside auth wall but beats the point of keeping it private)
@@ -554,6 +556,10 @@ const mainController = {
       }
     }
     res.redirect('/admin')
+  },
+  // 404 page for non-existent pages or wrong urls
+  errorPage: function (req, res) {
+    res.render('./errorpage')
   }
 }
 module.exports = mainController

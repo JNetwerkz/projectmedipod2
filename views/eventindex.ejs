@@ -13,10 +13,7 @@
             <th>Location</th>
             <th rowspan="2">
               <form action="/admin/<%= event._id %>" method="get">
-                <button type="submit" class='btn btn-primary'>Attendance</button>
-              </form>
-              <form action="/admin/eventedit/<%= event._id %>" method="get">
-                <button type="submit" class='btn btn-warning'>Edit Event</button>
+                <button type="submit" class='btn btn-primary adminbtn'>Attendance</button>
               </form>
               <form action="/admin/<%= event._id %>?_method=DELETE" method="post">
                 <button type="submit" class='btn btn-danger'>Delete Event</button>
@@ -57,7 +54,7 @@
             <th>Location</th>
             <th rowspan="2">
               <form action="/admin/<%= event._id %>" method="get">
-                <button type="submit" class='btn btn-primary'>Attendance</button>
+                <button type="submit" class='btn btn-primary adminbtn'>Attendance</button>
               </form>
               </form>
               <form action="/admin/<%= event._id %>?_method=DELETE" method="post">

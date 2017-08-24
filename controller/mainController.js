@@ -522,8 +522,7 @@ const mainController = {
         req.flash('error', 'Unable to find event')
         res.redirect('/admin')
       } else {
-        console.log(event)
-        res.render('editevent', {event: event})
+        res.render('editevent', {event: event, datefrom: moment(event.datefrom).format('YYYY-MM-DD'), dateto: moment(event.dateto).format('YYYY-MM-DD')})
       }
     })
   },

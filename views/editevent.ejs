@@ -1,5 +1,10 @@
 <div class="container-fluid form">
-  <h1>Edit Event</h1>
+  <h1><u>Edit Event</u></h1>
+
+  <h4>Current Promotion for event</h4>
+  <h4><strong><%= promo.name %></strong></h4>
+  <h4>Promo prefix is: <strong><%= promo.promocodeprefix %></strong></h4>
+  <h4>Promo postfix is: <strong><%= promo.agencyprefix %></strong></h4>
   <form action="?_method=put" method="post" data-parsley-validate="">
       <div class="form-group">
         <label for="eventname">Event Name <span class="mandatory">*</span> :

@@ -522,7 +522,18 @@ const mainController = {
         req.flash('error', 'Unable to find event')
         res.redirect('/admin')
       } else {
-        res.render('editevent', {event: event, datefrom: moment(event.datefrom).format('YYYY-MM-DD'), dateto: moment(event.dateto).format('YYYY-MM-DD')})
+        // console.log(event)
+        Event.findById(req.params.id)
+        .populate({
+          path: 'promo',
+          model: 'Promo'
+        })
+        .exec(function (err, promo) {
+          if (err) {
+            res.redirect('./admin')
+          }
+          res.render('editevent', {event: event, datefrom: moment(event.datefrom).format('YYYY-MM-DD'), dateto: moment(event.dateto).format('YYYY-MM-DD'), promo: promo.promo[0]})
+        })
       }
     })
   },

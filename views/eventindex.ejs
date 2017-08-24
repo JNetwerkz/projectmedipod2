@@ -15,6 +15,12 @@
               <form action="/admin/<%= event._id %>" method="get">
                 <button type="submit" class='btn btn-primary adminactionbtn'>Attendance</button>
               </form>
+              <form action="/admin/eventedit/<%= event._id %>?_method=put">
+                <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
+              </form>
+              <form action="/admin/<%= event._id %>?_method=DELETE">
+                <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
+              </form>
             </th>
           </tr>
           <tr>
@@ -53,9 +59,12 @@
               <form action="/admin/<%= event._id %>" method="get">
                 <button type="submit" class='btn btn-primary adminactionbtn'>Attendance</button>
               </form>
+              <form action="/admin/eventedit/<%= event._id %>?_method=put">
+                <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
+              </form>
               </form>
               <form action="/admin/<%= event._id %>?_method=DELETE" method="post">
-                <button type="submit" class='btn btn-danger'>Delete Event</button>
+                <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
               </form>
             </th>
           </tr>

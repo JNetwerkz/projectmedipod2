@@ -12,9 +12,9 @@
       <input type="checkbox" onclick="toggle(this)">
     </label>
     <button type="submit" class="btn btn-primary">Generate Code</button>
-    <h2>Duplicate NIRC Number</h2>
+    <h2>Duplicate NRIC Number</h2>
     <% dups.forEach(function(dup,i){ %>
-      <h3>Customers With NIRC number <%= dup._id.ic %></h3>
+      <h3>Customers With NRIC number <%= dup._id.ic %></h3>
       <% if (dup.count > 1) { %>
         <% for (var i=0; i<dup.count;i++){%>
           <h4><%= dup.firstnames[i] %> <%= dup.lastnames[i] %></h4>
@@ -34,7 +34,7 @@
                               <%= user.lastname %>
                           </th>
                           <th>Signed Up Date</th>
-                          <th> NIRC Number</th>
+                          <th> NRIC Number</th>
                           <th> Received Code</th>
                           <th> Attended Yet?</th>
                           <th rowspan="2">

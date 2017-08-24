@@ -517,45 +517,34 @@ const mainController = {
   },
   // Admin edit event form (render)
   editEventForm: function (req, res) {
-    Promo.find({}, function (err, promo) {
+    Event.findById(req.params.id, function (err, event) {
       if (err) {
-        req.flash('error', 'Can\'t get promotion list')
-        res.redirect('/eventindex')
+        req.flash('error', 'Unable to find event')
+        res.redirect('/admin')
+      } else {
+        console.log(event)
+        res.render('editevent', {event: event})
       }
-      res.render('editevent', {eventId: req.params.id, promos: promo})
     })
   },
   // Admin editting event (put route)
   editingEvent: function (req, res, next) {
-    // only updating 3 fields
-    if (req.body.eventname) {
-      Event.findByIdAndUpdate(req.params.id, {$set: {name: req.body.eventname}}, function (err, updated) {
-        if (err) next()
-      })
-      if (req.body.subeventname) {
-        Event.findByIdAndUpdate(req.params.id, {$set: {subname: req.body.subeventname}}, function (err, updated) {
-          if (err) next()
-        })
-        if (req.body.datefrom) {
-          Event.findByIdAndUpdate(req.params.id, {$set: {datefrom: req.body.datefrom}}, function (err, updated) {
-            if (err) next()
-          })
-          if (req.body.dateetill) {
-            Event.findByIdAndUpdate(req.params.id, {$set: {dateto: req.body.dateetill}}, function (err, updated) {
-              if (err) next()
-            })
-            if (req.body.location) {
-              Event.findByIdAndUpdate(req.params.id, {$set: {location: req.body.location}}, function (err, updated) {
-                if (err) next()
-              })
-              req.flash('success', 'Event Updated')
-              res.redirect('/admin')
-            }
-          }
-        }
-      }
+    var updates = {
+      name: req.body.eventname,
+      subname: req.body.subeventname,
+      datefrom: req.body.datefrom,
+      dateto: req.body.datetill,
+      location: req.body.location
     }
-    res.redirect('/admin')
+    Event.findByIdAndUpdate(req.params.id, updates, function (err, updated) {
+      if (err) {
+        req.flash('error', 'Cannot update event')
+        return res.redirect('/eventindex')
+      } else {
+        req.flash('success', 'Updated Event')
+        res.redirect('/admin')
+      }
+    })
   },
   // 404 page for non-existent pages or wrong urls
   errorPage: function (req, res) {

@@ -3,7 +3,7 @@
   <p>Repeat Sign Ups will be flagged at the top of the page</p>
   <p>Please vet through the repeat sign ups with columns coloured red</p>
   <form action="/allpick/<%= eventId %>" method="post">
-    <select class="promos" name="promos">
+    <select class="promos" name="promos" style="display: none;">
       <% promo.forEach(function(onpromo,i){ %>
         <option value="<%= onpromo._id %>"><%= onpromo.name %></option>
       <% }) %>

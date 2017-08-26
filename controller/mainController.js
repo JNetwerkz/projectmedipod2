@@ -107,7 +107,7 @@ const mainController = {
         if (check[0] === undefined) {
           req.flash('error', 'Not able to find code')
           return res.redirect('/clinic')
-        } else if (moment().format('DD MMM YYYY') > moment(check[0].dateexpires).format('DD MMM YYYY')) {
+        } else if (Date.now() > check[0].dateexpires) {
           req.flash('error', 'Code has expired')
           return res.redirect('/clinic')
         } else if (check[0].is_redeemed) {
@@ -262,6 +262,10 @@ const mainController = {
       path: 'attendees',
       model: 'Customer'
     })
+    .populate({
+      path: 'promo',
+      model: 'Promo'
+    })
     .exec(function (err, customers) {
       if (err) {
         console.log(err)
@@ -289,7 +293,7 @@ const mainController = {
             req.flash('error', 'Unable to vet through list')
           } else {
             console.log(customers)
-            res.render('chosenevent', {list: customers.attendees, promo: promo, dups: duplicates, eventId: eventId})
+            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: duplicates, eventId: eventId})
           }
         })
       })

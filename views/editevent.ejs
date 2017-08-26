@@ -3,8 +3,9 @@
 
   <h4>Current Promotion for event</h4>
   <h4><strong><%= promo.name %></strong></h4>
-  <h4>Promo prefix is: <strong><%= promo.promocodeprefix %></strong></h4>
-  <h4>Promo postfix is: <strong><%= promo.agencyprefix %></strong></h4>
+  <h4>Promo prefix: <strong><%= promo.promocodeprefix %></strong></h4>
+  <h4>Promo postfix: <strong><%= promo.agencyprefix %></strong></h4>
+  <h4>Validity (Days): <strong><%= promo.validity %></strong></h4>
   <form action="?_method=put" method="post" data-parsley-validate="">
       <div class="form-group">
         <label for="eventname">Event Name <span class="mandatory">*</span> :

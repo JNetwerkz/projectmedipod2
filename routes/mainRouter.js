@@ -65,11 +65,22 @@ router.route('/admin/promotion')
 router.route('/admin/promotion/:id')
 .get(mainController.editPromo)
 .delete(mainController.rmvPromo)
+.put(mainController.editingPromo)
 
 // route for post to create promotion in /createevent page
 router.route('/admin/promotioncreate')
 .get(mainController.getPromotionCreate)
 .post(mainController.promotionsCreate)
+
+// route for showing all the current promos
+router.route('/admin/clinic')
+.get(mainController.clinicIndex)
+
+// route for deleting and editing promotion
+router.route('/admin/clinic/:id')
+.get(mainController.editClinic)
+.delete(mainController.rmvClinic)
+.put(mainController.editingClinic)
 
 // route to check for promo
 router.route('/admin/createclinic')

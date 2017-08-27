@@ -539,7 +539,7 @@ const mainController = {
     })
   },
   // Admin editting event (put route)
-  editingEvent: function (req, res, next) {
+  editingEvent: function (req, res) {
     var updates = {
       name: req.body.eventname,
       subname: req.body.subeventname,
@@ -610,8 +610,78 @@ const mainController = {
           if (err) {
             res.redirect('./admin')
           }
-          res.render('editPromo', {promo: promo, clinic: promo.clinic[0], name: promo.name})
+          res.render('editpromo', {promo: promo, clinic: promo.clinic[0], name: promo.name})
         })
+      }
+    })
+  },
+  // Admin editting event (put route)
+  editingPromo: function (req, res) {
+    var updates = {
+      name: req.body.namepromo,
+      agencyprefix: req.body.codeprefix,
+      promocodeprefix: req.body.agencyprefix,
+      validity: req.body.validdate
+    }
+    Promo.findByIdAndUpdate(req.params.id, updates, function (err, updated) {
+      if (err) {
+        req.flash('error', 'Cannot update promotion')
+        return res.redirect('/admin/promotion')
+      } else {
+        req.flash('success', 'Updated promotion')
+        res.redirect('/admin/promotion')
+      }
+    })
+  },
+  // Index page for all clinics
+  clinicIndex: function (req, res) {
+    User.find({has_roles: 'clinic'}, function (err, clinic) {
+      if (err) {
+        req.flash('error', 'Not able to find clinics')
+        res.redirect('/attendee')
+      }
+      res.render('clinicindex', {clinics: clinic})
+    })
+  },
+  // Deleting clinic
+  rmvClinic: function (req, res) {
+    User.findByIdAndRemove(req.params.id, function (err, remove) {
+      if (err) {
+        console.log(err)
+        req.flash('error', 'Unable to delete clinic')
+        res.redirect('/admin/clinic')
+      }
+      req.flash('success', 'Successfully deleted clinic')
+      res.redirect('/admin/clinic')
+    })
+  },
+  // Editing clinic
+  editClinic: function (req, res) {
+    User.findById(req.params.id, function (err, clinic) {
+      if (err) {
+        req.flash('error', 'Unable to find Promotion')
+        res.redirect('/admin')
+      } else {
+        res.render('editclinic', {clinic: clinic})
+      }
+    })
+  },
+  // Admin editting clinic (put route)
+  editingClinic: function (req, res) {
+    var updates = {
+      name: req.body.clinicname,
+      contact_number: req.body.number,
+      address1: req.body.clinicadd1,
+      address2: req.body.clinicadd2,
+      postalcode: req.body.postalcode
+    }
+    User.findByIdAndUpdate(req.params.id, updates, function (err, updated) {
+      if (err) {
+        req.flash('error', 'Cannot update clinic')
+        return res.redirect('/admin/clinic')
+      } else {
+        req.flash('success', 'Updated clinic')
+        res.redirect('/admin/clinic')
       }
     })
   }

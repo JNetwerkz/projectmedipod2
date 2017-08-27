@@ -1,39 +1,41 @@
-<h1>Promotions Index</h1>
-
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <% promos.forEach(function(promo,i){ %>
-      <tr>
+<div class="container-fluid">
+  <h1>Promotions Index</h1>
+  <a href="/admin/promotioncreate"><button class="btn btn-info" style="margin-bottom: 20px;">Create Promotion</button></a>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <% promos.forEach(function(promo,i){ %>
+        <tr>
         <th rowspan="2">
-          <%= promo.name %>
+        <%= promo.name %>
         </th>
         <th>Promotion Prefix</th>
         <th>Promotion Postfix (Agency)</th>
         <th>Validity (Days)</th>
         <th>Clinic hosted</th>
         <th rowspan="2">
-          <form action="/admin/promotion/<%= promo._id %>?_method=put">
-            <button type="submit" class='btn btn-primary adminactionbtn'>Edit Promotion</button>
-          </form>
-          <form action="/admin/promotion/<%= promo._id %>?_method=delete" method="POST">
-            <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Promotion</button>
-          </form>
+        <form action="/admin/promotion/<%= promo._id %>?_method=put">
+        <button type="submit" class='btn btn-primary adminactionbtn'>Edit Promotion</button>
+        </form>
+        <form action="/admin/promotion/<%= promo._id %>?_method=delete" method="POST">
+        <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Promotion?')">Delete Promotion</button>
+        </form>
         </th>
-      </tr>
-      <tr>
+        </tr>
+        <tr>
         <td>
-          <%= promo.promocodeprefix %>
+        <%= promo.promocodeprefix %>
         </td>
         <td>
-          <%= promo.agencyprefix %>
+        <%= promo.agencyprefix %>
         </td>
         <td>
-          <%= promo.validity %>
+        <%= promo.validity %>
         </td>
         <td>
-          <%= promo.clinic[0].name %>
+        <%= promo.clinic[0].name %>
         </td>
-      </tr>
-      <% }) %>
-  </table>
+        </tr>
+        <% }) %>
+      </table>
+    </div>
 </div>

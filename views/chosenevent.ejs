@@ -45,7 +45,7 @@
   </tr>
   <tr>
     <td>
-      <%= user.creation_date %>
+      <%= moment(user.creation_date).format('Do MMMM YYYY, h:mm:ss a') %>
     </td>
     <td>
       <%= user.ic %>

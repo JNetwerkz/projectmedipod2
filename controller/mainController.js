@@ -293,7 +293,7 @@ const mainController = {
             req.flash('error', 'Unable to vet through list')
           } else {
             console.log(customers)
-            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: duplicates, eventId: eventId})
+            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: duplicates, eventId: eventId, moment: moment})
           }
         })
       })
@@ -895,7 +895,7 @@ function mailer (code, promoData, codeData) {
 
 // Toggling has_attended on customer schema to true after creating code
 function toggle (attendee) {
-  Customer.findByIdAndUpdate(attendee._id, {$set: {has_code: true}}, function (err, updateData) {
+  Customer.findByIdAndUpdate(attendee[0]._id, {$set: {has_code: true}}, function (err, updateData) {
     if (err) {
       console.log(err)
     }

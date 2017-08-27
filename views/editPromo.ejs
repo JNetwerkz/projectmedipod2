@@ -1,0 +1,32 @@
+<div class="container-fluid form">
+  <h1><u>Edit Promotion</u></h1>
+
+  <h4>Clinic hosting promotion</h4>
+  <h4><strong><%= clinic.name %></strong></h4>
+  <h4>Clinic Number: <strong><%= clinic.contact_number %></strong></h4>
+  <h4>Clinic Address: <strong><%= clinic.address1 %>, <%= clinic.address2 %></strong></h4>
+  <form action="?_method=put" method="post" data-parsley-validate="">
+    <form method="post" data-parsley-validate="">
+      <div class="form-group">
+        <label for="namepromo">Name of Promotion :
+          <input type="string" name="namepromo" class="form-control" id="namepromo" value= "<%= name %>" >
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="codeprefix">Promo Code Prefix :
+          <input type="text" name="codeprefix"  class="form-control" id="codeprefix" maxlength="5" value=<%= promo.promocodeprefix %> >
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="agencyprefix">Agency Postfix :
+          <input type="text" name="agencyprefix"  class="form-control" id="agencyprefix" maxlength="5" value=<%= promo.agencyprefix %> >
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="validdate">Validity Period :
+          <input type="number" name="validdate" class="form-control" id="validdate" value=<%= promo.validity %> >
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Update Event</button>
+  </form>
+</div>

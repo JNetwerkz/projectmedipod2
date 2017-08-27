@@ -57,6 +57,15 @@ router.route('/admin/createevent')
 .get(mainController.createEvent)
 .post(mainController.createPromo)
 
+// route for showing all the current promos
+router.route('/admin/promotion')
+.get(mainController.promoIndex)
+
+// route for deleting and editing promotion
+router.route('/admin/promotion/:id')
+.get(mainController.editPromo)
+.delete(mainController.rmvPromo)
+
 // route for post to create promotion in /createevent page
 router.route('/admin/promotioncreate')
 .get(mainController.getPromotionCreate)

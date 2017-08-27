@@ -139,7 +139,6 @@ const mainController = {
         res.render('./errorpage')
       } else {
         if (moment().format('DD MMM YYYY') <= moment(event.dateto).format('DD MMM YYYY')) {
-          // // if you log out user, advisor wont be able to render road show form (have to move these outside auth wall but beats the point of keeping it private)
           // req.logout()
           res.render('rdshow', {event: req.params})
         } else {
@@ -156,7 +155,6 @@ const mainController = {
         return res.redirect('/')
       } else {
         if (moment().format('DD MMM YYYY') <= moment(event.dateto).format('DD MMM YYYY')) {
-          // // log out not needed here i think since if you are sending this as a link they wont be able to access routes after auth
           // req.logout()
           res.render('seminar', {event: req.params})
         } else {
@@ -515,7 +513,7 @@ const mainController = {
         req.flash('error', 'Unable to delete event')
         res.redirect('/admin')
       }
-      req.flash('success', 'Deleted event')
+      req.flash('success', 'Successfully deleted event')
       res.redirect('/admin')
     })
   },
@@ -526,7 +524,6 @@ const mainController = {
         req.flash('error', 'Unable to find event')
         res.redirect('/admin')
       } else {
-        // console.log(event)
         Event.findById(req.params.id)
         .populate({
           path: 'promo',
@@ -563,6 +560,60 @@ const mainController = {
   // 404 page for non-existent pages or wrong urls
   errorPage: function (req, res) {
     res.render('./errorpage')
+  },
+  // index page for all promos
+  promoIndex: function (req, res) {
+    Promo.find({}, function (err, promos) {
+      if (err) {
+        req.flash('error', 'Could not find promotions')
+        res.redirect('/admin')
+      }
+    })
+    .populate({
+      path: 'clinic',
+      model: 'User'
+    })
+    .exec(function (err, promos) {
+      if (err) {
+        req.flash('error', 'Could not find promotions')
+        res.redirect('/admin')
+      } else {
+        res.render('promoindex', {promos: promos})
+      }
+    })
+  },
+  // admin delete promotion function
+  rmvPromo: function (req, res) {
+    Promo.findByIdAndRemove(req.params.id, function (err, remove) {
+      if (err) {
+        console.log(err)
+        req.flash('error', 'Unable to delete promotion')
+        res.redirect('/admin/promotion')
+      }
+      req.flash('success', 'Successfully deleted promotion')
+      res.redirect('/admin/promotion')
+    })
+  },
+  // edit promo page (rendering)
+  editPromo: function (req, res) {
+    Promo.findById(req.params.id, function (err, promo) {
+      if (err) {
+        req.flash('error', 'Unable to find Promotion')
+        res.redirect('/admin')
+      } else {
+        Promo.findById(req.params.id)
+        .populate({
+          path: 'clinic',
+          model: 'User'
+        })
+        .exec(function (err, promo) {
+          if (err) {
+            res.redirect('./admin')
+          }
+          res.render('editPromo', {promo: promo, clinic: promo.clinic[0], name: promo.name})
+        })
+      }
+    })
   }
 }
 module.exports = mainController

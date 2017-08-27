@@ -18,7 +18,7 @@
               <form action="/admin/eventedit/<%= event._id %>?_method=put">
                 <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
               </form>
-              <form action="/admin/<%= event._id %>?_method=DELETE">
+              <form action="/admin/<%= event._id %>?_method=DELETE" method="POST">
                 <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
               </form>
             </th>
@@ -48,7 +48,7 @@
   <div class="table-responsive">
     <table class="table table-bordered">
       <% events.forEach(function(event,i){ %>
-        <% if (moment(event.dateto).format('DD MMM YYYY') < moment().format('DD MMM YYYY')) { %>
+        <% if (moment(event.dateto).format('DD-MMM-YYYY') < moment().format('DD-MMM-YYYY')) { %>
           <tr>
             <th>Event Name</th>
             <th>Topic of Talk</th>

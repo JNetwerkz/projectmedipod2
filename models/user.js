@@ -39,6 +39,12 @@ var userSchema = new mongoose.Schema({
   postalcode: {
     type: Number
   },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpires: {
+    type: Date
+  },
   event: [{
     type: mongoose.Schema.ObjectId,
     ref: 'event'

@@ -15,6 +15,16 @@ router.route('/signup')
 .get(mainController.getSignUp)
 .post(mainController.signingup)
 
+// route for forgoting password
+router.route('/forgot')
+.get(mainController.forgotPassword)
+.post(mainController.resettingPassword)
+
+// route for resetting password
+router.route('/reset/:token')
+.get(mainController.resetPage)
+.post(mainController.confirmation)
+
 // route for seminar sign up form (should we add in the log out function)
 router.route('/attendee/seminar/:id')
 .get(mainController.seminarSignUp)

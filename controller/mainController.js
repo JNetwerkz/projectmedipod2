@@ -7,6 +7,8 @@ var passport = require('../config/passport')
 const voucherCodes = require('voucher-code-generator')
 const nodemailer = require('nodemailer')
 const moment = require('moment')
+const async = require('async')
+const crypto = require('crypto')
 
 const mainController = {
 
@@ -683,6 +685,129 @@ const mainController = {
         req.flash('success', 'Updated clinic')
         res.redirect('/admin/clinic')
       }
+    })
+  },
+  // Forgot password page (render)
+  forgotPassword: function (req, res) {
+    res.render('./forgot')
+  },
+  // Resetting password for user
+  resettingPassword: function (req, res, next) {
+    async.waterfall([
+      function (done) {
+        crypto.randomBytes(20, function (err, buf) {
+          var token = buf.toString('hex')
+          done(err, token)
+        })
+      },
+      function (token, done) {
+        User.findOne({email: req.body.email}, function (err, user) {
+          if (err) {
+            req.flash('error', 'No account with that email address exists')
+            return res.redirect('/forgot')
+          }
+          user.resetPasswordToken = token
+          user.resetPasswordExpires = Date.now() + 3600000 // 1 hour
+
+          user.save(function (err) {
+            done(err, token, user)
+          })
+        })
+      },
+      function (token, user, done) {
+        const smtpTransport = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            type: 'OAuth2',
+            user: process.env.CLIENT_EMAIL,
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN
+          }
+        })
+        const HelperOptions = {
+          from: 'Medipod <medipod.master@gmail.com>',
+          to: req.body.email,
+          subject: `Medipod Password Reset`,
+          text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        }
+        smtpTransport.sendMail(HelperOptions, (err, info) => {
+          if (err) {
+            console.log('sendmail error', err)
+            return res.redirect('/forgot')
+          }
+          req.flash('info', 'An e-mail has been sent to ' + req.body.email + ' with further instructions.')
+          res.redirect('/forgot')
+        })
+      }
+    ], function (err) {
+      if (err) return next(err)
+      res.redirect('/forgot')
+    })
+  },
+  // reset password page (render)
+  resetPage: function (req, res) {
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+      if (!user || err) {
+        req.flash('error', 'Password reset token is invalid or has expired.')
+        return res.redirect('/forgot')
+      }
+      res.render('reset', {
+        user: req.user
+      })
+    })
+  },
+  // sending confirmation email and saving new password
+  confirmation: function (req, res) {
+    async.waterfall([
+      function (done) {
+        User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+          if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired.')
+            return res.redirect('back')
+          }
+          user.password = req.body.password
+          user.resetPasswordToken = undefined
+          user.resetPasswordExpires = undefined
+          user.save(function (err) {
+            req.logIn(user, function (err) {
+              done(err, user)
+            })
+          })
+        })
+      },
+      function (user, done) {
+        var smtpTransport = nodemailer.createTransport('SMTP', {
+          service: 'Gmail',
+          auth: {
+            type: 'OAuth2',
+            user: process.env.CLIENT_EMAIL,
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN
+          }
+        })
+        var mailOptions = {
+          to: user.email,
+          from: 'Medipod <medipod.master@gmail.com>',
+          subject: 'Password has been changed',
+          text: `Hello ${user.name},\n\n` +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+        }
+        smtpTransport.sendMail(mailOptions, function (err) {
+          req.flash('success', 'Success! Your password has been changed.')
+          done(err)
+        })
+      }
+    ], function (err) {
+      if (err) {
+        console.log(err)
+        res.redirect('/forgot')
+      }
+      res.render('./')
     })
   }
 }

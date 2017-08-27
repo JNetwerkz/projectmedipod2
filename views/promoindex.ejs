@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <h1>Promotions Index</h1>
+  <hr>
   <a href="/admin/promotioncreate"><button class="btn btn-info" style="margin-bottom: 20px;">Create Promotion</button></a>
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -11,7 +12,7 @@
         <th>Promotion Prefix</th>
         <th>Promotion Postfix (Agency)</th>
         <th>Validity (Days)</th>
-        <th>Clinic hosted</th>
+        <th>Hosted by</th>
         <th rowspan="2">
         <form action="/admin/promotion/<%= promo._id %>?_method=put">
         <button type="submit" class='btn btn-primary adminactionbtn'>Edit Promotion</button>

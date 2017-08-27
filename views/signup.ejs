@@ -1,23 +1,24 @@
 <div class="container-fluid form">
   <h1>Medipod Sign Up</h1>
   <p>Sign Up page for advisors only</p>
-  <form action="/signup" method="post">
+  <form action="/signup" method="post" data-parsley-validate="">
     <div class="form-group">
       <label for="signupemail">Email:
-        <input type="text" name="email" placeholder="abc@medipod.com" class="form-control" id="signupemail" required>
+        <input type="text" name="email" placeholder="abc@medipod.com" class="form-control" id="signupemail" data-parsley-required="true" data-parsley-type="email">
       </label>
     </div>
     <div class="form-group">
       <label for="signinpassword">Password:
-        <input type="password" name="password" class="form-control" id="signinpassword" required>
+        <input type="password" name="password" class="form-control" id="signinpassword" data-parsley-required="true" data-parsley-min="3">
       </label>
     </div>
     <div class="form-group">
       <label for="confirmPass">Confirm Password:
-        <input type="password" name="confirmPassword" id="confirmPass" class="form-control" required>
+        <input type="password" name="confirmPassword" id="confirmPass" class="form-control" data-parsley-required="true" data-parsley-min="3">
       </label>
     </div>
     <button type="submit" class="btn btn-primary">Sign Up</button>
   </form>
+  <br>
   <a href="/">Log In Here</a>
 </div>

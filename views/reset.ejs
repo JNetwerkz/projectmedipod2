@@ -1,0 +1,16 @@
+<div class="container-fluid form">
+  <h1>Reset Password</h1>
+  <form method="post" data-parsley-validate="">
+    <div class="form-group">
+      <label for="newpass">New Password:
+        <input type="password" name="password" id="newpass" class="form-control" data-parsley-required="true" data-parsley-min="3">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password:
+        <input type="password" name="password" id="confirmPassword" class="form-control" data-parsley-required="true" data-parsley-min="3" data-parsley-equalto="#newpass">
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Password</button>
+  </form>
+</div>

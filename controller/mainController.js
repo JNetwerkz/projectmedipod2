@@ -739,25 +739,23 @@ const mainController = {
             console.log('sendmail error', err)
             return res.redirect('/forgot')
           }
-          req.flash('info', 'An e-mail has been sent to ' + req.body.email + ' with further instructions.')
-          res.redirect('/forgot')
+          req.flash('success', 'An e-mail has been sent to ' + req.body.email + ' with further instructions.')
+          res.redirect('/')
         })
       }
     ], function (err) {
       if (err) return next(err)
-      res.redirect('/forgot')
+      res.redirect('/')
     })
   },
   // reset password page (render)
   resetPage: function (req, res) {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
-      if (!user || err) {
+      if (!user) {
         req.flash('error', 'Password reset token is invalid or has expired.')
         return res.redirect('/forgot')
       }
-      res.render('reset', {
-        user: req.user
-      })
+      res.render('reset', {token: req.params.token})
     })
   },
   // sending confirmation email and saving new password
@@ -769,18 +767,23 @@ const mainController = {
             req.flash('error', 'Password reset token is invalid or has expired.')
             return res.redirect('back')
           }
-          user.password = req.body.password
-          user.resetPasswordToken = undefined
-          user.resetPasswordExpires = undefined
-          user.save(function (err) {
-            req.logIn(user, function (err) {
-              done(err, user)
+          if (req.body.password === req.body.confirm) {
+            user.password = req.body.password
+            user.resetPasswordToken = undefined
+            user.resetPasswordExpires = undefined
+            user.save(function (err) {
+              req.logIn(user, function (err) {
+                done(err, user)
+              })
             })
-          })
+          } else {
+            req.flash('error', 'Passwords do not match.')
+            return res.redirect('back')
+          }
         })
       },
       function (user, done) {
-        var smtpTransport = nodemailer.createTransport('SMTP', {
+        var smtpTransport = nodemailer.createTransport({
           service: 'Gmail',
           auth: {
             type: 'OAuth2',
@@ -793,9 +796,9 @@ const mainController = {
         var mailOptions = {
           to: user.email,
           from: 'Medipod <medipod.master@gmail.com>',
-          subject: 'Password has been changed',
-          text: `Hello ${user.name},\n\n` +
-          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+          subject: 'Your password has been changed',
+          text: 'Hello,\n\n' +
+           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
         }
         smtpTransport.sendMail(mailOptions, function (err) {
           req.flash('success', 'Success! Your password has been changed.')
@@ -803,11 +806,8 @@ const mainController = {
         })
       }
     ], function (err) {
-      if (err) {
-        console.log(err)
-        res.redirect('/forgot')
-      }
-      res.render('./')
+      if (err) return res.redirect('/')
+      res.redirect('/')
     })
   }
 }

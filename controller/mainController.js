@@ -702,7 +702,7 @@ const mainController = {
       },
       function (token, done) {
         User.findOne({email: req.body.email}, function (err, user) {
-          if (err) {
+          if (!user || err) {
             req.flash('error', 'No account with that email address exists')
             return res.redirect('/forgot')
           }
@@ -751,7 +751,7 @@ const mainController = {
   // reset password page (render)
   resetPage: function (req, res) {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
-      if (!user) {
+      if (!user || err) {
         req.flash('error', 'Password reset token is invalid or has expired.')
         return res.redirect('/forgot')
       }
@@ -763,7 +763,7 @@ const mainController = {
     async.waterfall([
       function (done) {
         User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
-          if (!user) {
+          if (!user || err) {
             req.flash('error', 'Password reset token is invalid or has expired.')
             return res.redirect('back')
           }
@@ -772,6 +772,10 @@ const mainController = {
             user.resetPasswordToken = undefined
             user.resetPasswordExpires = undefined
             user.save(function (err) {
+              if (err) {
+                req.flash('error', 'Unable to save new password')
+                return res.redirect('back')
+              }
               req.logIn(user, function (err) {
                 done(err, user)
               })

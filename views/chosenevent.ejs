@@ -47,9 +47,21 @@
     <td>
       <%= user.creation_date %>
     </td>
-    <td>
-      <%= user.ic %>
-    </td>
+    <% if (dups.length > 1) { %>
+      <% if (dupsIc.includes(user.ic)) { %>
+        <td style='background-color: red'>
+          <%= user.ic %>
+        </td>
+      <% } else { %>
+        <td>
+          <%= user.ic %>
+        </td>
+      <% } %>
+    <% } else { %>
+      <td>
+        <%= user.ic %>
+      </td>
+    <% } %>
     <td>
       <%= user.has_code %>
     </td>

@@ -296,25 +296,19 @@ const mainController = {
             req.flash('error', 'Unable to vet through list')
           } else {
             console.log(duplicates)
-            console.log(duplicates[0].uniqueIds[0])
-            console.log(duplicates[0]._id.ic)
-
+            // console.log(duplicates[0].uniqueIds[0])
+            // console.log(duplicates[0]._id.ic)
             let duplicatesIc = duplicates.map(person => {
               return person._id.ic
             })
-            console.log('--->',customers.attendees)
-
+            console.log('--->', customers.attendees)
             let dups
             if (customers.attendees.length) {
               dups = duplicates
             } else {
               dups = []
             }
-
-            // console.log(customers)
-            // console.log(customers.attendees[3])
-            // console.log(customers.attendees[3].some(item => item._id === duplicates[0].uniqueIds[0]))
-            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: dups, eventId: eventId, dupsIc: duplicatesIc, _: _})
+            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: dups, eventId: eventId, dupsIc: duplicatesIc})
           }
         })
       })

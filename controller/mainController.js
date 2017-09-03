@@ -295,19 +295,22 @@ const mainController = {
           if (err) {
             req.flash('error', 'Unable to vet through list')
           } else {
-            console.log(duplicates)
+            // console.log(duplicates)
             // console.log(duplicates[0].uniqueIds[0])
             // console.log(duplicates[0]._id.ic)
             let duplicatesIc = duplicates.map(person => {
               return person._id.ic
             })
-            console.log('--->', customers.attendees)
-            let dups
-            if (customers.attendees.length) {
-              dups = duplicates
-            } else {
-              dups = []
-            }
+            // console.log(duplicatesIc)
+            // console.log('--->', customers.attendees)
+            let arrayOfCustomerIcs = customers.attendees.map(customer => {
+              return customer.ic
+            })
+            let dups = duplicates.filter(duplicate => {
+              if (arrayOfCustomerIcs.includes(duplicate._id.ic)) {
+                return duplicate
+              }
+            })
             res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: dups, eventId: eventId, dupsIc: duplicatesIc})
           }
         })

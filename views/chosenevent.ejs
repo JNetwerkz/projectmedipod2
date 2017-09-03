@@ -12,6 +12,7 @@
       <input type="checkbox" onclick="toggle(this)">
     </label>
     <button type="submit" class="btn btn-primary">Generate Code</button>
+    <%if (dups.length >= 1 ) { %>
     <h2>Duplicate NRIC Number</h2>
     <% dups.forEach(function(dup,i){ %>
       <h3>Customers With NRIC number <%= dup._id.ic %></h3>
@@ -24,6 +25,7 @@
               <% }%>
                 <br />
                 <% }) %>
+                <% } %>
                   <div class="table-responsive">
                     <table class="table table-bordered">
                       <h2>All Attendees</h2>
@@ -45,11 +47,23 @@
   </tr>
   <tr>
     <td>
-      <%= moment(user.creation_date).format('Do MMMM YYYY, h:mm:ss a') %>
+      <%= moment(user.creation_date).format('Do MMMM YYYY') %>
     </td>
-    <td>
-      <%= user.ic %>
-    </td>
+    <% if (dups.length >= 1) { %>
+      <% if (dupsIc.includes(user.ic)) { %>
+        <td style='background-color: red'>
+          <%= user.ic %>
+        </td>
+      <% } else { %>
+        <td>
+          <%= user.ic %>
+        </td>
+      <% } %>
+    <% } else { %>
+      <td>
+        <%= user.ic %>
+      </td>
+    <% } %>
     <td>
       <%= user.has_code %>
     </td>

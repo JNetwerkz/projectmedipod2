@@ -168,7 +168,6 @@ const mainController = {
   // function when posting sign up form for customer
   signedUpRdShow: function (req, res) {
     var icString = req.body.ic.toUpperCase()
-    console.log(icString)
     Customer.create({
       title: req.body.title,
       firstname: req.body.firstname,
@@ -201,6 +200,7 @@ const mainController = {
   },
   // function when posting sign up form for customer
   signedUpSeminar: function (req, res) {
+    var icString = req.body.ic.toUpperCase()
     Customer.create({
       title: req.body.title,
       firstname: req.body.firstname,
@@ -211,7 +211,7 @@ const mainController = {
       contactno: req.body.contactno,
       email: req.body.email,
       dob: req.body.dob,
-      ic: req.body.ic,
+      ic: icString,
       event: req.params.id,
       pdpa_consent: req.body.pdpa
     }, function (err, customer) {
@@ -283,17 +283,34 @@ const mainController = {
             uniqueIds: {$addToSet: '$_id'},
             firstnames: {$addToSet: '$firstname'},
             lastnames: {$addToSet: '$lastname'},
+            event: {$addToSet: '$event'},
             count: {$sum: 1}
           }},
           {$match: {
+            // FIND IF EVENT INCLUDES eventID<---
             count: {'$gt': 1}
           }}
         ], function (err, duplicates) {
           if (err) {
             req.flash('error', 'Unable to vet through list')
           } else {
-            console.log(customers)
-            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: duplicates, eventId: eventId, moment: moment})
+            // console.log(duplicates)
+            // console.log(duplicates[0].uniqueIds[0])
+            // console.log(duplicates[0]._id.ic)
+            let duplicatesIc = duplicates.map(person => {
+              return person._id.ic
+            })
+            // console.log(duplicatesIc)
+            // console.log('--->', customers.attendees)
+            let arrayOfCustomerIcs = customers.attendees.map(customer => {
+              return customer.ic
+            })
+            let dups = duplicates.filter(duplicate => {
+              if (arrayOfCustomerIcs.includes(duplicate._id.ic)) {
+                return duplicate
+              }
+            })
+            res.render('chosenevent', {list: customers.attendees, promo: customers.promo, dups: dups, eventId: eventId, dupsIc: duplicatesIc, moment: moment})
           }
         })
       })

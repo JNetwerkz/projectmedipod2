@@ -140,7 +140,7 @@ const mainController = {
       } else if (event === null) {
         res.render('./errorpage')
       } else {
-        if (moment().format('DD MMM YYYY') <= moment(event.dateto).format('DD MMM YYYY')) {
+        if (moment().format() <= moment(event.dateto).format()) {
           // req.logout()
           res.render('rdshow', {event: req.params})
         } else {

@@ -6,7 +6,7 @@
   <div class="table-responsive">
     <table class="table table-bordered">
       <% events.forEach(function(event,i){ %>
-        <% if (moment(event.dateto).format('DD MMM YYYY') >= moment().format()) { %>
+        <% if (moment(event.dateto).format() >= moment().format()) { %>
           <tr>
           <th>Event Name</th>
           <th>Topic of Talk</th>

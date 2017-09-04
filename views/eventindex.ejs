@@ -2,93 +2,93 @@
   <h1>Lists of All Events</h1>
   <hr>
   <h3>Ongoing Events</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <% events.forEach(function(event,i){ %>
-        <% if (moment(event.dateto).format('DD MMM YYYY') >= moment().format()) { %>
-          <tr>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <% events.forEach(function(event,i){ %>
+          <% if (moment(event.dateto).format() >= moment().format()) { %>
+            <tr>
             <th>Event Name</th>
             <th>Topic of Talk</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Location</th>
             <th rowspan="2">
-              <form action="/admin/<%= event._id %>" method="get">
-                <button type="submit" class='btn btn-primary adminactionbtn'>Attendance</button>
-              </form>
-              <form action="/admin/eventedit/<%= event._id %>?_method=put">
-                <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
-              </form>
-              <form action="/admin/<%= event._id %>?_method=DELETE" method="POST">
-                <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
-              </form>
+            <form action="/admin/<%= event._id %>" method="get">
+            <button type="submit" class='btn btn-primary adminactionbtn'>Attendance</button>
+            </form>
+            <form action="/admin/eventedit/<%= event._id %>?_method=put">
+            <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
+            </form>
+            <form action="/admin/<%= event._id %>?_method=DELETE" method="POST">
+            <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
+            </form>
             </th>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>
-              <%= event.name %>
+            <%= event.name %>
             </td>
             <td>
-              <%= event.subname %>
+            <%= event.subname %>
             </td>
             <td>
-              <%= moment(event.datefrom).format('DD MMM YYYY') %>
+            <%= moment(event.datefrom).format('DD MMM YYYY') %>
             </td>
             <td>
-              <%= moment(event.dateto).format('DD MMM YYYY') %>
+            <%= moment(event.dateto).format('DD MMM YYYY') %>
             </td>
             <td>
-              <%= event.location %>
+            <%= event.location %>
             </td>
-          </tr>
-          <% } %>
+            </tr>
+            <% } %>
             <% }) %>
-    </table>
+          </table>
   </div>
   <hr>
   <h3>Past Events</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <% events.forEach(function(event,i){ %>
-        <% if (moment(event.dateto).format('DD-MMM-YYYY') < moment().format()) { %>
-          <tr>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <% events.forEach(function(event,i){ %>
+          <% if (moment(event.dateto).format() < moment().format()) { %>
+            <tr>
             <th>Event Name</th>
             <th>Topic of Talk</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Location</th>
             <th rowspan="2">
-              <form action="/admin/<%= event._id %>" method="get">
-                <button type="submit" class='btn btn-primary adminactionbtn'>Attendance</button>
-              </form>
-              <form action="/admin/eventedit/<%= event._id %>?_method=put">
-                <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
-              </form>
-              </form>
-              <form action="/admin/<%= event._id %>?_method=DELETE" method="post">
-                <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
-              </form>
+            <form action="/admin/<%= event._id %>" method="get">
+            <button type="submit" class='btn btn-primary adminactionbtn'>Attendance</button>
+            </form>
+            <form action="/admin/eventedit/<%= event._id %>?_method=put">
+            <button type="submit" class='btn btn-info adminactionbtn'>Edit Event</button>
+            </form>
+            </form>
+            <form action="/admin/<%= event._id %>?_method=DELETE" method="post">
+            <button type="submit" class='btn btn-danger adminactionbtn' onclick="return confirm('Delete Event?')">Delete Event</button>
+            </form>
             </th>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
             <td>
-              <%= event.name %>
+            <%= event.name %>
             </td>
             <td>
-              <%= event.subname %>
+            <%= event.subname %>
             </td>
             <td>
-              <%= moment(event.datefrom).format('DD MMM YYYY') %>
+            <%= moment(event.datefrom).format('DD MMM YYYY') %>
             </td>
             <td>
-              <%= moment(event.dateto).format('DD MMM YYYY') %>
+            <%= moment(event.dateto).format('DD MMM YYYY') %>
             </td>
             <td>
-              <%= event.location %>
+            <%= event.location %>
             </td>
-          </tr>
-          <% } %>
+            </tr>
+            <% } %>
             <% }) %>
-    </table>
-  </div>
+          </table>
+        </div>
 </div>

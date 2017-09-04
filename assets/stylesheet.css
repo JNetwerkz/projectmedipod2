@@ -41,3 +41,18 @@ th{
 .adminactionbtn{
   margin-bottom: 15px;
 }
+
+.scrollable{
+  height: 400px;
+  overflow: scroll;
+}
+
+.scrollablepast{
+  height: 800px;
+  overflow: scroll;
+  display: none;
+}
+
+#past:hover + .scrollablepast{
+  display: block;
+}
